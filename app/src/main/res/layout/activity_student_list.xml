@@ -4,6 +4,72 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.student.cooper_assign2.StudentListActivity">
+    tools:context="com.example.student.cooper_assign2.StudentListActivity"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
 
+    <EditText
+        android:id="@+id/txtFirstName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="First Name"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteY="16dp"
+        tools:layout_editor_absoluteX="85dp" />
+
+    <EditText
+        android:id="@+id/txtLastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Last Name"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteY="59dp"
+        tools:layout_editor_absoluteX="85dp" />
+
+    <EditText
+        android:id="@+id/txtYear"
+        android:layout_width="214dp"
+        android:layout_height="44dp"
+        android:ems="10"
+        android:hint="Year"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteY="149dp"
+        tools:layout_editor_absoluteX="86dp" />
+
+    <EditText
+        android:id="@+id/txtAge"
+        android:layout_width="0dp"
+        android:layout_height="46dp"
+        android:ems="10"
+        android:hint="Age"
+        android:inputType="number"
+        tools:layout_editor_absoluteY="102dp"
+        tools:layout_editor_absoluteX="85dp" />
+
+    <EditText
+        android:id="@+id/txtTeacherID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Teacher ID"
+        android:inputType="number"
+        tools:layout_editor_absoluteY="193dp"
+        tools:layout_editor_absoluteX="85dp" />
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        tools:layout_editor_absoluteY="236dp"
+        tools:layout_editor_absoluteX="137dp" />
+
+    <ListView
+        android:id="@+id/lstStudentsView"
+        android:layout_width="379dp"
+        android:layout_height="206dp"
+        tools:layout_editor_absoluteX="3dp"
+        tools:layout_editor_absoluteY="297dp" />
 </android.support.constraint.ConstraintLayout>
