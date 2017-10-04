@@ -7,6 +7,7 @@
     tools:context="com.example.student.cooper_assign2.TeacherListActivity">
 
     <ListView
+        android:id="@+id/lstTeachersView"
         android:layout_width="371dp"
         android:layout_height="228dp"
         tools:layout_editor_absoluteX="8dp"

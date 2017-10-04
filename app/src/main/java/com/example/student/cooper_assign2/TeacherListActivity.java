@@ -32,7 +32,7 @@ public class TeacherListActivity extends AppCompatActivity {
         teacherList = myDBHelper.getAllTeachers();
         //Instantiated an adapter
         adapter = new MyAdapter(this, R.layout.activity_list_item, teacherList);
-        ListView listTeachers = (ListView) findViewById(R.id.ListViewTeacher);
+        ListView listTeachers = (ListView) findViewById(R.id.lstTeachersView);
         listTeachers.setAdapter(adapter);
     }
     //Clears all teachers from the database

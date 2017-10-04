@@ -22,13 +22,14 @@
         android:id="@+id/btnTeachers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txtTitle"
-        android:layout_alignStart="@+id/txtTitle"
+        android:layout_marginLeft="57dp"
+        <!--android:onClick = "moveToTeachers"
+        android:layout_marginStart="57dp"
+        android:layout_marginTop="51dp"
+        android:text="Teachers"
         android:layout_below="@+id/txtTitle"
-        android:layout_marginLeft="56dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="50dp"
-        android:text="Teachers" />
+        android:layout_alignLeft="@+id/txtTitle"
+        android:layout_alignStart="@+id/txtTitle" />
 
     <Button
         android:id="@+id/btnStudents"
@@ -36,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/btnTeachers"
         android:layout_marginLeft="62dp"
+        <!--android:onClick = "moveToStudents"-->
         android:layout_marginStart="62dp"
         android:layout_toEndOf="@+id/btnTeachers"
         android:layout_toRightOf="@+id/btnTeachers"
