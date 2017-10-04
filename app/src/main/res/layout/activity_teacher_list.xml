@@ -6,49 +6,127 @@
     android:layout_height="match_parent"
     tools:context="com.example.student.cooper_assign2.TeacherListActivity">
 
-    <ListView
-        android:layout_width="371dp"
-        android:layout_height="228dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="275dp" />
-
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/txtFirstName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="First Name"
         android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="70dp"
-        tools:layout_editor_absoluteY="16dp" />
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="16dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="70dp"
-        tools:layout_editor_absoluteY="127dp" />
-
-    <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/txtLastName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Last Name"
         android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="70dp"
-        tools:layout_editor_absoluteY="71dp" />
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/txtFirstName"
+        app:layout_constraintTop_toBottomOf="@+id/txtFirstName"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/txtFirstName" />
 
     <EditText
-        android:id="@+id/editText5"
+        android:id="@+id/editTextPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Phone Number"
         android:inputType="phone"
-        tools:layout_editor_absoluteY="191dp"
-        tools:layout_editor_absoluteX="70dp" />
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/txtEmail"
+        app:layout_constraintTop_toBottomOf="@+id/txtEmail"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/txtEmail" />
+
+    <EditText
+        android:id="@+id/txtEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/txtLastName"
+        app:layout_constraintTop_toBottomOf="@+id/txtLastName"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/txtLastName" />
+
+    <Button
+        android:id="@+id/btnAddTeacher"
+        android:layout_width="99dp"
+        android:layout_height="0dp"
+        android:text="Add Teacher"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/btnRemoveAllTeachers"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnRemoveTeacher"
+        android:layout_marginLeft="16dp" />
+
+    <Button
+        android:id="@+id/btnRemoveTeacher"
+        android:layout_width="99dp"
+        android:layout_height="0dp"
+        android:text="Button"
+        tools:text="Remove Teacher"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="@+id/btnRemoveAllTeachers"
+        app:layout_constraintRight_toRightOf="@+id/editTextPhone"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/editTextPhone"
+        app:layout_constraintTop_toTopOf="@+id/btnRemoveAllTeachers" />
+
+    <Button
+        android:id="@+id/btnRemoveAllTeachers"
+        android:layout_width="0dp"
+        android:layout_height="53dp"
+        android:text="Button"
+        tools:text="Remove All"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginStart="27dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="6dp"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPhone"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toRightOf="@+id/btnRemoveTeacher"
+        android:layout_marginLeft="27dp"
+        android:layout_marginRight="16dp" />
+
+    <ListView
+        android:id="@+id/ListViewTeacher"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        android:layout_marginStart="6dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="6dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/btnAddTeacher"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp" />
 
 </android.support.constraint.ConstraintLayout>

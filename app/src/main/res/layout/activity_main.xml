@@ -13,7 +13,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="11dp"
-        android:text="TextView"
+        android:text="Edit Students and Teachers"
         android:textAlignment="center"
         android:textSize="30sp"
         tools:text="@string/txtTitle" />
@@ -28,7 +28,8 @@
         android:layout_marginLeft="56dp"
         android:layout_marginStart="56dp"
         android:layout_marginTop="50dp"
-        android:text="Teachers" />
+        android:onClick="openTeacherActivity"
+        android:text="@string/btnTeachers" />
 
     <Button
         android:id="@+id/btnStudents"
@@ -39,6 +40,7 @@
         android:layout_marginStart="62dp"
         android:layout_toEndOf="@+id/btnTeachers"
         android:layout_toRightOf="@+id/btnTeachers"
-        android:text="Students" />
+        android:onClick="openStudentActivity"
+        android:text="@string/btnStudents" />
 
 </RelativeLayout>
