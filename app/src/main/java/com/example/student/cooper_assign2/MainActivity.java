@@ -27,4 +27,11 @@ public class MainActivity extends AppCompatActivity {
     public void startStudentActivity(View view){
         startActivity(new Intent(MainActivity.this, StudentListActivity.class));
     }
+    public void openTeacherActivity(View view)
+    {
+        startActivity(new Intent(MainActivity.this, TeacherListActivity.class));
+    }
+    public void openStudentActivity(View view) {
+        startActivity(new Intent(MainActivity.this, StudentListActivity.class));
+    }
 }
