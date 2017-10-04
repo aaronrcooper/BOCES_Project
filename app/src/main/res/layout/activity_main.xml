@@ -13,7 +13,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="11dp"
-        android:text="TextView"
+        android:text="Edit Students and Teachers"
         android:textAlignment="center"
         android:textSize="30sp"
         tools:text="@string/txtTitle" />
@@ -23,7 +23,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="57dp"
-        <!--android:onClick = "moveToTeachers"
         android:layout_marginStart="57dp"
         android:layout_marginTop="51dp"
         android:text="Teachers"
@@ -37,7 +36,6 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/btnTeachers"
         android:layout_marginLeft="62dp"
-        <!--android:onClick = "moveToStudents"-->
         android:layout_marginStart="62dp"
         android:layout_toEndOf="@+id/btnTeachers"
         android:layout_toRightOf="@+id/btnTeachers"
