@@ -16,15 +16,15 @@ public class MainActivity extends AppCompatActivity {
         //get references to elements on the activity
         Button btnTeachers = (Button)findViewById(R.id.btnTeachers);
         Button btnStudents = (Button)findViewById(R.id.btnStudents);
-
-
-        //Button click handler for btnTeacher
-        btnTeachers.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, TeacherListActivity.class));
-            }
-        });
     }
 
+    //function to open the teacher activity
+    public void startTeacherActivity(View view){
+        startActivity(new Intent(MainActivity.this, TeacherListActivity.class));
+    }
+
+    //function to open the student activity
+    public void startStudentActivity(View view){
+        startActivity(new Intent(MainActivity.this, StudentListActivity.class));
+    }
 }

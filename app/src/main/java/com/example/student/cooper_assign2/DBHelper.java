@@ -55,12 +55,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //create the teacher table
         String teacherTable = "CREATE TABLE " + TEACHER_TABLE + "("
-                + TEACHER_ID + "INTEGER PRIMARY KEY AUTOINCREMENT, " + FIRST_NAME
+                + TEACHER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + FIRST_NAME
                 + " TEXT, " + LAST_NAME + " TEXT, " + EMAIL + " TEXT, "
                 + PHONE_NUMBER + " TEXT" + ")";
         //create the student table
         String studentTable = "CREATE TABLE " + STUDENT_TABLE + "("
-                + STUDENT_ID + "INTEGER PRIMARY KEY AUTOINCREMENT, " + S_FIRST_NAME
+                + STUDENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + S_FIRST_NAME
                 + " TEXT, " + S_LAST_NAME + " TEXT, " + AGE + " INTEGER, "
                 + YEAR + " TEXT " + S_TEACHER_ID + " INTEGER " + ")";
 
@@ -165,6 +165,7 @@ public class DBHelper extends SQLiteOpenHelper {
             }while(cursor.moveToNext());
         }
         //return the list of teachers
+
         return teachers;
     }
 

@@ -8,48 +8,89 @@
 
     <ListView
         android:id="@+id/lstTeachersView"
-        android:layout_width="371dp"
+        android:layout_width="0dp"
         android:layout_height="228dp"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="275dp" />
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        android:layout_marginStart="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="5dp"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/txtFirstName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="First Name"
         android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="70dp"
-        tools:layout_editor_absoluteY="16dp" />
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="16dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/txtEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Email"
         android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="70dp"
-        tools:layout_editor_absoluteY="127dp" />
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/txtLastName"
+        android:layout_marginTop="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/txtLastName"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/txtLastName"
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/txtLastName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Last Name"
         android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="70dp"
-        tools:layout_editor_absoluteY="71dp" />
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/txtFirstName"
+        android:layout_marginTop="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/txtFirstName"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/txtFirstName"
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <EditText
-        android:id="@+id/editText5"
+        android:id="@+id/txtPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="-16dp"
         android:ems="10"
+        android:hint="Phone"
         android:inputType="phone"
-        tools:layout_editor_absoluteY="191dp"
-        tools:layout_editor_absoluteX="70dp" />
+        app:layout_constraintLeft_toLeftOf="@+id/txtEmail"
+        app:layout_constraintRight_toRightOf="@+id/txtEmail"
+        app:layout_constraintTop_toBottomOf="@+id/txtEmail"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintHorizontal_bias="0.0" />
+
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="196dp" />
 
 </android.support.constraint.ConstraintLayout>

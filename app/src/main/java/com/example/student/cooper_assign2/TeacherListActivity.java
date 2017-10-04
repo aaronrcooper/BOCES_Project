@@ -29,7 +29,7 @@ public class TeacherListActivity extends AppCompatActivity {
     //Determines what happens when the app is resumed
     protected void onResume() {
         super.onResume();
-        teacherList = myDBHelper.getAllTeachers();
+    teacherList = myDBHelper.getAllTeachers();
         //Instantiated an adapter
         adapter = new MyAdapter(this, R.layout.activity_list_item, teacherList);
         ListView listTeachers = (ListView) findViewById(R.id.lstTeachersView);

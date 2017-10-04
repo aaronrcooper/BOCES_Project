@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -21,7 +22,15 @@ public class StudentListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_list);
+        //Creates the database object
+        myDBHelper = new DBHelper(this);
 
+        //get references to all elements on the page
+        EditText txtFirstName = (EditText)findViewById(R.id.txtFirstName);
+        EditText txtLastName = (EditText)findViewById(R.id.txtLastName);
+        EditText txtAge = (EditText)findViewById(R.id.txtAge);
+        EditText txtYear = (EditText)findViewById(R.id.txtYear);
+        EditText txtTeacherId = (EditText)findViewById(R.id.txtTeacherID);
     }
 
     @Override
@@ -78,6 +87,20 @@ public class StudentListActivity extends AppCompatActivity {
             isDoneChBx.setTag(current);
             return convertView;
         }
+
+
+        //Button Click handler for save button
+        //creates a Student object and stores all
+        //of the student information, then adds
+        //the student object to the database
+        public void addStudent()
+        {
+            //check that all textviews are filled
+
+        }
+
+
+
 //        public boolean onCreateOptionsMenu(Menu menu) {
 //            // Inflate the menu.
 //            getMenuInflater().inflate(R.menu.menu_main, menu);
