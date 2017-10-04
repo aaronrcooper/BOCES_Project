@@ -212,6 +212,31 @@ public class DBHelper extends SQLiteOpenHelper {
         return students;
     }
 
+    //remove all teachers
+    public void removeAllTeachers(List<Teacher> teachers)
+    {
+        //remove all teachers from the list
+        teachers.clear();
+
+        //get a ref to database
+        SQLiteDatabase db = this.getWritableDatabase();
+        //delete the teacher table
+        db.delete(TEACHER_TABLE, null, new String[]{});
+        //close the database connection
+        db.close();
+    }
+
+    //remove all students
+    public void removeAllStudents(List<Student> students)
+    {
+        //clear the student list
+        //get ref to database
+        SQLiteDatabase db = this.getWritableDatabase();
+        //delete the student table
+        db.delete(STUDENT_TABLE, null, new String[]{});
+        //close the database connection
+        db.close();
+    }
 
 
     //delete a student
