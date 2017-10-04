@@ -13,9 +13,8 @@ public class Teacher {
 
     }
 
-    public Teacher(int teachID, String fn, String ln, String email, String phoneNum)
+    public Teacher(String fn, String ln, String email, String phoneNum)
     {
-        teacherID = teachID;
         firstName = fn;
         lastName = ln;
         this.email = email;

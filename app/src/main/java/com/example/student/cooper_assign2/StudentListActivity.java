@@ -115,6 +115,17 @@ public class StudentListActivity extends AppCompatActivity {
         }
     }
 
+    //Button click handler for remove student
+    //gets the student id from the selected item in the list view and
+    //passes that id into remove student in dbhelper
+    public void removeStudent()
+    {
+        Student aStudent = (Student)lstStudents.getSelectedItem();
+        myDBHelper.removeStudent(aStudent.getStudentID());
+        adapter.remove(aStudent);
+        adapter.notifyDataSetChanged();
+    }
+
 
 
     //*******************ADAPTER**************************

@@ -93,12 +93,11 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         //add student information to the database
-        //values.put(STUDENT_ID, pStudent.getStudentID());//add student id
         values.put(S_FIRST_NAME, pStudent.getFirstName());//add first name
         values.put(S_LAST_NAME, pStudent.getLastName());//add last name
-        values.put(S_TEACHER_ID, pStudent.getTeacherID());//add teacher id
         values.put(AGE, pStudent.getAge());//add age
         values.put(YEAR, pStudent.getYear());//add year
+        values.put(S_TEACHER_ID, pStudent.getTeacherID());//add teacher id
         //insert the row in the table
         db.insert(STUDENT_TABLE, null, values);
 
@@ -115,7 +114,6 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         //add teacher information to the database
-        values.put(TEACHER_ID, pTeacher.getId());
         values.put(FIRST_NAME, pTeacher.getFirstName());
         values.put(LAST_NAME, pTeacher.getLastName());
         values.put(EMAIL, pTeacher.getEmail());
@@ -205,8 +203,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 //add the student object to the list
                 students.add(student);
             }while(cursor.moveToNext());
-
-
 
         }
         //return the list of teachers

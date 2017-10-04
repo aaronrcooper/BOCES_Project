@@ -52,9 +52,13 @@ public class TeacherListActivity extends AppCompatActivity {
         listTeachers.setAdapter(adapter);
     }
     //Clears all teachers from the database
-    public void clearTeacher(){
-//        myDBHelper.removeTeacher(teacherList);
+    public void removeAllTeachers(View view){
+        myDBHelper.removeAllTeachers(teacherList);
         adapter.notifyDataSetChanged();
+    }
+
+    //Clear a single teacher from the database
+    public void removeTeacher(View view){
     }
 
 
@@ -65,38 +69,28 @@ public class TeacherListActivity extends AppCompatActivity {
     //creates a Student object and stores all
     //of the student information, then adds
     //the student object to the database
-    public void addStudent(View view)
+    public void addTeacher(View view)
     {
         //store all of the variables from the edittexts
         String firstName = txtFirstName.getText().toString();
         String lastName = txtLastName.getText().toString();
-        String age = txtEmail.getText().toString();
-        String year = txtPhone.getText().toString();
-        int teacherId;
-        try {
-            teacherId = Integer.parseInt(txtTeacherId.getText().toString());
-        }
-        catch(Exception e)
-        {
-            teacherId = 0;
-            //Toast.makeText(getApplicationContext(), "That shit broke", Toast.LENGTH_SHORT).show();
-        }
+        String email = txtEmail.getText().toString();
+        String phone = txtPhone.getText().toString();
 
         //check that all textviews are filled
         if(firstName.isEmpty() ||
                 lastName.isEmpty() ||
-                age.isEmpty() ||
-                year.isEmpty() ||
-                txtTeacherId.getText().toString().isEmpty())
+                email.isEmpty() ||
+                phone.isEmpty())
         {
             //Toast yo
             Toast.makeText(getApplicationContext(), "All fields must be filled in.", Toast.LENGTH_SHORT).show();
         }
         else
         {
-            Student aStudent = new Student(firstName, lastName, Integer.parseInt(age), teacherId, year);
-            myDBHelper.addStudent(aStudent);
-            adapter.add(aStudent);
+            Teacher aTeacher = new Teacher(firstName, lastName, email, phone);
+            myDBHelper.addTeacher(aTeacher);
+            adapter.add(aTeacher);
             adapter.notifyDataSetChanged();
         }
     }
@@ -146,4 +140,7 @@ public class TeacherListActivity extends AppCompatActivity {
 //            return true;
 //        }
     }
+
+
+
 }
