@@ -9,13 +9,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 public class TeacherListActivity extends AppCompatActivity {
+
+    //references to all elements on activity
+    EditText txtFirstName;
+    EditText txtLastName;
+    EditText txtEmail;
+    EditText txtPhone;
+
     protected DBHelper myDBHelper;
     private List<Teacher> teacherList;
     private MyAdapter adapter;
@@ -25,6 +34,13 @@ public class TeacherListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_teacher_list);
         //Creates the database object
         myDBHelper = new DBHelper(this);
+
+        //get references to the elements on activity
+        txtFirstName = (EditText)findViewById(R.id.txtFirstName);
+        txtLastName = (EditText)findViewById(R.id.txtLastName);
+        txtEmail = (EditText)findViewById(R.id.txtEmail);
+        txtPhone = (EditText)findViewById(R.id.txtPhone);
+
     }
     //Determines what happens when the app is resumed
     protected void onResume() {
@@ -40,6 +56,51 @@ public class TeacherListActivity extends AppCompatActivity {
 //        myDBHelper.removeTeacher(teacherList);
         adapter.notifyDataSetChanged();
     }
+
+
+
+
+
+    //Button Click handler for add students button
+    //creates a Student object and stores all
+    //of the student information, then adds
+    //the student object to the database
+    public void addStudent(View view)
+    {
+        //store all of the variables from the edittexts
+        String firstName = txtFirstName.getText().toString();
+        String lastName = txtLastName.getText().toString();
+        String age = txtEmail.getText().toString();
+        String year = txtPhone.getText().toString();
+        int teacherId;
+        try {
+            teacherId = Integer.parseInt(txtTeacherId.getText().toString());
+        }
+        catch(Exception e)
+        {
+            teacherId = 0;
+            //Toast.makeText(getApplicationContext(), "That shit broke", Toast.LENGTH_SHORT).show();
+        }
+
+        //check that all textviews are filled
+        if(firstName.isEmpty() ||
+                lastName.isEmpty() ||
+                age.isEmpty() ||
+                year.isEmpty() ||
+                txtTeacherId.getText().toString().isEmpty())
+        {
+            //Toast yo
+            Toast.makeText(getApplicationContext(), "All fields must be filled in.", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Student aStudent = new Student(firstName, lastName, Integer.parseInt(age), teacherId, year);
+            myDBHelper.addStudent(aStudent);
+            adapter.add(aStudent);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
 
     //*******************ADAPTER**************************
     private class MyAdapter extends ArrayAdapter<Teacher> {

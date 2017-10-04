@@ -93,7 +93,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         //add student information to the database
-        values.put(STUDENT_ID, pStudent.getStudentID());//add student id
+        //values.put(STUDENT_ID, pStudent.getStudentID());//add student id
         values.put(S_FIRST_NAME, pStudent.getFirstName());//add first name
         values.put(S_LAST_NAME, pStudent.getLastName());//add last name
         values.put(S_TEACHER_ID, pStudent.getTeacherID());//add teacher id

@@ -17,8 +17,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".listItem"> </activity>
-        <activity android:name=".TeacherListActivity"></activity>
-        <activity android:name=".StudentListActivity"></activity>
+        <activity android:name=".TeacherListActivity"
+                  android:windowSoftInputMode="stateVisible|adjustPan"></activity>
+        <activity android:name=".StudentListActivity"
+                  android:windowSoftInputMode="stateVisible|adjustPan"></activity>
     </application>
 
 </manifest>

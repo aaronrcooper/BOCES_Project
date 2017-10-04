@@ -7,9 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +20,22 @@ public class StudentListActivity extends AppCompatActivity {
     protected DBHelper myDBHelper;
     private List<Student> studentsList;
     private MyAdapter adapter;
+
+    //get references to all elements on the page
+    //EditTexts
+    EditText txtFirstName;
+    EditText txtLastName;
+    EditText txtAge;
+    EditText txtYear;
+    EditText txtTeacherId;
+    //Buttons
+    Button btnAddStudent;
+    Button btnRemoveStudent;
+    Button btnRemoveAll;
+    //ListView
+    ListView lstStudents;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,12 +43,20 @@ public class StudentListActivity extends AppCompatActivity {
         //Creates the database object
         myDBHelper = new DBHelper(this);
 
-        //get references to all elements on the page
-        EditText txtFirstName = (EditText)findViewById(R.id.txtFirstName);
-        EditText txtLastName = (EditText)findViewById(R.id.txtLastName);
-        EditText txtAge = (EditText)findViewById(R.id.txtAge);
-        EditText txtYear = (EditText)findViewById(R.id.txtYear);
-        EditText txtTeacherId = (EditText)findViewById(R.id.txtTeacherID);
+        //get references to all elements
+        //EditTexts
+        txtFirstName = (EditText)findViewById(R.id.txtFirstName);
+        txtLastName = (EditText)findViewById(R.id.txtLastName);
+        txtAge = (EditText)findViewById(R.id.txtAge);
+        txtYear = (EditText)findViewById(R.id.txtYear);
+        txtTeacherId = (EditText)findViewById(R.id.txtTeacherID);
+        //Buttons
+        btnAddStudent = (Button)findViewById(R.id.btnAddStudent);
+        btnRemoveStudent = (Button)findViewById(R.id.btnRemoveStudent);
+        btnRemoveAll = (Button)findViewById(R.id.btnRemoveAll);
+        //ListView
+        lstStudents = (ListView)findViewById(R.id.lstStudentsView);
+
     }
 
     @Override
@@ -48,6 +74,48 @@ public class StudentListActivity extends AppCompatActivity {
 //        myDBHelper.clearAll(teacherList);
         adapter.notifyDataSetChanged();
     }
+
+    //Button Click handler for add students button
+    //creates a Student object and stores all
+    //of the student information, then adds
+    //the student object to the database
+    public void addStudent(View view)
+    {
+        //store all of the variables from the edittexts
+        String firstName = txtFirstName.getText().toString();
+        String lastName = txtLastName.getText().toString();
+        String age = txtAge.getText().toString();
+        String year = txtYear.getText().toString();
+        int teacherId;
+        try {
+            teacherId = Integer.parseInt(txtTeacherId.getText().toString());
+        }
+        catch(Exception e)
+        {
+            teacherId = 0;
+            //Toast.makeText(getApplicationContext(), "That shit broke", Toast.LENGTH_SHORT).show();
+        }
+
+        //check that all textviews are filled
+        if(firstName.isEmpty() ||
+                lastName.isEmpty() ||
+                age.isEmpty() ||
+                year.isEmpty() ||
+                txtTeacherId.getText().toString().isEmpty())
+        {
+            //Toast yo
+            Toast.makeText(getApplicationContext(), "All fields must be filled in.", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Student aStudent = new Student(firstName, lastName, Integer.parseInt(age), teacherId, year);
+            myDBHelper.addStudent(aStudent);
+            adapter.add(aStudent);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+
 
     //*******************ADAPTER**************************
     private class MyAdapter extends ArrayAdapter<Student> {
@@ -89,15 +157,7 @@ public class StudentListActivity extends AppCompatActivity {
         }
 
 
-        //Button Click handler for save button
-        //creates a Student object and stores all
-        //of the student information, then adds
-        //the student object to the database
-        public void addStudent()
-        {
-            //check that all textviews are filled
 
-        }
 
 
 
