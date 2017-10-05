@@ -28,10 +28,6 @@ public class StudentListActivity extends AppCompatActivity {
     EditText txtAge;
     EditText txtYear;
     EditText txtTeacherId;
-    //Buttons
-    Button btnAddStudent;
-    Button btnRemoveStudent;
-    Button btnRemoveAll;
     //ListView
     ListView lstStudents;
 
@@ -50,10 +46,6 @@ public class StudentListActivity extends AppCompatActivity {
         txtAge = (EditText)findViewById(R.id.txtAge);
         txtYear = (EditText)findViewById(R.id.txtYear);
         txtTeacherId = (EditText)findViewById(R.id.txtTeacherID);
-        //Buttons
-        btnAddStudent = (Button)findViewById(R.id.btnAddStudent);
-        btnRemoveStudent = (Button)findViewById(R.id.btnRemoveStudent);
-        btnRemoveAll = (Button)findViewById(R.id.btnRemoveAll);
         //ListView
         lstStudents = (ListView)findViewById(R.id.lstStudentsView);
 
@@ -66,12 +58,12 @@ public class StudentListActivity extends AppCompatActivity {
         studentsList = myDBHelper.getAllStudents();
         //Instantiated an adapter
         adapter = new MyAdapter(this, R.layout.activity_list_item, studentsList);
-        ListView listTeachers = (ListView) findViewById(R.id.lstStudentsView);
-        listTeachers.setAdapter(adapter);
+        ListView listStudents = (ListView) findViewById(R.id.lstStudentsView);
+        listStudents.setAdapter(adapter);
     }
-    //Clears all teachers from the database
-    public void clearTeacher(){
-//        myDBHelper.clearAll(teacherList);
+    //Clears all students from the database
+    public void removeAllStudents(View view){
+        myDBHelper.removeAllStudents(studentsList);
         adapter.notifyDataSetChanged();
     }
 
@@ -86,15 +78,15 @@ public class StudentListActivity extends AppCompatActivity {
         String lastName = txtLastName.getText().toString();
         String age = txtAge.getText().toString();
         String year = txtYear.getText().toString();
-        int teacherId;
-        try {
+        String teacherId = txtTeacherId.getText().toString();
+        /*try {
             teacherId = Integer.parseInt(txtTeacherId.getText().toString());
         }
         catch(Exception e)
         {
             teacherId = 0;
             //Toast.makeText(getApplicationContext(), "That shit broke", Toast.LENGTH_SHORT).show();
-        }
+        }*/
 
         //check that all textviews are filled
         if(firstName.isEmpty() ||
@@ -108,7 +100,7 @@ public class StudentListActivity extends AppCompatActivity {
         }
         else
         {
-            Student aStudent = new Student(firstName, lastName, Integer.parseInt(age), teacherId, year);
+            Student aStudent = new Student(firstName, lastName, Integer.parseInt(age), Integer.parseInt(teacherId), year);
             myDBHelper.addStudent(aStudent);
             adapter.add(aStudent);
             adapter.notifyDataSetChanged();
@@ -148,15 +140,15 @@ public class StudentListActivity extends AppCompatActivity {
                 convertView = inflater.inflate(R.layout.activity_list_item, parent, false);
                 isDoneChBx = (CheckBox) convertView.findViewById(R.id.chkListItem);
                 convertView.setTag(isDoneChBx);
-                isDoneChBx.setOnClickListener(new View.OnClickListener() {
+                /*isDoneChBx.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         CheckBox cb = (CheckBox) view;
-                        Teacher changeTeacher = (Teacher) cb.getTag();
+                        Student changeStudent = (Student) cb.getTag();
 //                        changeTeacher.setIs_done(cb.isChecked() == true ? 1 : 0);
 //                        myDBHelper.updateTeacher(changeTeacher);
                     }
-                });
+                });*/
             } else {
                 isDoneChBx = (CheckBox) convertView.getTag();
             }
