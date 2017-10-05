@@ -59,10 +59,15 @@ public class DBHelper extends SQLiteOpenHelper {
                 + " TEXT, " + LAST_NAME + " TEXT, " + EMAIL + " TEXT, "
                 + PHONE_NUMBER + " TEXT" + ")";
         //create the student table
-        String studentTable = "CREATE TABLE " + STUDENT_TABLE + "("
-                + STUDENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + S_FIRST_NAME
-                + " TEXT, " + S_LAST_NAME + " TEXT, " + AGE + " INTEGER, "
-                + YEAR + " TEXT " + S_TEACHER_ID + " INTEGER " + ")";
+        String studentTable = "CREATE TABLE " + STUDENT_TABLE +
+                "(" +
+                STUDENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                S_FIRST_NAME + " TEXT, " +
+                S_LAST_NAME + " TEXT, " +
+                AGE + " INTEGER, " +
+                YEAR + " TEXT, " +
+                S_TEACHER_ID + " INTEGER " +
+                ")";
 
         db.execSQL(teacherTable);
         db.execSQL(studentTable);
@@ -99,7 +104,8 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(YEAR, pStudent.getYear());//add year
         values.put(S_TEACHER_ID, pStudent.getTeacherID());//add teacher id
         //insert the row in the table
-        db.insert(STUDENT_TABLE, null, values);
+
+        long row_id = db.insert(STUDENT_TABLE, null, values);
 
         //close the database connection
         db.close();
@@ -227,6 +233,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void removeAllStudents(List<Student> students)
     {
         //clear the student list
+        students.clear();
         //get ref to database
         SQLiteDatabase db = this.getWritableDatabase();
         //delete the student table
