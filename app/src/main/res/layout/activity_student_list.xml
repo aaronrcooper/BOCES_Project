@@ -12,23 +12,23 @@
         android:id="@+id/txtFirstName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="First Name"
-        android:inputType="textPersonName"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="16dp"
-        tools:layout_constraintLeft_creator="1"
+        android:ems="10"
+        android:hint="@string/txtFirstName"
+        android:inputType="textPersonName"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
 
     <EditText
         android:id="@+id/txtLastName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Last Name"
+        android:hint="@string/txtLastName"
         android:inputType="textPersonName"
         app:layout_constraintLeft_toLeftOf="@+id/txtFirstName"
         app:layout_constraintRight_toRightOf="@+id/txtFirstName"
@@ -43,7 +43,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="1dp"
         android:ems="10"
-        android:hint="Year"
+        android:hint="@string/txtYear"
         android:inputType="text"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -57,15 +57,33 @@
         android:layout_width="0dp"
         android:layout_height="46dp"
         android:ems="10"
-        android:hint="Age"
+        android:hint="@string/txtAge"
         android:inputType="number"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/txtLastName"
         app:layout_constraintRight_toRightOf="@+id/txtLastName"
         app:layout_constraintTop_toBottomOf="@+id/txtLastName"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/txtLastName" />
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
 
+<<<<<<< HEAD
+=======
+    <EditText
+        android:id="@+id/txtTeacherID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:ems="10"
+        android:hint="@string/txtTeachId"
+        android:inputType="number"
+        app:layout_constraintLeft_toLeftOf="@+id/txtAge"
+        app:layout_constraintRight_toRightOf="@+id/txtAge"
+        app:layout_constraintTop_toBottomOf="@+id/txtAge"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+>>>>>>> 83d54428c22dfcfb222c981b4d3e3f8bd9dffe4c
     <ListView
         android:id="@+id/lstStudentsView"
         android:layout_width="0dp"
@@ -86,33 +104,33 @@
         android:id="@+id/btnRemoveStudent"
         android:layout_width="104dp"
         android:layout_height="53dp"
-        android:text="Remove Student"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
+        android:text="@string/txtRemoveStudent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
 
     <Button
         android:id="@+id/btnRemoveAll"
         android:layout_width="104dp"
         android:layout_height="53dp"
-        android:text="Remove All"
+        android:onClick="removeAllStudents"
+        android:text="@string/txtRemoveAll"
         app:layout_constraintBaseline_toBaselineOf="@+id/btnRemoveStudent"
-        tools:layout_constraintBaseline_creator="1"
-        tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toRightOf="@+id/btnRemoveStudent"
-        android:onClick="removeAllStudents"/>
+        tools:layout_constraintBaseline_creator="1"
+        tools:layout_constraintLeft_creator="1" />
 
     <Button
         android:id="@+id/btnAddStudent"
         android:layout_width="104dp"
         android:layout_height="53dp"
         android:onClick="addStudent"
-        android:text="Add Student"
+        android:text="@string/txtAddStudent"
         app:layout_constraintBaseline_toBaselineOf="@+id/btnRemoveStudent"
         app:layout_constraintRight_toLeftOf="@+id/btnRemoveStudent"
         tools:layout_constraintBaseline_creator="1"

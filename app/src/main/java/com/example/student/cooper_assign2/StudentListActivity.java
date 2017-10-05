@@ -1,6 +1,9 @@
 package com.example.student.cooper_assign2;
+//https://stackoverflow.com/questions/2478517/how-to-display-a-yes-no-dialog-box-on-android
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -35,7 +38,6 @@ public class StudentListActivity extends AppCompatActivity {
     Spinner teacherListSpinner;
     List<Teacher> teacherList;
     List<String> teacherNameID;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +81,7 @@ public class StudentListActivity extends AppCompatActivity {
     public void removeAllStudents(View view){
         myDBHelper.removeAllStudents(studentsList);
         adapter.notifyDataSetChanged();
+
     }
 
     //Button Click handler for add students button
@@ -87,12 +90,16 @@ public class StudentListActivity extends AppCompatActivity {
     //the student object to the database
     public void addStudent(View view)
     {
-        //store all of the variables from the edittexts
+        //store all of the variables from the edit texts
         String firstName = txtFirstName.getText().toString();
         String lastName = txtLastName.getText().toString();
         String age = txtAge.getText().toString();
         String year = txtYear.getText().toString();
         String teacherId = txtTeacherId.getText().toString();
+<<<<<<< HEAD
+=======
+
+>>>>>>> 83d54428c22dfcfb222c981b4d3e3f8bd9dffe4c
 
         //check that all textviews are filled
         if(firstName.isEmpty() ||
@@ -106,10 +113,22 @@ public class StudentListActivity extends AppCompatActivity {
         }
         else
         {
+            //create a student object with the correct attributes
             Student aStudent = new Student(firstName, lastName, Integer.parseInt(age), Integer.parseInt(teacherId), year);
+            //add the student to the database
             myDBHelper.addStudent(aStudent);
+            //add the student to the list
             adapter.add(aStudent);
+            //update the listview
             adapter.notifyDataSetChanged();
+            //Toast to let user know that Student was added successfully
+            Toast.makeText(getApplicationContext(), "Student successfully added.", Toast.LENGTH_SHORT).show();
+            //clear all fields
+            txtFirstName.setText("");
+            txtLastName.setText("");
+            txtAge.setText("");
+            txtTeacherId.setText("");
+            txtYear.setText("");
         }
     }
 
@@ -118,11 +137,45 @@ public class StudentListActivity extends AppCompatActivity {
     //passes that id into remove student in dbhelper
     public void removeStudent()
     {
+
         Student aStudent = (Student)lstStudents.getSelectedItem();
         myDBHelper.removeStudent(aStudent.getStudentID());
         adapter.remove(aStudent);
         adapter.notifyDataSetChanged();
     }
+
+
+    //method to display a dialog box
+    //returns true if positive button is pressed,
+    //returns false if negative button is pressed
+    /*public void getDialogResults()
+    {
+        proceed = false;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Confirm");
+        builder.setMessage("Are you sure?");
+
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                proceed = true;
+                // Do nothing but close the dialog
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //proceed = false;
+                // Do nothing
+                dialog.dismiss();
+            }
+        });
+        builder.show();
+    }*/
+
 
 
 
