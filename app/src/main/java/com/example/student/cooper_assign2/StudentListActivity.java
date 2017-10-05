@@ -73,20 +73,13 @@ public class StudentListActivity extends AppCompatActivity {
     //the student object to the database
     public void addStudent(View view)
     {
-        //store all of the variables from the edittexts
+        //store all of the variables from the edit texts
         String firstName = txtFirstName.getText().toString();
         String lastName = txtLastName.getText().toString();
         String age = txtAge.getText().toString();
         String year = txtYear.getText().toString();
         String teacherId = txtTeacherId.getText().toString();
-        /*try {
-            teacherId = Integer.parseInt(txtTeacherId.getText().toString());
-        }
-        catch(Exception e)
-        {
-            teacherId = 0;
-            //Toast.makeText(getApplicationContext(), "That shit broke", Toast.LENGTH_SHORT).show();
-        }*/
+
 
         //check that all textviews are filled
         if(firstName.isEmpty() ||
