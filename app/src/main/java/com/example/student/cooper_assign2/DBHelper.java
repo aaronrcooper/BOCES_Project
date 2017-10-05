@@ -163,7 +163,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 teacher.setLastName(cursor.getString(2));
                 teacher.setEmail(cursor.getString(3));
                 teacher.setPhoneNum(cursor.getString(4));
-
+                teacher.setFullNameID();
                 //add the teacher object to the list
                 teachers.add(teacher);
             }while(cursor.moveToNext());

@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -30,6 +31,10 @@ public class StudentListActivity extends AppCompatActivity {
     EditText txtTeacherId;
     //ListView
     ListView lstStudents;
+    //Spinner
+    Spinner teacherListSpinner;
+    List<Teacher> teacherList;
+    List<String> teacherNameID;
 
 
     @Override
@@ -38,14 +43,14 @@ public class StudentListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_student_list);
         //Creates the database object
         myDBHelper = new DBHelper(this);
-
         //get references to all elements
         //EditTexts
         txtFirstName = (EditText)findViewById(R.id.txtFirstName);
         txtLastName = (EditText)findViewById(R.id.txtLastName);
         txtAge = (EditText)findViewById(R.id.txtAge);
         txtYear = (EditText)findViewById(R.id.txtYear);
-        txtTeacherId = (EditText)findViewById(R.id.txtTeacherID);
+        //txtTeacherId = (EditText)findViewById(R.id.txtTeacherID);
+        teacherListSpinner = (Spinner) findViewById(R.id.spinTeacherList);
         //ListView
         lstStudents = (ListView)findViewById(R.id.lstStudentsView);
 
@@ -56,10 +61,19 @@ public class StudentListActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         studentsList = myDBHelper.getAllStudents();
+        teacherList = myDBHelper.getAllTeachers();
         //Instantiated an adapter
         adapter = new MyAdapter(this, R.layout.activity_list_item, studentsList);
         ListView listStudents = (ListView) findViewById(R.id.lstStudentsView);
         listStudents.setAdapter(adapter);
+        teacherNameID = new ArrayList<String>();
+        for(Teacher aTeach: teacherList)
+        {
+            teacherNameID.add(aTeach.getFullNameID());
+        }
+        ArrayAdapter<String> teacherAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.support_simple_spinner_dropdown_item, teacherNameID);
+        teacherAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        teacherListSpinner.setAdapter(teacherAdapter);
     }
     //Clears all students from the database
     public void removeAllStudents(View view){
@@ -79,14 +93,6 @@ public class StudentListActivity extends AppCompatActivity {
         String age = txtAge.getText().toString();
         String year = txtYear.getText().toString();
         String teacherId = txtTeacherId.getText().toString();
-        /*try {
-            teacherId = Integer.parseInt(txtTeacherId.getText().toString());
-        }
-        catch(Exception e)
-        {
-            teacherId = 0;
-            //Toast.makeText(getApplicationContext(), "That shit broke", Toast.LENGTH_SHORT).show();
-        }*/
 
         //check that all textviews are filled
         if(firstName.isEmpty() ||
@@ -95,7 +101,7 @@ public class StudentListActivity extends AppCompatActivity {
                 year.isEmpty() ||
                 txtTeacherId.getText().toString().isEmpty())
         {
-            //Toast yo
+            //Toast that displays error if all fields are not entered
             Toast.makeText(getApplicationContext(), "All fields must be filled in.", Toast.LENGTH_SHORT).show();
         }
         else
@@ -124,6 +130,7 @@ public class StudentListActivity extends AppCompatActivity {
     private class MyAdapter extends ArrayAdapter<Student> {
         Context context;
         List<Student> studentList = new ArrayList<Student>();
+
         //Constructor
         public MyAdapter(Context c, int rId, List<Student> objects) {
             super(c, rId, objects);
@@ -131,8 +138,7 @@ public class StudentListActivity extends AppCompatActivity {
             context = c;
         }
 
-        public View getView(int position, View convertView, ViewGroup parent)
-        {
+        public View getView(int position, View convertView, ViewGroup parent) {
             CheckBox isDoneChBx = null;
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) context
@@ -158,16 +164,5 @@ public class StudentListActivity extends AppCompatActivity {
             isDoneChBx.setTag(current);
             return convertView;
         }
-
-
-
-
-
-
-//        public boolean onCreateOptionsMenu(Menu menu) {
-//            // Inflate the menu.
-//            getMenuInflater().inflate(R.menu.menu_main, menu);
-//            return true;
-//        }
     }
 }
