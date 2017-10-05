@@ -53,6 +53,7 @@ public class TeacherListActivity extends AppCompatActivity {
     }
     //Clears all teachers from the database
     public void removeAllTeachers(View view){
+        //prompt the user to confirm that he or she wants to remove all teachers
         myDBHelper.removeAllTeachers(teacherList);
         adapter.notifyDataSetChanged();
     }
@@ -88,10 +89,20 @@ public class TeacherListActivity extends AppCompatActivity {
         }
         else
         {
+            //create a teacher object with correct attributes
             Teacher aTeacher = new Teacher(firstName, lastName, email, phone);
+            //add the teacher to the database
             myDBHelper.addTeacher(aTeacher);
+            //update listview of teachers
             adapter.add(aTeacher);
             adapter.notifyDataSetChanged();
+            //Toast to let user know that Teacher was added successfully
+            Toast.makeText(getApplicationContext(), "Teacher successfully added.", Toast.LENGTH_SHORT).show();
+            //clear all fields
+            txtFirstName.setText("");
+            txtLastName.setText("");
+            txtEmail.setText("");
+            txtPhone.setText("");
         }
     }
 
