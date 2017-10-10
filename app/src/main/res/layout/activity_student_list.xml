@@ -12,7 +12,7 @@
         android:id="@+id/txtFirstName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="6dp"
         android:ems="10"
         android:hint="@string/txtFirstName"
         android:inputType="textPersonName"
@@ -21,7 +21,8 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintHorizontal_bias="0.502" />
 
     <EditText
         android:id="@+id/txtLastName"
@@ -66,8 +67,6 @@
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1" />
 
-<<<<<<< HEAD
-=======
     <EditText
         android:id="@+id/txtTeacherID"
         android:layout_width="wrap_content"
@@ -83,23 +82,6 @@
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1" />
 
->>>>>>> 83d54428c22dfcfb222c981b4d3e3f8bd9dffe4c
-    <ListView
-        android:id="@+id/lstStudentsView"
-        android:layout_width="0dp"
-        android:layout_height="212dp"
-        android:layout_marginBottom="3dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginLeft="2dp"
-        android:layout_marginRight="2dp"
-        android:layout_marginStart="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1" />
-
     <Button
         android:id="@+id/btnRemoveStudent"
         android:layout_width="104dp"
@@ -112,7 +94,8 @@
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintVertical_bias="0.537" />
 
     <Button
         android:id="@+id/btnRemoveAll"
@@ -123,7 +106,8 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/btnRemoveStudent"
         app:layout_constraintLeft_toRightOf="@+id/btnRemoveStudent"
         tools:layout_constraintBaseline_creator="1"
-        tools:layout_constraintLeft_creator="1" />
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginLeft="0dp" />
 
     <Button
         android:id="@+id/btnAddStudent"
@@ -134,13 +118,39 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/btnRemoveStudent"
         app:layout_constraintRight_toLeftOf="@+id/btnRemoveStudent"
         tools:layout_constraintBaseline_creator="1"
-        tools:layout_constraintRight_creator="1" />
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginRight="0dp" />
 
     <Spinner
         android:id="@+id/spinTeacherList"
-        android:layout_width="368dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="-3dp"
         app:layout_constraintBottom_toTopOf="@+id/btnRemoveStudent"
-        tools:layout_editor_absoluteX="8dp" />
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintHorizontal_bias="0.0" />
+
+    <ListView
+        android:id="@+id/lstStudentsView"
+        android:layout_width="0dp"
+        android:layout_height="212dp"
+        android:layout_marginBottom="-49dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginStart="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1" />
 </android.support.constraint.ConstraintLayout>

@@ -51,7 +51,7 @@ public class StudentListActivity extends AppCompatActivity {
         txtLastName = (EditText)findViewById(R.id.txtLastName);
         txtAge = (EditText)findViewById(R.id.txtAge);
         txtYear = (EditText)findViewById(R.id.txtYear);
-        //txtTeacherId = (EditText)findViewById(R.id.txtTeacherID);
+        txtTeacherId = (EditText)findViewById(R.id.txtTeacherID);
         teacherListSpinner = (Spinner) findViewById(R.id.spinTeacherList);
         //ListView
         lstStudents = (ListView)findViewById(R.id.lstStudentsView);
@@ -96,10 +96,6 @@ public class StudentListActivity extends AppCompatActivity {
         String age = txtAge.getText().toString();
         String year = txtYear.getText().toString();
         String teacherId = txtTeacherId.getText().toString();
-<<<<<<< HEAD
-=======
-
->>>>>>> 83d54428c22dfcfb222c981b4d3e3f8bd9dffe4c
 
         //check that all textviews are filled
         if(firstName.isEmpty() ||
