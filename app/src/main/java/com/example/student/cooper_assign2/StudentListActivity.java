@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -141,38 +142,6 @@ public class StudentListActivity extends AppCompatActivity {
     }
 
 
-    //method to display a dialog box
-    //returns true if positive button is pressed,
-    //returns false if negative button is pressed
-    /*public void getDialogResults()
-    {
-        proceed = false;
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        builder.setTitle("Confirm");
-        builder.setMessage("Are you sure?");
-
-        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                proceed = true;
-                // Do nothing but close the dialog
-                dialog.dismiss();
-            }
-        });
-
-        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //proceed = false;
-                // Do nothing
-                dialog.dismiss();
-            }
-        });
-        builder.show();
-    }*/
-
-
 
 
     //*******************ADAPTER**************************
@@ -195,21 +164,12 @@ public class StudentListActivity extends AppCompatActivity {
                 convertView = inflater.inflate(R.layout.activity_list_item, parent, false);
                 isDoneChBx = (CheckBox) convertView.findViewById(R.id.chkListItem);
                 convertView.setTag(isDoneChBx);
-                /*isDoneChBx.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        CheckBox cb = (CheckBox) view;
-                        Student changeStudent = (Student) cb.getTag();
-//                        changeTeacher.setIs_done(cb.isChecked() == true ? 1 : 0);
-//                        myDBHelper.updateTeacher(changeTeacher);
-                    }
-                });*/
+
             } else {
                 isDoneChBx = (CheckBox) convertView.getTag();
             }
             Student current = studentList.get(position);
             isDoneChBx.setText(current.getFirstName() + " " + current.getLastName());
-//            isDoneChBx.setChecked(current.getIs_done() == 1 ? true : false);
             isDoneChBx.setTag(current);
             return convertView;
         }

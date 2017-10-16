@@ -5,8 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Spinner;
 
 public class MainActivity extends AppCompatActivity {
+
+
+    //get a reference to the spinner that will display all students
+    Spinner studentSpinner = (Spinner)findViewById(R.id.spinStudent);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
