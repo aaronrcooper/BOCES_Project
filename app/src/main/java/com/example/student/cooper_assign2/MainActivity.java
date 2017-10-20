@@ -10,9 +10,6 @@ import android.widget.Spinner;
 public class MainActivity extends AppCompatActivity {
 
 
-    //get a reference to the spinner that will display all students
-    Spinner studentSpinner = (Spinner)findViewById(R.id.spinStudent);
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
         //get references to elements on the activity
         Button btnTeachers = (Button)findViewById(R.id.btnTeachers);
         Button btnStudents = (Button)findViewById(R.id.btnStudents);
+
     }
 
     //function to open the teacher activity
