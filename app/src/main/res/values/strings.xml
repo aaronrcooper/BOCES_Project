@@ -3,4 +3,16 @@
     <string name="txtTitle">Edit Students and Teachers</string>
     <string name="btnTeachers">Teachers</string>
     <string name="btnStudents">Students</string>
+    <string name="txtFirstName">First Name</string>
+    <string name="txtLastName">Last Name</string>
+    <string name="txtAge">Age</string>
+    <string name="txtYear">Year</string>
+    <string name="txtTeachId">Teacher ID</string>
+    <string name="txtAddStudent">Add Student</string>
+    <string name="txtRemoveStudent">Remove Student</string>
+    <string name="txtRemoveAll">Remove All</string>
+    <string name="txtEmail">Email</string>
+    <string name="txtPhone">Phone Number</string>
+    <string name="txtAddTeacher">Add Teacher</string>
+    <string name="txtRemoveTeacher">Remove Teacher</string>
 </resources>

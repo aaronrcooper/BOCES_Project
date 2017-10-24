@@ -55,14 +55,19 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //create the teacher table
         String teacherTable = "CREATE TABLE " + TEACHER_TABLE + "("
-                + TEACHER_ID + "INTEGER PRIMARY KEY AUTOINCREMENT, " + FIRST_NAME
+                + TEACHER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + FIRST_NAME
                 + " TEXT, " + LAST_NAME + " TEXT, " + EMAIL + " TEXT, "
                 + PHONE_NUMBER + " TEXT" + ")";
         //create the student table
-        String studentTable = "CREATE TABLE " + STUDENT_TABLE + "("
-                + STUDENT_ID + "INTEGER PRIMARY KEY AUTOINCREMENT, " + S_FIRST_NAME
-                + " TEXT, " + S_LAST_NAME + " TEXT, " + AGE + " INTEGER, "
-                + YEAR + " TEXT " + S_TEACHER_ID + " INTEGER " + ")";
+        String studentTable = "CREATE TABLE " + STUDENT_TABLE +
+                "(" +
+                STUDENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                S_FIRST_NAME + " TEXT, " +
+                S_LAST_NAME + " TEXT, " +
+                AGE + " INTEGER, " +
+                YEAR + " TEXT, " +
+                S_TEACHER_ID + " INTEGER " +
+                ")";
 
         db.execSQL(teacherTable);
         db.execSQL(studentTable);
@@ -93,14 +98,14 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         //add student information to the database
-        values.put(STUDENT_ID, pStudent.getStudentID());//add student id
         values.put(S_FIRST_NAME, pStudent.getFirstName());//add first name
         values.put(S_LAST_NAME, pStudent.getLastName());//add last name
-        values.put(S_TEACHER_ID, pStudent.getTeacherID());//add teacher id
         values.put(AGE, pStudent.getAge());//add age
         values.put(YEAR, pStudent.getYear());//add year
+        values.put(S_TEACHER_ID, pStudent.getTeacherID());//add teacher id
         //insert the row in the table
-        db.insert(STUDENT_TABLE, null, values);
+
+        long row_id = db.insert(STUDENT_TABLE, null, values);
 
         //close the database connection
         db.close();
@@ -115,7 +120,6 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         //add teacher information to the database
-        values.put(TEACHER_ID, pTeacher.getId());
         values.put(FIRST_NAME, pTeacher.getFirstName());
         values.put(LAST_NAME, pTeacher.getLastName());
         values.put(EMAIL, pTeacher.getEmail());
@@ -159,12 +163,13 @@ public class DBHelper extends SQLiteOpenHelper {
                 teacher.setLastName(cursor.getString(2));
                 teacher.setEmail(cursor.getString(3));
                 teacher.setPhoneNum(cursor.getString(4));
-
+                teacher.setFullNameID();
                 //add the teacher object to the list
                 teachers.add(teacher);
             }while(cursor.moveToNext());
         }
         //return the list of teachers
+
         return teachers;
     }
 
@@ -205,8 +210,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 students.add(student);
             }while(cursor.moveToNext());
 
-
-
         }
         //return the list of teachers
         return students;
@@ -230,6 +233,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void removeAllStudents(List<Student> students)
     {
         //clear the student list
+        students.clear();
         //get ref to database
         SQLiteDatabase db = this.getWritableDatabase();
         //delete the student table

@@ -22,14 +22,14 @@
         android:id="@+id/btnTeachers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/txtTitle"
-        android:layout_alignStart="@+id/txtTitle"
+        android:layout_marginLeft="55dp"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="163dp"
+        android:text="Teachers"
+        android:onClick="startTeacherActivity"
         android:layout_below="@+id/txtTitle"
-        android:layout_marginLeft="56dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="50dp"
-        android:onClick="openTeacherActivity"
-        android:text="@string/btnTeachers" />
+        android:layout_alignLeft="@+id/txtTitle"
+        android:layout_alignStart="@+id/txtTitle" />
 
     <Button
         android:id="@+id/btnStudents"
@@ -40,7 +40,17 @@
         android:layout_marginStart="62dp"
         android:layout_toEndOf="@+id/btnTeachers"
         android:layout_toRightOf="@+id/btnTeachers"
-        android:onClick="openStudentActivity"
-        android:text="@string/btnStudents" />
+        android:text="Students"
+        android:onClick="startStudentActivity"/>
+
+    <Spinner
+        android:id="@+id/spinStudent"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/txtTitle"
+        android:layout_marginTop="28dp"
+        android:background="@android:color/background_light" />
 
 </RelativeLayout>
