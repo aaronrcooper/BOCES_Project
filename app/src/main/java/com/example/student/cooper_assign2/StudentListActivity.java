@@ -75,7 +75,7 @@ public class StudentListActivity extends AppCompatActivity {
             teacherNameID.add(aTeach.getFullNameID());
         }
         ArrayAdapter<String> teacherAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item, teacherNameID);
-        teacherAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        teacherAdapter.setDropDownViewResource(R.layout.spinner_item);
         teacherListSpinner.setAdapter(teacherAdapter);
     }
     //Clears all students from the database

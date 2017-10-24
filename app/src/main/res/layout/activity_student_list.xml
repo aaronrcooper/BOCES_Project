@@ -123,22 +123,20 @@
 
     <Spinner
         android:id="@+id/spinTeacherList"
-        android:layout_width="366dp"
-        android:layout_height="37dp"
-        android:layout_marginBottom="0dp"
+        android:layout_width="325dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="-3dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:background="@android:color/holo_blue_bright"
         app:layout_constraintBottom_toTopOf="@+id/btnRemoveStudent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_editor_absoluteX="10dp"
-        tools:layout_editor_absoluteY="225dp" />
+        tools:layout_constraintRight_creator="1" />
 
     <ListView
         android:id="@+id/lstStudentsView"

@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             studentNames.add(temp);
         }
         ArrayAdapter<String> studentAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item, studentNames);
-        studentAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        studentAdapter.setDropDownViewResource(R.layout.spinner_item);
         studentSpinner.setAdapter(studentAdapter);
     }
     //function to open the teacher activity
