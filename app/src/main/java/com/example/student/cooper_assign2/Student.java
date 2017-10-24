@@ -19,9 +19,8 @@ public class Student {
 
     }
 
-    public Student(int id, String fn, String ln, int age, int teachID, String year)
+    public Student(String fn, String ln, int age, int teachID, String year)
     {
-        studentID = id;
         firstName = fn;
         lastName=ln;
         this.age = age;

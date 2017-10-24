@@ -7,19 +7,20 @@ public class Teacher {
     private String lastName;
     private String email;
     private String phoneNum;
+    private String fullNameID;
 
     public Teacher()
     {
 
     }
 
-    public Teacher(int teachID, String fn, String ln, String email, String phoneNum)
+    public Teacher(String fn, String ln, String email, String phoneNum)
     {
-        teacherID = teachID;
         firstName = fn;
         lastName = ln;
         this.email = email;
         this.phoneNum = phoneNum;
+        setFullNameID();
     }
 
     public int getId() {
@@ -61,4 +62,6 @@ public class Teacher {
     public void setPhoneNum(String phoneNum) {
         this.phoneNum = phoneNum;
     }
+    public void setFullNameID() { fullNameID = firstName + " " + lastName + "\t ID: " + teacherID;}
+    public String getFullNameID(){return fullNameID;}
 }

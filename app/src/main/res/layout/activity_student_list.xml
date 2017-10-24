@@ -12,64 +12,147 @@
         android:id="@+id/txtFirstName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
         android:ems="10"
-        android:hint="First Name"
+        android:hint="@string/txtFirstName"
         android:inputType="textPersonName"
-        tools:layout_editor_absoluteY="16dp"
-        tools:layout_editor_absoluteX="85dp" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintHorizontal_bias="0.502" />
 
     <EditText
         android:id="@+id/txtLastName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Last Name"
+        android:hint="@string/txtLastName"
         android:inputType="textPersonName"
-        tools:layout_editor_absoluteY="59dp"
-        tools:layout_editor_absoluteX="85dp" />
+        app:layout_constraintLeft_toLeftOf="@+id/txtFirstName"
+        app:layout_constraintRight_toRightOf="@+id/txtFirstName"
+        app:layout_constraintTop_toBottomOf="@+id/txtFirstName"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
 
     <EditText
         android:id="@+id/txtYear"
         android:layout_width="214dp"
-        android:layout_height="44dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="1dp"
         android:ems="10"
-        android:hint="Year"
-        android:inputType="textPersonName"
-        tools:layout_editor_absoluteY="149dp"
-        tools:layout_editor_absoluteX="86dp" />
+        android:hint="@string/txtYear"
+        android:inputType="text"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtAge"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
 
     <EditText
         android:id="@+id/txtAge"
         android:layout_width="0dp"
         android:layout_height="46dp"
         android:ems="10"
-        android:hint="Age"
+        android:hint="@string/txtAge"
         android:inputType="number"
-        tools:layout_editor_absoluteY="102dp"
-        tools:layout_editor_absoluteX="85dp" />
+        app:layout_constraintLeft_toLeftOf="@+id/txtLastName"
+        app:layout_constraintRight_toRightOf="@+id/txtLastName"
+        app:layout_constraintTop_toBottomOf="@+id/txtLastName"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
 
     <EditText
         android:id="@+id/txtTeacherID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
         android:ems="10"
-        android:hint="Teacher ID"
+        android:hint="@string/txtTeachId"
         android:inputType="number"
-        tools:layout_editor_absoluteY="193dp"
-        tools:layout_editor_absoluteX="85dp" />
+        app:layout_constraintLeft_toLeftOf="@+id/txtAge"
+        app:layout_constraintRight_toRightOf="@+id/txtAge"
+        app:layout_constraintTop_toBottomOf="@+id/txtAge"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
 
     <Button
-        android:id="@+id/btnSave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Save"
-        tools:layout_editor_absoluteY="236dp"
-        tools:layout_editor_absoluteX="137dp" />
+        android:id="@+id/btnRemoveStudent"
+        android:layout_width="104dp"
+        android:layout_height="53dp"
+        android:text="@string/txtRemoveStudent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintVertical_bias="0.572" />
+
+    <Button
+        android:id="@+id/btnRemoveAll"
+        android:layout_width="104dp"
+        android:layout_height="53dp"
+        android:onClick="removeAllStudents"
+        android:text="@string/txtRemoveAll"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btnRemoveStudent"
+        app:layout_constraintLeft_toRightOf="@+id/btnRemoveStudent"
+        tools:layout_constraintBaseline_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginLeft="0dp" />
+
+    <Button
+        android:id="@+id/btnAddStudent"
+        android:layout_width="104dp"
+        android:layout_height="53dp"
+        android:onClick="addStudent"
+        android:text="@string/txtAddStudent"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btnRemoveStudent"
+        app:layout_constraintRight_toLeftOf="@+id/btnRemoveStudent"
+        tools:layout_constraintBaseline_creator="1"
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginRight="0dp" />
+
+    <Spinner
+        android:id="@+id/spinTeacherList"
+        android:layout_width="325dp"
+        android:layout_height="40sp"
+        android:layout_marginBottom="-3dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@android:color/background_light"
+        app:layout_constraintBottom_toTopOf="@+id/btnRemoveStudent"
+        app:layout_constraintHorizontal_bias="0.511"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1" />
 
     <ListView
         android:id="@+id/lstStudentsView"
-        android:layout_width="379dp"
-        android:layout_height="206dp"
-        tools:layout_editor_absoluteX="3dp"
-        tools:layout_editor_absoluteY="297dp" />
+        android:layout_width="377dp"
+        android:layout_height="196dp"
+        android:layout_marginBottom="-49dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_marginStart="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_editor_absoluteY="315dp" />
 </android.support.constraint.ConstraintLayout>
