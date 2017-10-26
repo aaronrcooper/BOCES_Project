@@ -4,28 +4,33 @@ package com.example.student.cooper_assign2;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Filter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentListActivity extends AppCompatActivity {
+public class StudentListActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+    //Global variables
     protected DBHelper myDBHelper;
     private List<Student> studentsList;
-    private MyAdapter adapter;
-
+    private StudentAdapter adapter;
+    private ArrayAdapter<Teacher> teacherAdapter;
     //get references to all elements on the page
     //EditTexts
     EditText txtFirstName;
@@ -38,7 +43,6 @@ public class StudentListActivity extends AppCompatActivity {
     //Spinner
     Spinner teacherListSpinner;
     List<Teacher> teacherList;
-    List<String> teacherNameID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,16 +70,13 @@ public class StudentListActivity extends AppCompatActivity {
         studentsList = myDBHelper.getAllStudents();
         teacherList = myDBHelper.getAllTeachers();
         //Instantiated an adapter
-        adapter = new MyAdapter(this, R.layout.activity_list_item, studentsList);
+        adapter = new StudentAdapter(this, R.layout.activity_list_item, studentsList);
         ListView listStudents = (ListView) findViewById(R.id.lstStudentsView);
         listStudents.setAdapter(adapter);
-        teacherNameID = new ArrayList<String>();
-        for(Teacher aTeach: teacherList)
-        {
-            teacherNameID.add(aTeach.getFullNameID());
-        }
-        ArrayAdapter<String> teacherAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item, teacherNameID);
+        teacherAdapter = new TeacherAdapter(getApplicationContext(), R.layout.spinner_item, teacherList);
         teacherAdapter.setDropDownViewResource(R.layout.spinner_item);
+        //TODO
+        //teacherListSpinner.setOnItemClickListener(this);
         teacherListSpinner.setAdapter(teacherAdapter);
     }
     //Clears all students from the database
@@ -134,23 +135,37 @@ public class StudentListActivity extends AppCompatActivity {
     //passes that id into remove student in dbhelper
     public void removeStudent()
     {
-
         Student aStudent = (Student)lstStudents.getSelectedItem();
         myDBHelper.removeStudent(aStudent.getStudentID());
         adapter.remove(aStudent);
         adapter.notifyDataSetChanged();
     }
+    //@Override
+    //TODO
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        Teacher city = teacherAdapter.getItem(position);
 
+        teacherAdapter.getFilter().filter(Long.toString(city.getId()),new Filter.FilterListener() {
+            //@Override
+            public void onFilterComplete(int count) {
 
+            }
+        });
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
 
 
     //*******************ADAPTER**************************
-    private class MyAdapter extends ArrayAdapter<Student> {
+    private class StudentAdapter extends ArrayAdapter<Student> {
         Context context;
         List<Student> studentList = new ArrayList<Student>();
 
         //Constructor
-        public MyAdapter(Context c, int rId, List<Student> objects) {
+        public StudentAdapter(Context c, int rId, List<Student> objects) {
             super(c, rId, objects);
             studentList = objects;
             context = c;
@@ -172,6 +187,58 @@ public class StudentListActivity extends AppCompatActivity {
             isDoneChBx.setText(current.getFirstName() + " " + current.getLastName());
             isDoneChBx.setTag(current);
             return convertView;
+        }
+    }
+    //*******************ADAPTER**************************
+    private class TeacherAdapter extends ArrayAdapter<Teacher> {
+        Context context;
+        List<Teacher> teacherList = new ArrayList<Teacher>();
+
+        //Constructor
+        public TeacherAdapter(Context c, int rId, List<Teacher> objects) {
+            super(c, rId, objects);
+            teacherList = objects;
+            context = c;
+        }
+
+        public View getView(int position, View convertView, ViewGroup parent) {
+            TextView teacher = null;
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) context
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.spinner_item, parent, false);
+                teacher = (TextView) convertView.findViewById(R.id.spinnerItem);
+                convertView.setTag(teacher);
+
+            } else {
+                teacher = (TextView) convertView.getTag();
+            }
+            Teacher current = teacherList.get(position);
+            teacher.setText(current.getFirstName() + " " + current.getLastName());
+            teacher.setTag(current);
+            return convertView;
+        }
+        public View getDropDownView(int position, View convertView,
+                                    ViewGroup parent) {
+            TextView view =null;
+            if (convertView == null) {
+                LayoutInflater inflater = (LayoutInflater) context
+                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.spinner_item, parent, false);
+                view = (TextView) convertView.findViewById(R.id.spinnerItem);
+                convertView.setTag(view);
+
+            } else {
+                view = (TextView) convertView.getTag();
+            }
+            view.setText(teacherList.get(position).getFirstName() + " " + teacherList.get(position).getLastName());
+            view.setHeight(60);
+
+            return view;
+        }
+        public Teacher getPosition(int position)
+        {
+            return teacherList.get(position);
         }
     }
 }
