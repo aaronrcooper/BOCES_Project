@@ -19,7 +19,7 @@ import java.util.List;
 public class DBHelper extends SQLiteOpenHelper {
 
     //constant to hold the database verson
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 8;
     //Name of database and two tables it contains
     //Table for teachers and table for students
     private static final String DATABASE_NAME = "TeacherStudentDB";
@@ -32,6 +32,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String LAST_NAME = "lastName";
     private static final String EMAIL = "email";
     private static final String PHONE_NUMBER = "phoneNumber";
+    private static final String TEACHER_IMAGE = "teacherImage";
 
     //Define the column (fields) names for the Student table
     private static final String STUDENT_ID = "studentID";
@@ -40,6 +41,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String AGE = "age";
     private static final String S_TEACHER_ID = "teacherID";
     private static final String YEAR = "year";
+    private static final String STUDENT_IMAGE = "studentImage";
 
 
     //CONSTRUCTOR
@@ -60,7 +62,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 FIRST_NAME + " TEXT, " +
                 LAST_NAME + " TEXT, " +
                 EMAIL + " TEXT, " +
-                PHONE_NUMBER + " TEXT" +
+                PHONE_NUMBER + " TEXT, " +
+                TEACHER_IMAGE + " BLOB" +
                 ")";
         //create the student table
         String studentTable = "CREATE TABLE " + STUDENT_TABLE +
@@ -70,11 +73,23 @@ public class DBHelper extends SQLiteOpenHelper {
                 S_LAST_NAME + " TEXT, " +
                 AGE + " INTEGER, " +
                 YEAR + " TEXT, " +
-                S_TEACHER_ID + " INTEGER " +
+                S_TEACHER_ID + " INTEGER, " +
+                STUDENT_IMAGE + " BLOB, " +
+                "FOREIGN KEY (" + S_TEACHER_ID + ") REFERENCES " +
+                TEACHER_TABLE +  "(" + TEACHER_ID + ")" +
                 ")";
+
 
         db.execSQL(teacherTable);
         db.execSQL(studentTable);
+    }
+
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        if (!db.isReadOnly()) {
+            // Enable foreign key constraints
+            db.execSQL("PRAGMA foreign_keys=ON;");
+        }
     }
 
     @Override

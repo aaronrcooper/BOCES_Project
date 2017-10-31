@@ -13,6 +13,7 @@ public class Student {
     private int age;
     private int teacherID;
     private String year;
+    private byte[] studentImage;
 
     public  Student()
     {
@@ -74,5 +75,13 @@ public class Student {
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+    public byte[] getStudentImage() {
+        return studentImage;
+    }
+
+    public void setStudentImage(byte[] studentImage) {
+        this.studentImage = studentImage;
     }
 }

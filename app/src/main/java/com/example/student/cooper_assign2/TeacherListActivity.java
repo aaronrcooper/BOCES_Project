@@ -140,7 +140,7 @@ public class TeacherListActivity extends AppCompatActivity {
                 isDoneChBx = (CheckBox) convertView.getTag();
             }
             Teacher current = teacherList.get(position);
-            isDoneChBx.setText(current.getFirstName() + " " + current.getLastName());
+            isDoneChBx.setText(current.getFirstName() + " " + current.getLastName() + " " + current.getId());
 //            isDoneChBx.setChecked(current.getIs_done() == 1 ? true : false);
             isDoneChBx.setTag(current);
             return convertView;

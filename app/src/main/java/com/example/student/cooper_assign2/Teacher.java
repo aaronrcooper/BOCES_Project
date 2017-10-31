@@ -8,6 +8,7 @@ public class Teacher {
     private String email;
     private String phoneNum;
     private String fullNameID;
+    private byte[] teacherImage;
 
     public Teacher()
     {
@@ -64,4 +65,12 @@ public class Teacher {
     }
     public void setFullNameID() { fullNameID = firstName + " " + lastName + "\t ID: " + teacherID;}
     public String getFullNameID(){return fullNameID;}
+
+    public byte[] getTeacherImage() {
+        return teacherImage;
+    }
+
+    public void setTeacherImage(byte[] teacherImage) {
+        this.teacherImage = teacherImage;
+    }
 }

@@ -184,7 +184,7 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
                 isDoneChBx = (CheckBox) convertView.getTag();
             }
             Student current = studentList.get(position);
-            isDoneChBx.setText(current.getFirstName() + " " + current.getLastName());
+            isDoneChBx.setText(current.getFirstName() + " " + current.getLastName() + " " + current.getTeacherID());
             isDoneChBx.setTag(current);
             return convertView;
         }
