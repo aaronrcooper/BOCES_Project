@@ -54,10 +54,14 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         //create the teacher table
-        String teacherTable = "CREATE TABLE " + TEACHER_TABLE + "("
-                + TEACHER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + FIRST_NAME
-                + " TEXT, " + LAST_NAME + " TEXT, " + EMAIL + " TEXT, "
-                + PHONE_NUMBER + " TEXT" + ")";
+        String teacherTable = "CREATE TABLE " + TEACHER_TABLE +
+                "(" +
+                TEACHER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                FIRST_NAME + " TEXT, " +
+                LAST_NAME + " TEXT, " +
+                EMAIL + " TEXT, " +
+                PHONE_NUMBER + " TEXT" +
+                ")";
         //create the student table
         String studentTable = "CREATE TABLE " + STUDENT_TABLE +
                 "(" +

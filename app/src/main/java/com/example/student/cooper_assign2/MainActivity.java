@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     //get a reference to the spinner
     Spinner studentSpinner;
+    Spinner teacherSpinner;
     DBHelper myDBHelper;
 
     @Override
@@ -28,7 +29,9 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         //get list of students
         List<Student> studentList = myDBHelper.getAllStudents();
+        List<Teacher> teacherList = myDBHelper.getAllTeachers();
         studentSpinner = (Spinner)findViewById(R.id.spinStudent);
+        teacherSpinner = (Spinner)findViewById(R.id.spinTeachers);
         //get arraylist of all students names and ids
         //populate the student spinner with values
         List<String> studentNames = new ArrayList<String>();
@@ -42,6 +45,18 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String> studentAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item, studentNames);
         studentAdapter.setDropDownViewResource(R.layout.spinner_item);
         studentSpinner.setAdapter(studentAdapter);
+
+
+        List<String> teacherNames = new ArrayList<String>();
+        for(Teacher aTeacher: teacherList)
+        {
+            String temp;
+            temp = aTeacher.getFirstName() + " " + aTeacher.getLastName();
+            teacherNames.add(temp);
+        }
+        ArrayAdapter<String> teacherAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item, teacherNames);
+        studentAdapter.setDropDownViewResource(R.layout.spinner_item);
+        teacherSpinner.setAdapter(teacherAdapter);
     }
     //function to open the teacher activity
     public void startTeacherActivity(View view){
