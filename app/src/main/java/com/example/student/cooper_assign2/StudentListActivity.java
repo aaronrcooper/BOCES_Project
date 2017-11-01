@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -31,13 +32,14 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
     private List<Student> studentsList;
     private StudentAdapter adapter;
     private ArrayAdapter<Teacher> teacherAdapter;
+    //Variable to store the current teacher selected in the spinner
+    Teacher currentTeacher;
     //get references to all elements on the page
     //EditTexts
     EditText txtFirstName;
     EditText txtLastName;
     EditText txtAge;
     EditText txtYear;
-    EditText txtTeacherId;
     //ListView
     ListView lstStudents;
     //Spinner
@@ -56,10 +58,10 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
         txtLastName = (EditText)findViewById(R.id.txtLastName);
         txtAge = (EditText)findViewById(R.id.txtAge);
         txtYear = (EditText)findViewById(R.id.txtYear);
-        txtTeacherId = (EditText)findViewById(R.id.txtTeacherID);
         teacherListSpinner = (Spinner) findViewById(R.id.spinTeacherList);
         //ListView
         lstStudents = (ListView)findViewById(R.id.lstStudentsView);
+        teacherListSpinner.setOnItemSelectedListener(this);
 
     }
 
@@ -75,8 +77,6 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
         listStudents.setAdapter(adapter);
         teacherAdapter = new TeacherAdapter(getApplicationContext(), R.layout.spinner_item, teacherList);
         teacherAdapter.setDropDownViewResource(R.layout.spinner_item);
-        //TODO
-        //teacherListSpinner.setOnItemClickListener(this);
         teacherListSpinner.setAdapter(teacherAdapter);
     }
     //Clears all students from the database
@@ -97,14 +97,13 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
         String lastName = txtLastName.getText().toString();
         String age = txtAge.getText().toString();
         String year = txtYear.getText().toString();
-        String teacherId = txtTeacherId.getText().toString();
+        int teacherId = currentTeacher.getId();
 
         //check that all textviews are filled
         if(firstName.isEmpty() ||
                 lastName.isEmpty() ||
                 age.isEmpty() ||
-                year.isEmpty() ||
-                txtTeacherId.getText().toString().isEmpty())
+                year.isEmpty() )
         {
             //Toast that displays error if all fields are not entered
             Toast.makeText(getApplicationContext(), "All fields must be filled in.", Toast.LENGTH_SHORT).show();
@@ -112,7 +111,7 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
         else
         {
             //create a student object with the correct attributes
-            Student aStudent = new Student(firstName, lastName, Integer.parseInt(age), Integer.parseInt(teacherId), year);
+            Student aStudent = new Student(firstName, lastName, Integer.parseInt(age), teacherId, year);
             //add the student to the database
             myDBHelper.addStudent(aStudent);
             //add the student to the list
@@ -125,8 +124,8 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
             txtFirstName.setText("");
             txtLastName.setText("");
             txtAge.setText("");
-            txtTeacherId.setText("");
             txtYear.setText("");
+            //TODO Diagnose error that this seems to throw
         }
     }
 
@@ -140,17 +139,10 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
         adapter.remove(aStudent);
         adapter.notifyDataSetChanged();
     }
-    //@Override
-    //TODO
+
+    @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Teacher city = teacherAdapter.getItem(position);
-
-        teacherAdapter.getFilter().filter(Long.toString(city.getId()),new Filter.FilterListener() {
-            //@Override
-            public void onFilterComplete(int count) {
-
-            }
-        });
+        currentTeacher = teacherAdapter.getItem(position);
     }
 
     @Override
@@ -159,7 +151,7 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
     }
 
 
-    //*******************ADAPTER**************************
+    //*******************STUDENT ADAPTER**************************
     private class StudentAdapter extends ArrayAdapter<Student> {
         Context context;
         List<Student> studentList = new ArrayList<Student>();
@@ -189,7 +181,8 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
             return convertView;
         }
     }
-    //*******************ADAPTER**************************
+
+    //*******************TEACHER ADAPTER**************************
     private class TeacherAdapter extends ArrayAdapter<Teacher> {
         Context context;
         List<Teacher> teacherList = new ArrayList<Teacher>();
