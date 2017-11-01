@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             //add the student to the student name list
             studentNames.add(temp);
         }
-        studentAdapter = new ArrayAdapter<Student>(getApplicationContext(), R.layout.spinner_item, studentList);
+        ArrayAdapter<Student> studentAdapter = new ArrayAdapter<Student>(getApplicationContext(), R.layout.spinner_item, studentList);
         studentAdapter.setDropDownViewResource(R.layout.spinner_item);
         studentSpinner.setAdapter(studentAdapter);
 
