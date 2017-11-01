@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     ArrayAdapter<Student> studentAdapter;
     List<Student> studentList;
     List<Teacher> teacherList;
+    Teacher currentTeacher;
+    Student currentStudent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,31 +45,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         teacherList = myDBHelper.getAllTeachers();
         studentSpinner = (Spinner)findViewById(R.id.spinStudent);
         teacherSpinner = (Spinner)findViewById(R.id.spinTeachers);
-        //get arraylist of all students names and ids
-        //populate the student spinner with values
-        List<String> studentNames = new ArrayList<String>();
-        for(Student aStudent: studentList)
-        {
-            String temp;
-            temp = aStudent.getFirstName() + " " + aStudent.getLastName();
-            //add the student to the student name list
-            studentNames.add(temp);
-        }
-        studentAdapter = new ArrayAdapter<Student>(getApplicationContext(), R.layout.spinner_item, studentList);
+        //Sets the adapter for the teacher spinner
+        teacherAdapter = new TeacherAdapter(getApplicationContext(), R.layout.spinner_item, teacherList);
+        teacherAdapter.setDropDownViewResource(R.layout.spinner_item);
+        teacherSpinner.setAdapter(teacherAdapter);
+        teacherSpinner.setOnItemSelectedListener(this);
+        //Sets the adapter for the student spinner
+        studentAdapter = new StudentAdapter(getApplicationContext(), R.layout.spinner_item, studentList);
         studentAdapter.setDropDownViewResource(R.layout.spinner_item);
         studentSpinner.setAdapter(studentAdapter);
+        studentSpinner.setOnItemSelectedListener(this);
 
-
-        List<String> teacherNames = new ArrayList<String>();
-        for(Teacher aTeacher: teacherList)
-        {
-            String temp;
-            temp = aTeacher.getFirstName() + " " + aTeacher.getLastName();
-            teacherNames.add(temp);
-        }
-        ArrayAdapter<String> teacherAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item, teacherNames);
-        studentAdapter.setDropDownViewResource(R.layout.spinner_item);
-        teacherSpinner.setAdapter(teacherAdapter);
     }
     //function to open the teacher activity
     public void startTeacherActivity(View view){
@@ -87,16 +75,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-        //Gets the selected teacher object
-        Teacher teacher = teacherAdapter.getItem(position);
-        //Filters the student adapter by the teacher ID
-        studentAdapter.getFilter().filter(Long.toString(teacher.getId()),new Filter.FilterListener() {
-            @Override
-            public void onFilterComplete(int count) {
-
-            }
-        });
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
+        Spinner spinner = (Spinner) parent;
+        if (spinner.getId() == R.id.spinTeachers)
+        {
+            //Gets the selected teacher object
+            currentTeacher = teacherAdapter.getItem(position);
+        }
+        else if (spinner.getId() == R.id.spinStudent)
+        {
+            currentStudent = studentAdapter.getItem(position);
+        }
     }
 
     @Override
