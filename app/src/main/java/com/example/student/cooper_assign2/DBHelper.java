@@ -122,6 +122,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(AGE, pStudent.getAge());//add age
         values.put(YEAR, pStudent.getYear());//add year
         values.put(S_TEACHER_ID, pStudent.getTeacherID());//add teacher id
+        values.put(STUDENT_IMAGE, pStudent.getStudentImage());
         //insert the row in the table
 
         long row_id = db.insert(STUDENT_TABLE, null, values);
@@ -143,7 +144,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(LAST_NAME, pTeacher.getLastName());
         values.put(EMAIL, pTeacher.getEmail());
         values.put(PHONE_NUMBER, pTeacher.getPhoneNum());
-
+        values.put(TEACHER_IMAGE, pTeacher.getTeacherImage());
         //insert the row in the table
         db.insert(TEACHER_TABLE, null, values);
 
@@ -183,6 +184,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 teacher.setEmail(cursor.getString(3));
                 teacher.setPhoneNum(cursor.getString(4));
                 teacher.setFullNameID();
+                teacher.setTeacherImage(cursor.getBlob(5));
                 //add the teacher object to the list
                 teachers.add(teacher);
             }while(cursor.moveToNext());
@@ -224,7 +226,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 student.setAge(cursor.getInt(3));
                 student.setYear(cursor.getString(4));
                 student.setTeacherID(cursor.getInt(5));
-
+                student.setStudentImage((cursor.getBlob(6)));
                 //add the student object to the list
                 students.add(student);
             }while(cursor.moveToNext());

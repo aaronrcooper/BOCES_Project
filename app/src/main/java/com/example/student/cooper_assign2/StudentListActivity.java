@@ -4,6 +4,8 @@ package com.example.student.cooper_assign2;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -99,6 +101,7 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
         String year = txtYear.getText().toString();
         int teacherId = currentTeacher.getId();
 
+
         //check that all textviews are filled
         if(firstName.isEmpty() ||
                 lastName.isEmpty() ||
@@ -112,6 +115,10 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
         {
             //create a student object with the correct attributes
             Student aStudent = new Student(firstName, lastName, Integer.parseInt(age), teacherId, year);
+
+
+
+
             //add the student to the database
             myDBHelper.addStudent(aStudent);
             //add the student to the list

@@ -2,6 +2,7 @@ package com.example.student.cooper_assign2;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Filter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -29,6 +31,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     List<Student> studentList;
     List<Teacher> teacherList;
 
+    //***********************************
+    ImageView test;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +44,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onResume(){
         super.onResume();
         //get list of students
+
+
+
         studentList = myDBHelper.getAllStudents();
         teacherList = myDBHelper.getAllTeachers();
         studentSpinner = (Spinner)findViewById(R.id.spinStudent);
@@ -58,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         studentSpinner.setAdapter(studentAdapter);
 
 
+
         List<String> teacherNames = new ArrayList<String>();
         for(Teacher aTeacher: teacherList)
         {
@@ -68,6 +77,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ArrayAdapter<String> teacherAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item, teacherNames);
         studentAdapter.setDropDownViewResource(R.layout.spinner_item);
         teacherSpinner.setAdapter(teacherAdapter);
+
+
+
     }
     //function to open the teacher activity
     public void startTeacherActivity(View view){
