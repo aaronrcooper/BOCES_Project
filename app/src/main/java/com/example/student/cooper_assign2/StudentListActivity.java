@@ -40,7 +40,6 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
     EditText txtLastName;
     EditText txtAge;
     EditText txtYear;
-    EditText txtTeacherId;
     //ListView
     ListView lstStudents;
     //Spinner
@@ -59,7 +58,6 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
         txtLastName = (EditText)findViewById(R.id.txtLastName);
         txtAge = (EditText)findViewById(R.id.txtAge);
         txtYear = (EditText)findViewById(R.id.txtYear);
-        txtTeacherId = (EditText)findViewById(R.id.txtTeacherID);
         teacherListSpinner = (Spinner) findViewById(R.id.spinTeacherList);
         //ListView
         lstStudents = (ListView)findViewById(R.id.lstStudentsView);
@@ -100,14 +98,12 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
         String age = txtAge.getText().toString();
         String year = txtYear.getText().toString();
         int teacherId = currentTeacher.getId();
-        //String teacherId = txtTeacherId.getText().toString();
 
         //check that all textviews are filled
         if(firstName.isEmpty() ||
                 lastName.isEmpty() ||
                 age.isEmpty() ||
-                year.isEmpty()
-          )
+                year.isEmpty() )
         {
             //Toast that displays error if all fields are not entered
             Toast.makeText(getApplicationContext(), "All fields must be filled in.", Toast.LENGTH_SHORT).show();
@@ -128,7 +124,6 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
             txtFirstName.setText("");
             txtLastName.setText("");
             txtAge.setText("");
-            txtTeacherId.setText("");
             txtYear.setText("");
             //TODO Diagnose error that this seems to throw
         }
