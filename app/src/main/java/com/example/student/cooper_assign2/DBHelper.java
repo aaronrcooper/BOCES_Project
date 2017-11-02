@@ -79,18 +79,11 @@ public class DBHelper extends SQLiteOpenHelper {
                 TEACHER_TABLE +  "(" + TEACHER_ID + ")" +
                 ")";
 
-
+        db.execSQL("PRAGMA foreign_keys=1;");
         db.execSQL(teacherTable);
         db.execSQL(studentTable);
     }
 
-    public void onOpen(SQLiteDatabase db) {
-        super.onOpen(db);
-        if (!db.isReadOnly()) {
-            // Enable foreign key constraints
-            db.execSQL("PRAGMA foreign_keys=ON;");
-        }
-    }
 
     @Override
     public void onUpgrade(SQLiteDatabase database, int i, int i1) {
