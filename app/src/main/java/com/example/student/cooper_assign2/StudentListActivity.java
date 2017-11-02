@@ -1,25 +1,23 @@
 package com.example.student.cooper_assign2;
 //https://stackoverflow.com/questions/2478517/how-to-display-a-yes-no-dialog-box-on-android
 
-import android.app.AlertDialog;
 import android.content.Context;
+<<<<<<< HEAD
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+=======
+>>>>>>> TeacherStudentListBranch
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Filter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -32,7 +30,7 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
     //Global variables
     protected DBHelper myDBHelper;
     private List<Student> studentsList;
-    private StudentAdapter adapter;
+    private StudentAdapter studentAdapter;
     private ArrayAdapter<Teacher> teacherAdapter;
     //Variable to store the current teacher selected in the spinner
     Teacher currentTeacher;
@@ -73,10 +71,10 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
         super.onResume();
         studentsList = myDBHelper.getAllStudents();
         teacherList = myDBHelper.getAllTeachers();
-        //Instantiated an adapter
-        adapter = new StudentAdapter(this, R.layout.activity_list_item, studentsList);
+        //Instantiated an studentAdapter
+        studentAdapter = new StudentAdapter(this, R.layout.activity_list_item, studentsList);
         ListView listStudents = (ListView) findViewById(R.id.lstStudentsView);
-        listStudents.setAdapter(adapter);
+        listStudents.setAdapter(studentAdapter);
         teacherAdapter = new TeacherAdapter(getApplicationContext(), R.layout.spinner_item, teacherList);
         teacherAdapter.setDropDownViewResource(R.layout.spinner_item);
         teacherListSpinner.setAdapter(teacherAdapter);
@@ -84,7 +82,7 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
     //Clears all students from the database
     public void removeAllStudents(View view){
         myDBHelper.removeAllStudents(studentsList);
-        adapter.notifyDataSetChanged();
+        studentAdapter.notifyDataSetChanged();
 
     }
 
@@ -122,9 +120,9 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
             //add the student to the database
             myDBHelper.addStudent(aStudent);
             //add the student to the list
-            adapter.add(aStudent);
+            studentAdapter.add(aStudent);
             //update the listview
-            adapter.notifyDataSetChanged();
+            studentAdapter.notifyDataSetChanged();
             //Toast to let user know that Student was added successfully
             Toast.makeText(getApplicationContext(), "Student successfully added.", Toast.LENGTH_SHORT).show();
             //clear all fields
@@ -143,8 +141,8 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
     {
         Student aStudent = (Student)lstStudents.getSelectedItem();
         myDBHelper.removeStudent(aStudent.getStudentID());
-        adapter.remove(aStudent);
-        adapter.notifyDataSetChanged();
+        studentAdapter.remove(aStudent);
+        studentAdapter.notifyDataSetChanged();
     }
 
     @Override
