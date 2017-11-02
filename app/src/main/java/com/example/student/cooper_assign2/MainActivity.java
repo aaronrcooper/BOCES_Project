@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         studentSpinner.setAdapter(studentAdapter);
         studentSpinner.setOnItemSelectedListener(this);
 
-<<<<<<< HEAD
 
 
         List<String> teacherNames = new ArrayList<String>();
@@ -78,10 +77,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         studentAdapter.setDropDownViewResource(R.layout.spinner_item);
         teacherSpinner.setAdapter(teacherAdapter);
 
-
-
-=======
->>>>>>> TeacherStudentListBranch
     }
     //function to open the teacher activity
     public void startTeacherActivity(View view){

@@ -2,13 +2,6 @@ package com.example.student.cooper_assign2;
 //https://stackoverflow.com/questions/2478517/how-to-display-a-yes-no-dialog-box-on-android
 
 import android.content.Context;
-<<<<<<< HEAD
-import android.content.DialogInterface;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-=======
->>>>>>> TeacherStudentListBranch
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
