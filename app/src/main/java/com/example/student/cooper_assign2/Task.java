@@ -7,6 +7,13 @@ package com.example.student.cooper_assign2;
 public class Task {
     private String taskName;
     private String taskID;
+    private String taskDescription;
+
+    public Task(String taskname, String taskDescription)
+    {
+        this.taskName = taskname;
+        this.taskDescription = taskDescription;
+    }
 
 
     public String getTaskName() {
@@ -23,5 +30,13 @@ public class Task {
 
     public void setTaskID(String taskID) {
         this.taskID = taskID;
+    }
+
+    public String getTaskDescription() {
+        return taskDescription;
+    }
+
+    public void setTaskDescription(String taskDescription) {
+        this.taskDescription = taskDescription;
     }
 }

@@ -76,7 +76,6 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
     public void removeAllStudents(View view){
         myDBHelper.removeAllStudents(studentsList);
         studentAdapter.notifyDataSetChanged();
-
     }
 
     //Button Click handler for add students button
@@ -118,20 +117,30 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
             txtLastName.setText("");
             txtAge.setText("");
             txtYear.setText("");
-            //TODO Diagnose error that this seems to throw
         }
     }
 
     //Button click handler for remove student
-    //gets the student id from the selected item in the list view and
-    //passes that id into remove student in dbhelper
-    public void removeStudent()
+    //gets the student object from the selected item in the list view and
+    //passes that object into remove student in dbhelper
+    public void removeStudent(Student aStudent)
     {
-        Student aStudent = (Student)lstStudents.getSelectedItem();
-        myDBHelper.removeStudent(aStudent.getStudentID());
+        myDBHelper.removeStudent(aStudent);
         studentAdapter.remove(aStudent);
         studentAdapter.notifyDataSetChanged();
     }
+
+    public void removeCheckedStudents(View view)
+    {
+        for( Student aStudent: studentsList)
+        {
+            if (aStudent.isDeletable())
+            {
+                removeStudent(aStudent);
+            }
+        }
+    }
+
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -157,20 +166,27 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
-            CheckBox isDoneChBx = null;
+            CheckBox deleteStudent = null;
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) context
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.activity_list_item, parent, false);
-                isDoneChBx = (CheckBox) convertView.findViewById(R.id.chkListItem);
-                convertView.setTag(isDoneChBx);
-
+                deleteStudent = (CheckBox) convertView.findViewById(R.id.chkListItem);
+                convertView.setTag(deleteStudent);
+                deleteStudent.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        CheckBox cb = (CheckBox) view;
+                        Student studentToDelete = (Student) cb.getTag();
+                        studentToDelete.setDeletable(cb.isChecked() == true ? true : false);
+                    }
+                });
             } else {
-                isDoneChBx = (CheckBox) convertView.getTag();
+                deleteStudent = (CheckBox) convertView.getTag();
             }
             Student current = studentList.get(position);
-            isDoneChBx.setText(current.getFirstName() + " " + current.getLastName());
-            isDoneChBx.setTag(current);
+            deleteStudent.setText(current.getFirstName() + " " + current.getLastName());
+            deleteStudent.setTag(current);
             return convertView;
         }
     }

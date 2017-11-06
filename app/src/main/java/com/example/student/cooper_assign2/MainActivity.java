@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         startActivity(new Intent(MainActivity.this, StudentListActivity.class));
     }
 
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
         Spinner spinner = (Spinner) parent;
@@ -81,17 +82,34 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         {
             //Gets the selected teacher object
             currentTeacher = teacherAdapter.getItem(position);
+            studentList = myDBHelper.getStudentsByTeacher(currentTeacher);
+            //Sets the adapter to null (for garbage collection) and creates a new adapter for the new list
+            studentAdapter = null;
+            studentAdapter = new StudentAdapter(getApplicationContext(), R.layout.spinner_item, studentList);
+            studentAdapter.setDropDownViewResource(R.layout.spinner_item);
+            studentSpinner.setAdapter(studentAdapter);
+            //If student list is populated, sets the current student to the first student for the selected teacher
+            if (studentList.size() != 0)
+            {
+                currentStudent = studentList.get(0);
+            }
         }
+
+        //Determines what happens when the student is selected from a spinner
         else if (spinner.getId() == R.id.spinStudent)
         {
+            //Sets currentStudent to the selected student
             currentStudent = studentAdapter.getItem(position);
         }
+        //Updates the spinner
+        studentAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
+
     //*******************STUDENT ADAPTER**************************
     private class StudentAdapter extends ArrayAdapter<Student> {
         Context context;
