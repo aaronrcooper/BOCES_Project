@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context="com.example.student.cooper_assign2.MainActivity">
 
+    <Spinner
+        android:id="@+id/spinTeachers"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:background="@android:color/background_light"
+        android:layout_above="@+id/spinStudent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="47dp" />
+
     <TextView
         android:id="@+id/txtTitle"
         android:layout_width="wrap_content"
@@ -22,14 +32,14 @@
         android:id="@+id/btnTeachers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="55dp"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="163dp"
+        android:layout_marginLeft="54dp"
+        android:layout_marginStart="54dp"
         android:text="Teachers"
         android:onClick="startTeacherActivity"
-        android:layout_below="@+id/txtTitle"
+        android:layout_alignParentBottom="true"
         android:layout_alignLeft="@+id/txtTitle"
-        android:layout_alignStart="@+id/txtTitle" />
+        android:layout_alignStart="@+id/txtTitle"
+        android:layout_marginBottom="146dp" />
 
     <Button
         android:id="@+id/btnStudents"
@@ -47,10 +57,10 @@
         android:id="@+id/spinStudent"
         android:layout_width="match_parent"
         android:layout_height="50sp"
+        android:background="@android:color/background_light"
+        android:layout_marginBottom="76dp"
+        android:layout_above="@+id/btnTeachers"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/txtTitle"
-        android:layout_marginTop="28dp"
-        android:background="@android:color/background_light" />
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

@@ -54,10 +54,14 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         //create the teacher table
-        String teacherTable = "CREATE TABLE " + TEACHER_TABLE + "("
-                + TEACHER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + FIRST_NAME
-                + " TEXT, " + LAST_NAME + " TEXT, " + EMAIL + " TEXT, "
-                + PHONE_NUMBER + " TEXT" + ")";
+        String teacherTable = "CREATE TABLE " + TEACHER_TABLE +
+                "(" +
+                TEACHER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                FIRST_NAME + " TEXT, " +
+                LAST_NAME + " TEXT, " +
+                EMAIL + " TEXT, " +
+                PHONE_NUMBER + " TEXT" +
+                ")";
         //create the student table
         String studentTable = "CREATE TABLE " + STUDENT_TABLE +
                 "(" +
@@ -163,7 +167,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 teacher.setLastName(cursor.getString(2));
                 teacher.setEmail(cursor.getString(3));
                 teacher.setPhoneNum(cursor.getString(4));
-                teacher.setFullNameID();
                 //add the teacher object to the list
                 teachers.add(teacher);
             }while(cursor.moveToNext());
@@ -182,6 +185,47 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //select all query from the Student table
         String selectQuery = "SELECT * FROM " + STUDENT_TABLE;
+
+        //get a reference to the database
+        SQLiteDatabase db = this.getWritableDatabase();
+        //create a cursor object to take data from the database and display
+        //it in a list
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        //loop through the students and:
+        //*create a new Student obj and instantiate it
+        //*set the attributes for that obj
+        //*add the object to the list
+        //*move the cursor to the next item
+        if(cursor.moveToFirst()) {
+            do {
+                //create a new Student obj
+                Student student = new Student();
+                //set the attributes
+                student.setStudentID(cursor.getInt(0));
+                student.setFirstName(cursor.getString(1));
+                student.setLastName(cursor.getString(2));
+                student.setAge(cursor.getInt(3));
+                student.setYear(cursor.getString(4));
+                student.setTeacherID(cursor.getInt(5));
+
+                //add the student object to the list
+                students.add(student);
+            }while(cursor.moveToNext());
+
+        }
+        //return the list of teachers
+        return students;
+    }
+
+    //show all students whose teacher ID field matches the ID of the selected teacher
+    public List<Student> getStudentsByTeacher(Teacher teacher)
+    {
+        //create a list of student objects
+        List<Student> students = new ArrayList<Student>();
+
+        //select all query from the Student table
+        String selectQuery = "SELECT * FROM " + STUDENT_TABLE + " WHERE " + S_TEACHER_ID + " = " + teacher.getId();
 
         //get a reference to the database
         SQLiteDatabase db = this.getWritableDatabase();
@@ -247,13 +291,13 @@ public class DBHelper extends SQLiteOpenHelper {
     //takes a student id as a parameter
     //returns true if the student was successfully removed
     //returns false if the student was not successfully removed
-    public boolean removeStudent(int studentID)
+    public boolean removeStudent(Student student)
     {
         //get a ref to the database
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        db.execSQL("DELETE FROM " + STUDENT_TABLE + " WHERE STUDENT_ID = " + studentID);
+        db.execSQL("DELETE FROM " + STUDENT_TABLE + " WHERE " + STUDENT_ID + " = " + student.getStudentID());
 
         return true;
     }
@@ -261,13 +305,13 @@ public class DBHelper extends SQLiteOpenHelper {
     //delete a teacher
     //takes a teacher id as a parameter
     //returns true if the student was successfully removed
-    public boolean removeTeacher(int teacherID)
+    public boolean removeTeacher(Teacher teacher)
     {
         //get a ref to the database
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        db.execSQL("DELETE FROM " + TEACHER_TABLE + " WHERE TEACHER_ID = " + teacherID);
+        db.execSQL("DELETE FROM " + TEACHER_TABLE + " WHERE " + TEACHER_ID + " = " + teacher.getId());
 
         return true;
     }

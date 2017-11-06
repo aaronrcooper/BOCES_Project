@@ -13,6 +13,7 @@ public class Student {
     private int age;
     private int teacherID;
     private String year;
+    private boolean deletable;
 
     public  Student()
     {
@@ -26,6 +27,7 @@ public class Student {
         this.age = age;
         teacherID = teachID;
         this.year = year;
+        this.setDeletable(false);
     }
 
     public int getStudentID() {
@@ -74,5 +76,13 @@ public class Student {
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+    public boolean isDeletable() {
+        return deletable;
+    }
+
+    public void setDeletable(boolean deletable) {
+        this.deletable = deletable;
     }
 }

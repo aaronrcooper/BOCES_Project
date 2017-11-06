@@ -8,6 +8,7 @@ public class Teacher {
     private String email;
     private String phoneNum;
     private String fullNameID;
+    private boolean isDeletable;
 
     public Teacher()
     {
@@ -20,7 +21,7 @@ public class Teacher {
         lastName = ln;
         this.email = email;
         this.phoneNum = phoneNum;
-        setFullNameID();
+        this.setDeletable(false);
     }
 
     public int getId() {
@@ -62,6 +63,12 @@ public class Teacher {
     public void setPhoneNum(String phoneNum) {
         this.phoneNum = phoneNum;
     }
-    public void setFullNameID() { fullNameID = firstName + " " + lastName + "\t ID: " + teacherID;}
-    public String getFullNameID(){return fullNameID;}
+
+    public boolean isDeletable() {
+        return isDeletable;
+    }
+
+    public void setDeletable(boolean deletable) {
+        isDeletable = deletable;
+    }
 }

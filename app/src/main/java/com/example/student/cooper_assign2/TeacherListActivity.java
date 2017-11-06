@@ -57,9 +57,26 @@ public class TeacherListActivity extends AppCompatActivity {
         myDBHelper.removeAllTeachers(teacherList);
         adapter.notifyDataSetChanged();
     }
+    //Button click handler for remove teacher
+    //gets the teacher object from the selected item in the list view and
+    //passes that object into remove teacher in dbhelper
+    public void removeTeacher(Teacher aTeacher)
+    {
+        myDBHelper.removeTeacher(aTeacher);
+        adapter.remove(aTeacher);
+        adapter.notifyDataSetChanged();
+    }
 
-    //Clear a single teacher from the database
+    //Clear a checked teacher from the database
     public void removeTeacher(View view){
+        //Loops through teacherList to determine if a teacher is to be deleted
+        for(Teacher aTeacher : teacherList)
+        {
+            if (aTeacher.isDeletable())
+            {
+                removeTeacher(aTeacher);
+            }
+        }
     }
 
 
@@ -127,29 +144,26 @@ public class TeacherListActivity extends AppCompatActivity {
                 convertView = inflater.inflate(R.layout.activity_list_item, parent, false);
                 isDoneChBx = (CheckBox) convertView.findViewById(R.id.chkListItem);
                 convertView.setTag(isDoneChBx);
+                //Checkbox listener anonymous inner class
+                //Deletes checked teachers and leaves unchecked teachers
                 isDoneChBx.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         CheckBox cb = (CheckBox) view;
                         Teacher changeTeacher = (Teacher) cb.getTag();
-//                        changeTeacher.setIs_done(cb.isChecked() == true ? 1 : 0);
-//                        myDBHelper.updateTeacher(changeTeacher);
+                        changeTeacher.setDeletable(cb.isChecked() == true ? true : false);
                     }
                 });
-            } else {
+            }
+            else
+            {
                 isDoneChBx = (CheckBox) convertView.getTag();
             }
             Teacher current = teacherList.get(position);
             isDoneChBx.setText(current.getFirstName() + " " + current.getLastName());
-//            isDoneChBx.setChecked(current.getIs_done() == 1 ? true : false);
             isDoneChBx.setTag(current);
             return convertView;
         }
-//        public boolean onCreateOptionsMenu(Menu menu) {
-//            // Inflate the menu.
-//            getMenuInflater().inflate(R.menu.menu_main, menu);
-//            return true;
-//        }
     }
 
 

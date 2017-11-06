@@ -18,9 +18,9 @@
         </activity>
         <activity android:name=".listItem"> </activity>
         <activity android:name=".TeacherListActivity"
-                  android:windowSoftInputMode="stateVisible|adjustPan"></activity>
+                  android:windowSoftInputMode="stateVisible|adjustNothing"></activity>
         <activity android:name=".StudentListActivity"
-                  android:windowSoftInputMode="stateVisible|adjustPan"></activity>
+                  android:windowSoftInputMode="stateVisible|adjustNothing"></activity>
     </application>
 
 </manifest>
