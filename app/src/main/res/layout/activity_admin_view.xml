@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:orientation="vertical"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context="com.example.student.cooper_assign2.AdminView">
+
+<TextView
+    android:id="@+id/txtAdminTitle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textAlignment="center"
+    android:textSize="30sp"
+    android:text="@string/txtEditTitle" />
+
+<Button
+    android:id="@+id/btnEditStudents"
+    android:layout_width="match_parent"
+    android:layout_height="80sp"
+    android:layout_marginTop="15sp"
+    android:elevation="0dp"
+    android:onClick="startStudentActivity"
+    android:text="@string/btnAdminStudents" />
+
+<Button
+    android:id="@+id/btnEditTeachers"
+    android:layout_width="match_parent"
+    android:layout_height="80sp"
+    android:layout_marginTop="15sp"
+    android:onClick="startTeacherActivity"
+    android:text="@string/btnAdminTeachers" />
+
+<Button
+    android:id="@+id/btnEditTasks"
+    android:layout_width="match_parent"
+    android:layout_height="80sp"
+    android:layout_marginTop="15sp"
+    android:text="@string/btnAdminTasks" />
+
+<Button
+    android:id="@+id/btnGenReport"
+    android:layout_width="match_parent"
+    android:layout_height="80sp"
+    android:layout_marginTop="15sp"
+    android:text="@string/btnAdminReport" />
+</LinearLayout>

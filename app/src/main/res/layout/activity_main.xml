@@ -1,66 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.student.cooper_assign2.MainActivity">
 
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:layout_marginBottom="15sp"
+        tools:text="@string/txtMainTitle" />
+
+    <TextView
+        android:id="@+id/lblTeach"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/txtSelectTeacher"
+        android:textSize="20sp" />
+
     <Spinner
         android:id="@+id/spinTeachers"
         android:layout_width="match_parent"
         android:layout_height="50sp"
-        android:background="@android:color/background_light"
-        android:layout_above="@+id/spinStudent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="47dp" />
+        android:layout_marginBottom="15sp"
+        android:background="#0090ff" />
 
     <TextView
-        android:id="@+id/txtTitle"
-        android:layout_width="wrap_content"
+        android:id="@+id/lblStudent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="11dp"
-        android:text="Edit Students and Teachers"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        tools:text="@string/txtTitle" />
-
-    <Button
-        android:id="@+id/btnTeachers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="54dp"
-        android:layout_marginStart="54dp"
-        android:text="Teachers"
-        android:onClick="startTeacherActivity"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/txtTitle"
-        android:layout_alignStart="@+id/txtTitle"
-        android:layout_marginBottom="146dp" />
-
-    <Button
-        android:id="@+id/btnStudents"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/btnTeachers"
-        android:layout_marginLeft="62dp"
-        android:layout_marginStart="62dp"
-        android:layout_toEndOf="@+id/btnTeachers"
-        android:layout_toRightOf="@+id/btnTeachers"
-        android:text="Students"
-        android:onClick="startStudentActivity"/>
+        android:text="@string/txtSelectSelf"
+        android:textSize="20sp" />
 
     <Spinner
         android:id="@+id/spinStudent"
         android:layout_width="match_parent"
         android:layout_height="50sp"
-        android:background="@android:color/background_light"
-        android:layout_marginBottom="76dp"
-        android:layout_above="@+id/btnTeachers"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_marginBottom="15sp"
+        android:background="#0090ff" />
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/lblTask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/txtSelectTask"
+        android:textSize="20sp" />
+
+    <Spinner
+        android:id="@+id/spinTask"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:layout_marginBottom="10sp"
+        android:background="#0090ff" />
+
+    <Button
+        android:id="@+id/btnClockIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btnClockIn" />
+
+</LinearLayout>

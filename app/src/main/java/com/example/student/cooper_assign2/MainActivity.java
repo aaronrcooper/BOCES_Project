@@ -78,15 +78,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         teacherSpinner.setAdapter(teacherAdapter);
 
     }
-    //function to open the teacher activity
-    public void startTeacherActivity(View view){
-        startActivity(new Intent(MainActivity.this, TeacherListActivity.class));
-    }
-
-    //function to open the student activity
-    public void startStudentActivity(View view){
-        startActivity(new Intent(MainActivity.this, StudentListActivity.class));
-    }
     public void openTeacherActivity(View view)
     {
         startActivity(new Intent(MainActivity.this, TeacherListActivity.class));
