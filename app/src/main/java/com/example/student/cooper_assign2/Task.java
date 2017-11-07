@@ -6,9 +6,20 @@ package com.example.student.cooper_assign2;
 
 public class Task {
     private String taskName;
-    private String taskID;
+    private int taskID;
+    private String description;
 
 
+    public Task()
+    {
+
+    }
+    //overloaded constructor
+    public Task(String name, String descr)
+    {
+        taskName = name;
+        description = descr;
+    }
     public String getTaskName() {
         return taskName;
     }
@@ -17,11 +28,20 @@ public class Task {
         this.taskName = taskName;
     }
 
-    public String getTaskID() {
+
+    public int getTaskID() {
         return taskID;
     }
 
-    public void setTaskID(String taskID) {
+    public void setTaskID(int taskID) {
         this.taskID = taskID;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

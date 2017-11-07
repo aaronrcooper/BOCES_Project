@@ -20,11 +20,12 @@
         android:inputType="text" />
 
     <EditText
+        android:id="@+id/txtTaskDescr"
+        style="@style/Widget.AppCompat.EditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="top|start"
         android:hint="@string/txtTaskDescr"
-        style="@style/Widget.AppCompat.EditText"
         android:lines="8"
         android:maxLength="200"
         android:scrollbars="vertical" />
@@ -40,6 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight=".33"
+            android:onClick="addTask"
             android:text="@string/btnAddTask" />
 
         <Button
@@ -47,6 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight=".33"
+            android:onClick="removeTasks"
             android:text="@string/btnRemoveTask" />
 
         <Button
@@ -60,6 +63,7 @@
     </LinearLayout>
 
     <ListView
+        android:id="@+id/lstTasks"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

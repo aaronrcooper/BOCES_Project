@@ -25,6 +25,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "TeacherStudentDB";
     private static final String TEACHER_TABLE = "Teacher_Table";
     private static final String STUDENT_TABLE = "Student_Table";
+    private static final String TASK_TABLE = "Task_Table";
 
     //Define the column (fields) names for the Teacher table
     private static final String TEACHER_ID = "teacherID";
@@ -43,7 +44,10 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String YEAR = "year";
     private static final String STUDENT_IMAGE = "studentImage";
 
-
+    //Define fields for task table
+    private static final String TASK_ID = "taskID";
+    private static final String TASK_NAME = "taskName";
+    private static final String DESCRIPTION = "taskDescription";
 
 
     //CONSTRUCTOR
@@ -81,9 +85,17 @@ public class DBHelper extends SQLiteOpenHelper {
                 TEACHER_TABLE +  "(" + TEACHER_ID + ")" +
                 ")";
 
+        String taskTable = "CREATE TABLE " + TASK_TABLE +
+                "(" +
+                TASK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                TASK_NAME + " TEXT, " +
+                DESCRIPTION + " TEXT" +
+                ")";
+
         db.execSQL("PRAGMA foreign_keys=1;");
         db.execSQL(teacherTable);
         db.execSQL(studentTable);
+        db.execSQL(taskTable);
     }
 
 
@@ -92,6 +104,7 @@ public class DBHelper extends SQLiteOpenHelper {
         //Drop the older tables if they exists
         database.execSQL("DROP TABLE IF EXISTS " + TEACHER_TABLE);
         database.execSQL("DROP TABLE IF EXISTS " + STUDENT_TABLE);
+        database.execSQL("DROP TABLE IF EXISTS " + TASK_TABLE);
 
         //recreate the tables
         onCreate(database);
@@ -144,6 +157,23 @@ public class DBHelper extends SQLiteOpenHelper {
         db.insert(TEACHER_TABLE, null, values);
 
         //close the database connection
+        db.close();
+    }
+
+    //adding a new task
+    public void addTask(Task pTask)
+    {
+        //get a ref to database
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        //add teacher information to the database
+        values.put(TASK_NAME,pTask.getTaskName());
+        values.put(DESCRIPTION, pTask.getDescription());
+
+        db.insert(TASK_TABLE, null, values);
+
+        //close db connection
         db.close();
     }
 
@@ -231,6 +261,36 @@ public class DBHelper extends SQLiteOpenHelper {
         return students;
     }
 
+
+    //get all tasks
+    public List<Task> getAllTasks()
+    {
+
+        //create a list of tasks
+        List<Task> tasks = new ArrayList<Task>();
+        //select all query from the task table
+        String selectQuery = "SELECT * FROM " + TASK_TABLE;
+        //get a reference to the database
+        SQLiteDatabase db = this.getWritableDatabase();
+        //create cursor object to take data from database
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        //use cursor to move through rows and add the
+        //records to task objects then add tasks
+        //to the task list
+        if(cursor.moveToFirst()) {
+            do{
+                Task aTask = new Task();
+                aTask.setTaskID(cursor.getInt(0));
+                aTask.setTaskName(cursor.getString(1));
+                aTask.setDescription(cursor.getString(2));
+
+                tasks.add(aTask);
+            }while(cursor.moveToNext());
+        }
+
+        return tasks;
+    }
+
     //show all students whose teacher ID field matches the ID of the selected teacher
     public List<Student> getStudentsByTeacher(Teacher teacher)
     {
@@ -297,6 +357,20 @@ public class DBHelper extends SQLiteOpenHelper {
         db.delete(STUDENT_TABLE, null, new String[]{});
         //close the database connection
         db.close();
+    }
+
+    //remove all tasks
+    public void removeAllTasks(List<Task> tasks)
+    {
+        //clear the task list
+        tasks.clear();
+        //get ref to database
+        SQLiteDatabase db = this.getWritableDatabase();
+        //delete the task table
+        db.delete(TASK_TABLE, null, new String[]{});
+        //close the db connection
+        db.close();
+
     }
 
 

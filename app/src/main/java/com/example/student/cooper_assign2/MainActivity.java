@@ -22,9 +22,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     //get a reference to the spinner
     Spinner studentSpinner;
     Spinner teacherSpinner;
+    Spinner taskSpinner;
     DBHelper myDBHelper;
     ArrayAdapter<Teacher> teacherAdapter;
     ArrayAdapter<Student> studentAdapter;
+    ArrayAdapter<Task> taskAdapter;
     List<Student> studentList;
     List<Teacher> teacherList;
     Teacher currentTeacher;
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         teacherList = myDBHelper.getAllTeachers();
         studentSpinner = (Spinner)findViewById(R.id.spinStudent);
         teacherSpinner = (Spinner)findViewById(R.id.spinTeachers);
+        taskSpinner = (Spinner)findViewById(R.id.spinTask);
         //Sets the adapter for the teacher spinner
         teacherAdapter = new TeacherAdapter(getApplicationContext(), R.layout.spinner_item, teacherList);
         teacherAdapter.setDropDownViewResource(R.layout.spinner_item);
