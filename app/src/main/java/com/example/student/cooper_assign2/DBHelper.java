@@ -208,7 +208,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 teacher.setLastName(cursor.getString(2));
                 teacher.setEmail(cursor.getString(3));
                 teacher.setPhoneNum(cursor.getString(4));
-                teacher.setFullNameID();
                 teacher.setTeacherImage(cursor.getBlob(5));
                 //add the teacher object to the list
                 teachers.add(teacher);
@@ -378,13 +377,13 @@ public class DBHelper extends SQLiteOpenHelper {
     //takes a student id as a parameter
     //returns true if the student was successfully removed
     //returns false if the student was not successfully removed
-    public boolean removeStudent(int studentID)
+    public boolean removeStudent(Student aStudent)
     {
         //get a ref to the database
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        db.execSQL("DELETE FROM " + STUDENT_TABLE + " WHERE STUDENT_ID = " + studentID);
+        db.execSQL("DELETE FROM " + STUDENT_TABLE + " WHERE " + STUDENT_ID + " = " + aStudent.getStudentID());
 
         return true;
     }
@@ -392,13 +391,13 @@ public class DBHelper extends SQLiteOpenHelper {
     //delete a teacher
     //takes a teacher id as a parameter
     //returns true if the student was successfully removed
-    public boolean removeTeacher(int teacherID)
+    public boolean removeTeacher(Teacher aTeacher)
     {
         //get a ref to the database
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        db.execSQL("DELETE FROM " + TEACHER_TABLE + " WHERE TEACHER_ID = " + teacherID);
+        db.execSQL("DELETE FROM " + TEACHER_TABLE + " WHERE " + TEACHER_ID + " = " + aTeacher.getId());
 
         return true;
     }

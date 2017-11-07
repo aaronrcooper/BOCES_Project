@@ -14,6 +14,7 @@ public class Student {
     private int teacherID;
     private String year;
     private byte[] studentImage;
+    private boolean isDeletable;
 
     public  Student()
     {
@@ -27,6 +28,7 @@ public class Student {
         this.age = age;
         teacherID = teachID;
         this.year = year;
+        isDeletable = false;
     }
 
     public int getStudentID() {
@@ -83,5 +85,13 @@ public class Student {
 
     public void setStudentImage(byte[] studentImage) {
         this.studentImage = studentImage;
+    }
+
+    public boolean isDeletable() {
+        return isDeletable;
+    }
+
+    public void setDeletable(boolean deletable) {
+        isDeletable = deletable;
     }
 }

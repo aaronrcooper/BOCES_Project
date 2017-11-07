@@ -94,6 +94,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         {
             //Gets the selected teacher object
             currentTeacher = teacherAdapter.getItem(position);
+            studentList = myDBHelper.getStudentsByTeacher(currentTeacher);
+            //Sets the adapter to null (for garbage collection) and creates a new adapter for the new list
+            studentAdapter = null;
+            studentAdapter = new StudentAdapter(getApplicationContext(), R.layout.spinner_item, studentList);
+            studentAdapter.setDropDownViewResource(R.layout.spinner_item);
+            studentSpinner.setAdapter(studentAdapter);
         }
         else if (spinner.getId() == R.id.spinStudent)
         {

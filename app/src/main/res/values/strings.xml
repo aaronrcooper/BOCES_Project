@@ -9,7 +9,7 @@
     <string name="txtYear">Year</string>
     <string name="txtTeachId">Teacher ID</string>
     <string name="txtAddStudent">Add Student</string>
-    <string name="txtRemoveStudent">Remove Student</string>
+    <string name="txtRemoveStudent">Remove</string>
     <string name="txtRemoveAll">Remove All</string>
     <string name="txtEmail">Email</string>
     <string name="txtPhone">Phone Number</string>

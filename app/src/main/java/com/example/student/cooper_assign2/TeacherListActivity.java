@@ -59,7 +59,22 @@ public class TeacherListActivity extends AppCompatActivity {
     }
 
     //Clear a single teacher from the database
-    public void removeTeacher(View view){
+    public void removeTeacher(Teacher aTeacher){
+        myDBHelper.removeTeacher(aTeacher);
+        adapter.remove(aTeacher);
+        adapter.notifyDataSetChanged();
+    }
+
+    //removeCheckedTeachers
+    public void removeCheckedTeachers(View view)
+    {
+        for(Teacher aTeacher: teacherList)
+        {
+            if(aTeacher.isDeletable())
+            {
+                removeTeacher(aTeacher);
+            }
+        }
     }
 
 
@@ -120,29 +135,31 @@ public class TeacherListActivity extends AppCompatActivity {
 
         public View getView(int position, View convertView, ViewGroup parent)
         {
-            CheckBox isDoneChBx = null;
+            CheckBox deleteChBx = null;
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) context
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 convertView = inflater.inflate(R.layout.activity_list_item, parent, false);
-                isDoneChBx = (CheckBox) convertView.findViewById(R.id.chkListItem);
-                convertView.setTag(isDoneChBx);
-                isDoneChBx.setOnClickListener(new View.OnClickListener() {
+                deleteChBx = (CheckBox) convertView.findViewById(R.id.chkListItem);
+                convertView.setTag(deleteChBx);
+                //Checkbox listener anonymous inner class
+                //Deletes checked teachers and leaves unchecked teachers
+                deleteChBx.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         CheckBox cb = (CheckBox) view;
                         Teacher changeTeacher = (Teacher) cb.getTag();
-//                        changeTeacher.setIs_done(cb.isChecked() == true ? 1 : 0);
-//                        myDBHelper.updateTeacher(changeTeacher);
+                        changeTeacher.setDeletable(cb.isChecked() == true ? true : false);
                     }
                 });
-            } else {
-                isDoneChBx = (CheckBox) convertView.getTag();
+            }
+            else
+            {
+                deleteChBx = (CheckBox) convertView.getTag();
             }
             Teacher current = teacherList.get(position);
-            isDoneChBx.setText(current.getFirstName() + " " + current.getLastName() + " " + current.getId());
-//            isDoneChBx.setChecked(current.getIs_done() == 1 ? true : false);
-            isDoneChBx.setTag(current);
+            deleteChBx.setText(current.getFirstName() + " " + current.getLastName());
+            deleteChBx.setTag(current);
             return convertView;
         }
 //        public boolean onCreateOptionsMenu(Menu menu) {

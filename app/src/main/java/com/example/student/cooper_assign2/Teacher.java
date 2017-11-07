@@ -7,8 +7,8 @@ public class Teacher {
     private String lastName;
     private String email;
     private String phoneNum;
-    private String fullNameID;
     private byte[] teacherImage;
+    private boolean isDeletable;
 
     public Teacher()
     {
@@ -21,7 +21,7 @@ public class Teacher {
         lastName = ln;
         this.email = email;
         this.phoneNum = phoneNum;
-        setFullNameID();
+        isDeletable= false;
     }
 
     public int getId() {
@@ -63,8 +63,6 @@ public class Teacher {
     public void setPhoneNum(String phoneNum) {
         this.phoneNum = phoneNum;
     }
-    public void setFullNameID() { fullNameID = firstName + " " + lastName + "\t ID: " + teacherID;}
-    public String getFullNameID(){return fullNameID;}
 
     public byte[] getTeacherImage() {
         return teacherImage;
@@ -72,5 +70,13 @@ public class Teacher {
 
     public void setTeacherImage(byte[] teacherImage) {
         this.teacherImage = teacherImage;
+    }
+
+    public boolean isDeletable() {
+        return isDeletable;
+    }
+
+    public void setDeletable(boolean deletable) {
+        isDeletable = deletable;
     }
 }
