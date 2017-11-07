@@ -44,6 +44,8 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String STUDENT_IMAGE = "studentImage";
 
 
+
+
     //CONSTRUCTOR
     public DBHelper (Context context){
         super (context, DATABASE_NAME, null, DATABASE_VERSION);

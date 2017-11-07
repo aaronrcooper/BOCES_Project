@@ -11,9 +11,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.Filter;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -33,8 +30,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     Teacher currentTeacher;
     Student currentStudent;
 
-    //***********************************
-    ImageView test;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +41,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onResume(){
         super.onResume();
         //get list of students
-
-
-
         studentList = myDBHelper.getAllStudents();
         teacherList = myDBHelper.getAllTeachers();
         studentSpinner = (Spinner)findViewById(R.id.spinStudent);
@@ -78,12 +70,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         teacherSpinner.setAdapter(teacherAdapter);
 
     }
-    public void openTeacherActivity(View view)
+
+
+    //************CLICK EVENT HANDLERS*********************
+    //Clock in button
+    //TODO add clock in button functionality
+
+
+    //Admin button
+    //checks teacher id and takes teacher to admin view
+    public void startAdminView(View view)
     {
-        startActivity(new Intent(MainActivity.this, TeacherListActivity.class));
-    }
-    public void openStudentActivity(View view) {
-        startActivity(new Intent(MainActivity.this, StudentListActivity.class));
+        startActivity(new Intent(MainActivity.this, AdminView.class));
     }
 
     @Override

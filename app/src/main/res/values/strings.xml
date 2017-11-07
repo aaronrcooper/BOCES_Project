@@ -24,4 +24,10 @@
     <string name="txtSelectTask">Select the task you will be completing: </string>
     <string name="btnClockIn">Clock in</string>
     <string name="btnAdminReport">Generate Report</string>
+    <string name="txtTaskName">Task Name</string>
+    <string name="txtTaskDescr">Task Description \n200 character limit</string>
+    <string name="btnAdminLog">Admin Login</string>
+    <string name="btnAddTask">Add Task</string>
+    <string name="btnRemoveTask">Remove Task</string>
+    <string name="btnEditTask">Edit Task</string>
 </resources>

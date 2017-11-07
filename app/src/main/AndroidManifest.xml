@@ -16,14 +16,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".listItem"></activity>
+        <activity android:name=".listItem" />
         <activity
             android:name=".TeacherListActivity"
             android:windowSoftInputMode="stateVisible|adjustNothing" />
         <activity
             android:name=".StudentListActivity"
             android:windowSoftInputMode="stateVisible|adjustNothing" />
-        <activity android:name=".AdminView"></activity>
+        <activity android:name=".AdminView" />
+        <activity android:name=".TaskListActivity"></activity>
     </application>
 
 </manifest>

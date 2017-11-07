@@ -36,6 +36,7 @@ tools:context="com.example.student.cooper_assign2.AdminView">
     android:layout_width="match_parent"
     android:layout_height="80sp"
     android:layout_marginTop="15sp"
+    android:onClick="startTaskActivity"
     android:text="@string/btnAdminTasks" />
 
 <Button

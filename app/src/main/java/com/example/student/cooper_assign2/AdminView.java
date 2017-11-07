@@ -22,4 +22,9 @@ public class AdminView extends AppCompatActivity {
     public void startStudentActivity(View view){
         startActivity(new Intent(AdminView.this, StudentListActivity.class));
     }
+
+    //function to open the task activity
+    public  void startTaskActivity(View view){
+        startActivity(new Intent(AdminView.this, TaskListActivity.class));
+    }
 }
