@@ -29,8 +29,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     ArrayAdapter<Task> taskAdapter;
     List<Student> studentList;
     List<Teacher> teacherList;
+    List<Task> taskList;
     Teacher currentTeacher;
     Student currentStudent;
+    Task currentTask;
 
 
     @Override
@@ -42,9 +44,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     protected void onResume(){
         super.onResume();
-        //get list of students
+        //get list of students, teachers, and tasks
         studentList = myDBHelper.getAllStudents();
         teacherList = myDBHelper.getAllTeachers();
+        taskList = myDBHelper.getAllTasks();
+        //get references to all spinners
         studentSpinner = (Spinner)findViewById(R.id.spinStudent);
         teacherSpinner = (Spinner)findViewById(R.id.spinTeachers);
         taskSpinner = (Spinner)findViewById(R.id.spinTask);
@@ -58,7 +62,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         studentAdapter.setDropDownViewResource(R.layout.spinner_item);
         studentSpinner.setAdapter(studentAdapter);
         studentSpinner.setOnItemSelectedListener(this);
-
+        //sets the adapter for the task spinner
+        taskAdapter = new TaskAdapter(getApplicationContext(), R.layout.spinner_item, taskList);
+        taskAdapter.setDropDownViewResource(R.layout.spinner_item);
+        taskSpinner.setAdapter(taskAdapter);
+        taskSpinner.setOnItemSelectedListener(this);
 
 
         List<String> teacherNames = new ArrayList<String>();
@@ -214,6 +222,62 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         public Teacher getPosition(int position)
         {
             return teacherList.get(position);
+        }
+    }
+
+
+
+    //**************TASK ADAPTER*********************************
+    private class TaskAdapter extends ArrayAdapter<Task> {
+        Context context;
+        List<Task> taskList = new ArrayList<Task>();
+
+        //Constructor
+        public TaskAdapter(Context c, int rId, List<Task> objects)
+        {
+            super(c, rId, objects);
+            taskList = objects;
+            context = c;
+        }
+
+        public View getView(int position, View convertView, ViewGroup parent){
+            TextView task = null;
+            if(convertView == null){
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.spinner_item, parent, false);
+                task = (TextView) convertView.findViewById(R.id.spinnerItem);
+                convertView.setTag(task);
+            }
+            else
+            {
+                task = (TextView) convertView.getTag();
+            }
+            Task current = taskList.get(position);
+            task.setText(current.getTaskName() + " " + current.getDescription());
+            task.setTag(current);
+            return convertView;
+        }
+
+        public View getDropDownView(int position, View convertView, ViewGroup parent)
+        {
+            TextView view = null;
+            if(convertView == null){
+                LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.spinner_item, parent, false);
+                view = (TextView) convertView.findViewById(R.id.spinnerItem);
+                convertView.setTag(view);
+            }
+            else
+            {
+                view = (TextView) convertView.getTag();
+            }
+            view.setText(taskList.get(position).getTaskName() + " " + taskList.get(position).getDescription());
+            view.setHeight(60);
+            return view;
+        }
+        public Task getPosition(int position)
+        {
+            return taskList.get(position);
         }
     }
 }

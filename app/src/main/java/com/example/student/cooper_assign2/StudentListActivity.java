@@ -64,7 +64,7 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
         super.onResume();
         studentsList = myDBHelper.getAllStudents();
         teacherList = myDBHelper.getAllTeachers();
-        //Instantiated an studentAdapter
+        //Instantiated a studentAdapter
         studentAdapter = new StudentAdapter(this, R.layout.activity_list_item, studentsList);
         ListView listStudents = (ListView) findViewById(R.id.lstStudentsView);
         listStudents.setAdapter(studentAdapter);
@@ -107,9 +107,6 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
             //create a student object with the correct attributes
             Student aStudent = new Student(firstName, lastName, Integer.parseInt(age), teacherId, year);
 
-
-
-
             //add the student to the database
             myDBHelper.addStudent(aStudent);
             //add the student to the list
@@ -130,12 +127,12 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
     //Button click handler for remove student
     //gets the student id from the selected item in the list view and
     //passes that id into remove student in dbhelper
-    public void removeStudent(Student aStudent)
+    /*public void removeStudent(Student aStudent)
     {
         myDBHelper.removeStudent(aStudent);
         studentAdapter.remove(aStudent);
         studentAdapter.notifyDataSetChanged();
-    }
+    }*/
 
     //removeCheckedStudents
     //removes all checked students from the database
@@ -144,9 +141,12 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
         for(Student aStudent: studentsList)
         {
             if(aStudent.isDeletable()) {
-                removeStudent(aStudent);
+                myDBHelper.removeStudent(aStudent);
+                studentAdapter.remove(aStudent);
             }
         }
+
+        studentAdapter.notifyDataSetChanged();
     }
 
 

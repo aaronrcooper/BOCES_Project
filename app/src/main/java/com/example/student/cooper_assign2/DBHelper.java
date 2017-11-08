@@ -381,10 +381,11 @@ public class DBHelper extends SQLiteOpenHelper {
     {
         //get a ref to the database
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
+        //ContentValues values = new ContentValues();
 
         db.execSQL("DELETE FROM " + STUDENT_TABLE + " WHERE " + STUDENT_ID + " = " + aStudent.getStudentID());
 
+        db.close();
         return true;
     }
 
@@ -398,7 +399,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         db.execSQL("DELETE FROM " + TEACHER_TABLE + " WHERE " + TEACHER_ID + " = " + aTeacher.getId());
-
+        db.close();
         return true;
     }
 }

@@ -1,26 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.student.cooper_assign2.TeacherListActivity">
 
-    <ListView
-        android:id="@+id/lstTeachersView"
-        android:layout_width="0dp"
-        android:layout_height="228dp"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        android:layout_marginStart="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginEnd="5dp"
-        app:layout_constraintRight_toRightOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp" />
+
 
     <EditText
         android:id="@+id/txtFirstName"
@@ -28,29 +14,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:ems="10"
+        android:layout_gravity="center"
         android:hint="@string/txtFirstName"
-        android:inputType="textPersonName"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
-
-    <EditText
-        android:id="@+id/txtEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/txtEmail"
-        android:inputType="textEmailAddress"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/txtLastName"
-        app:layout_constraintRight_toRightOf="@+id/txtLastName"
-        app:layout_constraintTop_toBottomOf="@+id/txtLastName"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/txtLastName"
@@ -58,68 +24,60 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/txtLastName"
-        android:inputType="textPersonName"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/txtFirstName"
-        app:layout_constraintRight_toRightOf="@+id/txtFirstName"
-        app:layout_constraintTop_toBottomOf="@+id/txtFirstName"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
+        android:layout_gravity="center"
+        android:inputType="textPersonName"/>
+
+    <EditText
+        android:id="@+id/txtEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/txtEmail"
+        android:layout_gravity="center"
+        android:inputType="textEmailAddress" />
 
     <EditText
         android:id="@+id/txtPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:layout_gravity="center"
         android:hint="@string/txtPhone"
-        android:inputType="phone"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/txtEmail"
-        app:layout_constraintRight_toRightOf="@+id/txtEmail"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmail"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
+        android:inputType="phone" />
 
-    <Button
-        android:id="@+id/btnAddTeacher"
-        android:layout_width="104dp"
-        android:layout_height="53dp"
-        android:onClick="addTeacher"
-        android:text="@string/txtAddTeacher"
-        app:layout_constraintBaseline_toBaselineOf="@+id/btnRemoveTeacher"
-        app:layout_constraintRight_toLeftOf="@+id/btnRemoveTeacher"
-        tools:layout_constraintBaseline_creator="1"
-        tools:layout_constraintRight_creator="1" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="15sp">
+            <Button
+                android:id="@+id/btnAddTeacher"
+                android:layout_width="104dp"
+                android:layout_height="53dp"
+                android:layout_weight=".33"
+                android:onClick="addTeacher"
+                android:text="@string/txtAddTeacher" />
 
-    <Button
-        android:id="@+id/btnRemoveTeacher"
-        android:layout_width="104dp"
-        android:layout_height="53dp"
-        android:layout_marginBottom="35dp"
-        android:layout_marginTop="43dp"
-        android:text="@string/txtRemoveTeacher"
-        android:onClick="removeCheckedTeachers"
-        app:layout_constraintBottom_toTopOf="@+id/lstTeachersView"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txtPhone"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1" />
-        <!--android:onClick="removeTeacher"-->
+        <Button
+            android:id="@+id/btnRemoveTeacher"
+            android:layout_width="104dp"
+            android:layout_height="53dp"
+            android:layout_weight=".33"
+            android:onClick="removeCheckedTeachers"
+            android:text="@string/txtRemoveStudent" />
 
-    <Button
-        android:id="@+id/btnRemoveAll"
-        android:layout_width="104dp"
-        android:layout_height="53dp"
-        android:onClick="removeAllTeachers"
-        android:text="@string/txtRemoveAll"
-        app:layout_constraintBaseline_toBaselineOf="@+id/btnRemoveTeacher"
-        app:layout_constraintLeft_toRightOf="@+id/btnRemoveTeacher"
-        tools:layout_constraintBaseline_creator="1"
-        tools:layout_constraintLeft_creator="1" />
+            <Button
+                android:id="@+id/btnRemoveAll"
+                android:layout_width="104dp"
+                android:layout_height="53dp"
+                android:layout_weight=".33"
+                android:onClick="removeAllTeachers"
+                android:text="@string/txtRemoveAll" />
 
-</android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+    <ListView
+        android:id="@+id/lstTeachersView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
