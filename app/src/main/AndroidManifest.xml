@@ -24,7 +24,8 @@
             android:name=".StudentListActivity"
             android:windowSoftInputMode="stateVisible|adjustNothing" />
         <activity android:name=".AdminView" />
-        <activity android:name=".TaskListActivity"></activity>
+        <activity android:name=".TaskListActivity" />
+        <activity android:name=".ClockedInActivity"></activity>
     </application>
 
 </manifest>

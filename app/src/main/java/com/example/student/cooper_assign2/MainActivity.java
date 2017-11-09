@@ -84,15 +84,23 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
     //************CLICK EVENT HANDLERS*********************
-    //Clock in button
-    //TODO add clock in button functionality
-
-
     //Admin button
     //checks teacher id and takes teacher to admin view
     public void startAdminView(View view)
     {
         startActivity(new Intent(MainActivity.this, AdminView.class));
+    }
+
+    //Clock in Button
+    //TODO make this package the student name and task to clock the student in
+    //Takes the student to the clocked in activity
+    public void startClockedInView(View view)
+    {
+        Intent myIntent = new Intent(MainActivity.this, ClockedInActivity.class);
+        myIntent.putExtra("student", currentStudent);
+        myIntent.putExtra("task", currentTask);
+        startActivity(myIntent);
+
     }
 
     @Override
@@ -112,6 +120,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         else if (spinner.getId() == R.id.spinStudent)
         {
             currentStudent = studentAdapter.getItem(position);
+        }
+        else if(spinner.getId() == R.id.spinTask)
+        {
+            currentTask = taskAdapter.getItem(position);
         }
     }
 

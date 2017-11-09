@@ -22,7 +22,7 @@
     <string name="txtSelectTeacher">Select your teacher: </string>
     <string name="txtSelectSelf">Select yourself: </string>
     <string name="txtSelectTask">Select the task you will be completing: </string>
-    <string name="btnClockIn">Clock in</string>
+    <string name="btnClockIn">Clock In</string>
     <string name="btnAdminReport">Generate Report</string>
     <string name="txtTaskName">Task Name</string>
     <string name="txtTaskDescr">Task Description \n200 character limit</string>
@@ -30,4 +30,8 @@
     <string name="btnAddTask">Add Task</string>
     <string name="btnRemoveTask">Remove Task</string>
     <string name="btnEditTask">Edit Task</string>
+    <string name="txtClockedInTitle">You are currently clocked in</string>
+    <string name="lblTimerDefault">00:00:00</string>
+    <string name="lblTimerLabel">Time spent on current task:</string>
+    <string name="btnClockOut">Clock Out</string>
 </resources>
