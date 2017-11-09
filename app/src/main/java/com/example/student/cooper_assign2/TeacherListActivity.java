@@ -59,11 +59,11 @@ public class TeacherListActivity extends AppCompatActivity {
     }
 
     //Clear a single teacher from the database
-    public void removeTeacher(Teacher aTeacher){
+    /*public void removeTeacher(Teacher aTeacher){
         myDBHelper.removeTeacher(aTeacher);
         adapter.remove(aTeacher);
         adapter.notifyDataSetChanged();
-    }
+    }*/
 
     //removeCheckedTeachers
     public void removeCheckedTeachers(View view)
@@ -72,9 +72,18 @@ public class TeacherListActivity extends AppCompatActivity {
         {
             if(aTeacher.isDeletable())
             {
-                removeTeacher(aTeacher);
+                myDBHelper.removeTeacher(aTeacher);
+                //adapter.remove(aTeacher);
+                //
+                teacherList = myDBHelper.getAllTeachers();
             }
         }
+        //Instantiated an adapter
+        adapter = new MyAdapter(this, R.layout.activity_list_item, teacherList);
+        ListView listTeachers = (ListView) findViewById(R.id.lstTeachersView);
+        listTeachers.setAdapter(adapter);
+        //adapter.notifyDataSetChanged();
+
     }
 
 
@@ -111,6 +120,7 @@ public class TeacherListActivity extends AppCompatActivity {
             //update listview of teachers
             adapter.add(aTeacher);
             adapter.notifyDataSetChanged();
+            onResume();
             //Toast to let user know that Teacher was added successfully
             Toast.makeText(getApplicationContext(), "Teacher successfully added.", Toast.LENGTH_SHORT).show();
             //clear all fields

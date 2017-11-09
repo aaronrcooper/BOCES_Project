@@ -39,10 +39,10 @@ tools:context="com.example.student.cooper_assign2.AdminView">
     android:onClick="startTaskActivity"
     android:text="@string/btnAdminTasks" />
 
-<Button
-    android:id="@+id/btnGenReport"
-    android:layout_width="match_parent"
-    android:layout_height="80sp"
-    android:layout_marginTop="15sp"
-    android:text="@string/btnAdminReport" />
+    <Button
+        android:id="@+id/btnGenReport"
+        android:layout_width="match_parent"
+        android:layout_height="80sp"
+        android:layout_marginTop="15sp"
+        android:text="@string/btnAdminReport" />
 </LinearLayout>

@@ -113,6 +113,7 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
             studentAdapter.add(aStudent);
             //update the listview
             studentAdapter.notifyDataSetChanged();
+            onResume();
             //Toast to let user know that Student was added successfully
             Toast.makeText(getApplicationContext(), "Student successfully added.", Toast.LENGTH_SHORT).show();
             //clear all fields
@@ -141,12 +142,19 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
         for(Student aStudent: studentsList)
         {
             if(aStudent.isDeletable()) {
+                //myDBHelper.removeStudent(aStudent);
+                //studentAdapter.remove(aStudent);
                 myDBHelper.removeStudent(aStudent);
-                studentAdapter.remove(aStudent);
+                //adapter.remove(aTeacher);
+                //
+                studentsList = myDBHelper.getAllStudents();
+                //Instantiated an adapter
+                studentAdapter = new StudentAdapter(this, R.layout.activity_list_item, studentsList);
+                ListView listTeachers = (ListView) findViewById(R.id.lstStudentsView);
+                listTeachers.setAdapter(studentAdapter);
+                studentAdapter.notifyDataSetChanged();
             }
         }
-
-        studentAdapter.notifyDataSetChanged();
     }
 
 
