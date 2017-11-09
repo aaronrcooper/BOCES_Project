@@ -1,3 +1,5 @@
+//Author: Chris Frye
+//Date modified: 11/8/2017
 package com.example.student.cooper_assign2;
 
 import android.os.SystemClock;
@@ -23,6 +25,7 @@ public class ClockedInActivity extends AppCompatActivity {
     TextView lblTimer;
     TextView lblWelcome;
     TextView lblCurrentTask;
+    TextView lblTaskDescr;
     final int TIMER_DELAY = 1000;
     Student currentStudent;
     Task currentTask;
@@ -39,9 +42,15 @@ public class ClockedInActivity extends AppCompatActivity {
         //get a reference to the timer label
         lblTimer = (TextView)findViewById(R.id.lblTimer);
         lblWelcome = (TextView)findViewById(R.id.lblWelcome);
+        lblTaskDescr = (TextView)findViewById(R.id.lblTaskDescription);
+        //display a welcome message to the user
         lblWelcome.setText("Welcome " + currentStudent.getFirstName() + " " + currentStudent.getLastName());
+
+        //get a reference to the current task label and display the
+        //current task
         lblCurrentTask = (TextView)findViewById(R.id.lblCurrentTask);
         lblCurrentTask.setText("Current Task: " + currentTask.getTaskName());
+        lblTaskDescr.setText("Task Description: \n" + currentTask.getDescription());
         //get the starting time
         startingTime = SystemClock.uptimeMillis();
 

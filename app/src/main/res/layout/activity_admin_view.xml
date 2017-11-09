@@ -15,21 +15,21 @@ tools:context="com.example.student.cooper_assign2.AdminView">
     android:text="@string/txtEditTitle" />
 
 <Button
-    android:id="@+id/btnEditStudents"
-    android:layout_width="match_parent"
-    android:layout_height="80sp"
-    android:layout_marginTop="15sp"
-    android:elevation="0dp"
-    android:onClick="startStudentActivity"
-    android:text="@string/btnAdminStudents" />
-
-<Button
     android:id="@+id/btnEditTeachers"
     android:layout_width="match_parent"
     android:layout_height="80sp"
     android:layout_marginTop="15sp"
     android:onClick="startTeacherActivity"
     android:text="@string/btnAdminTeachers" />
+
+<Button
+    android:id="@+id/btnEditStudents"
+    android:layout_width="match_parent"
+    android:layout_height="80sp"
+    android:layout_marginTop="15sp"
+    android:onClick="startStudentActivity"
+    android:text="@string/btnAdminStudents" />
+
 
 <Button
     android:id="@+id/btnEditTasks"
