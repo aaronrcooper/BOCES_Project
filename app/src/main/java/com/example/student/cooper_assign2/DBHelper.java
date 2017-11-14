@@ -19,13 +19,15 @@ import java.util.List;
 public class DBHelper extends SQLiteOpenHelper {
 
     //constant to hold the database verson
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 9;
     //Name of database and two tables it contains
-    //Table for teachers and table for students
+
+    //Table strings
     private static final String DATABASE_NAME = "TeacherStudentDB";
     private static final String TEACHER_TABLE = "Teacher_Table";
     private static final String STUDENT_TABLE = "Student_Table";
     private static final String TASK_TABLE = "Task_Table";
+    private static final String COMPLETED_TASK_TABLE = "Completed_Task";
 
     //Define the column (fields) names for the Teacher table
     private static final String TEACHER_ID = "teacherID";
@@ -48,6 +50,12 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String TASK_ID = "taskID";
     private static final String TASK_NAME = "taskName";
     private static final String DESCRIPTION = "taskDescription";
+
+    //Define fields for CompletedTask table
+    //Needs studentID, taskID, TimeStarted, TimeCompleted
+    private static final String TIME_STARTED = "timeStarted";
+    private static final String TIME_COMPLETED = "timeCompleted";
+
 
 
     //CONSTRUCTOR
@@ -91,11 +99,15 @@ public class DBHelper extends SQLiteOpenHelper {
                 TASK_NAME + " TEXT, " +
                 DESCRIPTION + " TEXT" +
                 ")";
-
+        //TODO Create way to add completed tasks to Database
+        String completedTaskTable = String.format("CREATE TABLE %S(%S INTEGER, %S INTEGER, " +
+                "%S DATE, %S DATE, PRIMARY KEY(%S, %S, %S, %S))",
+                COMPLETED_TASK_TABLE, STUDENT_ID, TASK_ID, TIME_STARTED, TIME_COMPLETED, STUDENT_ID, TASK_ID, TIME_STARTED, TIME_COMPLETED);
         db.execSQL("PRAGMA foreign_keys=1;");
         db.execSQL(teacherTable);
         db.execSQL(studentTable);
         db.execSQL(taskTable);
+        db.execSQL(completedTaskTable);
     }
 
 

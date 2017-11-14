@@ -92,7 +92,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     //Clock in Button
-    //TODO make this package the student name and task to clock the student in
     //Takes the student to the clocked in activity
     public void startClockedInView(View view)
     {
