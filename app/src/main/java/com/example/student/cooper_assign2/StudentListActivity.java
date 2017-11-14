@@ -125,15 +125,6 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
         }
     }
 
-    //Button click handler for remove student
-    //gets the student id from the selected item in the list view and
-    //passes that id into remove student in dbhelper
-    /*public void removeStudent(Student aStudent)
-    {
-        myDBHelper.removeStudent(aStudent);
-        studentAdapter.remove(aStudent);
-        studentAdapter.notifyDataSetChanged();
-    }*/
 
     //removeCheckedStudents
     //removes all checked students from the database
@@ -157,6 +148,8 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
         }
     }
 
+    //openCamera
+    //on click for
 
 
 
@@ -197,6 +190,10 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
                         CheckBox cb = (CheckBox) view;
                         Student studentToDelete = (Student) cb.getTag();
                         studentToDelete.setDeletable(cb.isChecked() == true ? true : false);
+                        txtFirstName.setText(studentToDelete.getFirstName());
+                        txtLastName.setText(studentToDelete.getLastName());
+                        txtAge.setText(Integer.toString(studentToDelete.getAge()));
+                        txtYear.setText(studentToDelete.getYear());
                     }
                 });
             } else {

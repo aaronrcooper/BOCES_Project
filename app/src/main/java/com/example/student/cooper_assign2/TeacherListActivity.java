@@ -160,6 +160,10 @@ public class TeacherListActivity extends AppCompatActivity {
                         CheckBox cb = (CheckBox) view;
                         Teacher changeTeacher = (Teacher) cb.getTag();
                         changeTeacher.setDeletable(cb.isChecked() == true ? true : false);
+                        txtFirstName.setText(changeTeacher.getFirstName());
+                        txtLastName.setText(changeTeacher.getLastName());
+                        txtPhone.setText(changeTeacher.getPhoneNum());
+                        txtEmail.setText(changeTeacher.getEmail());
                     }
                 });
             }

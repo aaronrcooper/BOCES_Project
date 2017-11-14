@@ -34,4 +34,5 @@
     <string name="lblTimerDefault">00:00:00</string>
     <string name="lblTimerLabel">Time spent on current task:</string>
     <string name="btnClockOut">Clock Out</string>
+    <string name="btnAddImage">Add Image</string>
 </resources>

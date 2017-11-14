@@ -6,6 +6,30 @@
     android:layout_height="match_parent"
     tools:context="com.example.student.cooper_assign2.StudentListActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="75sp"
+        android:orientation="horizontal"
+        android:weightSum="1">
+        <View
+            android:layout_width="0sp"
+            android:layout_height="0sp"
+            android:layout_weight=".6" />
+
+        <ImageView
+            android:layout_width="100sp"
+            android:layout_height="75sp"
+            android:layout_gravity="center" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="50sp"
+            android:layout_height="54dp"
+            android:layout_gravity="right"
+            android:background="@mipmap/camerabtn"
+            android:gravity="center_vertical" />
+    </LinearLayout>
+
     <EditText
         android:id="@+id/txtFirstName"
         android:layout_width="220sp"
@@ -93,7 +117,7 @@
     <ListView
         android:id="@+id/lstStudentsView"
         android:layout_width="377dp"
-        android:layout_height="196dp"
+        android:layout_height="110dp"
         android:layout_marginBottom="0dp"
         android:layout_marginEnd="2dp"
         android:layout_marginLeft="2dp"
