@@ -29,6 +29,14 @@ public class ClockedInActivity extends AppCompatActivity {
     final int TIMER_DELAY = 1000;
     Student currentStudent;
     Task currentTask;
+    Calendar cal;
+    //Datebase variables
+    SimpleDateFormat timeFormat;
+    SimpleDateFormat dateFormat;
+    String startTime;
+    String finishTime;
+    String date;
+    String timeSpentOnTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +61,35 @@ public class ClockedInActivity extends AppCompatActivity {
         lblTaskDescr.setText("Task Description: \n" + currentTask.getDescription());
         //get the starting time
         startingTime = SystemClock.uptimeMillis();
-
+        //Set up string formatting in order to pass in data to database
+        cal = Calendar.getInstance();
+        timeFormat = new SimpleDateFormat("HH:mm:ss");
+        dateFormat = new SimpleDateFormat("MM/dd/YYYY");
+        date = dateFormat.format(cal.getTime());
+        final String calStart = timeFormat.format(cal.getTime());
+        startTime = calStart;
         //instantiate the timer and timer task
         //start the timer
         timer = new Timer();
         timerTask = new MyTimerTask();
         timer.schedule(timerTask,TIMER_DELAY, TIMER_DELAY);
     }
+
+    //ClockOut method
+    public void clockOut(View v)
+    {
+        cal = null;
+        cal = Calendar.getInstance();
+        //Cancels the timer if it already exists
+        if (timer != null)
+        {
+            timer.cancel();
+            timer = null;
+        }
+        final String calFinish = timeFormat.format(cal.getTime());
+        finishTime = calFinish;
+    }
+
     private class MyTimerTask extends TimerTask{
 
         @Override
@@ -68,9 +98,9 @@ public class ClockedInActivity extends AppCompatActivity {
             currentTime = SystemClock.uptimeMillis();
             //calc the elapsed milliseconds, seconds, mins and hours
             long elapsedMs = currentTime - startingTime;
-            final int seconds = (int) (elapsedMs /1000);
-            final int minutes = (int) (seconds /60);
-            final int hours = (int) (minutes / 60);
+            final int seconds = (int) ((elapsedMs /1000)%60);
+            final int minutes = (int) (elapsedMs /60000);
+            final int hours = (int) (elapsedMs / 360000);
             //display the time to the user
 
             runOnUiThread(new Runnable() {

@@ -12,15 +12,17 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    //constant to hold the database verson
+    //constant to hold the database version
     private static final int DATABASE_VERSION = 9;
-    //Name of database and two tables it contains
+    //Name of database and tables it contains
 
     //Table strings
     private static final String DATABASE_NAME = "TeacherStudentDB";
@@ -53,8 +55,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     //Define fields for CompletedTask table
     //Needs studentID, taskID, TimeStarted, TimeCompleted
-    private static final String TIME_STARTED = "timeStarted";
-    private static final String TIME_COMPLETED = "timeCompleted";
+    private static final String TIME_STARTED = "time_Started";
+    private static final String TIME_COMPLETED = "time_Completed";
+    private static final String DATE_COMPLETED = "date_Completed";
 
 
 
@@ -101,8 +104,9 @@ public class DBHelper extends SQLiteOpenHelper {
                 ")";
         //TODO Create way to add completed tasks to Database
         String completedTaskTable = String.format("CREATE TABLE %S(%S INTEGER, %S INTEGER, " +
-                "%S DATE, %S DATE, PRIMARY KEY(%S, %S, %S, %S))",
-                COMPLETED_TASK_TABLE, STUDENT_ID, TASK_ID, TIME_STARTED, TIME_COMPLETED, STUDENT_ID, TASK_ID, TIME_STARTED, TIME_COMPLETED);
+                "%S DATE, %S DATE, %S DATE, PRIMARY KEY(%S, %S, %S, %S, %S))",
+                COMPLETED_TASK_TABLE, STUDENT_ID, TASK_ID, TIME_STARTED, TIME_COMPLETED, DATE_COMPLETED,
+                STUDENT_ID, TASK_ID, TIME_STARTED, TIME_COMPLETED, DATE_COMPLETED);
         db.execSQL("PRAGMA foreign_keys=1;");
         db.execSQL(teacherTable);
         db.execSQL(studentTable);
@@ -143,6 +147,30 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(YEAR, pStudent.getYear());//add year
         values.put(S_TEACHER_ID, pStudent.getTeacherID());//add teacher id
         values.put(STUDENT_IMAGE, pStudent.getStudentImage());
+        //insert the row in the table
+
+        long row_id = db.insert(STUDENT_TABLE, null, values);
+
+        //close the database connection
+        db.close();
+    }
+
+    //adding a new student
+    //columns: studentID, taskID, timeStarted, timeCompleted, dateCompleted
+    public void addCompletedTask(Student pStudent, Task aTask, String start, String finish, String date)
+    {
+
+        //get a ref to the database
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        //add student information to the database
+        values.put(STUDENT_ID, pStudent.getStudentID());    //add studentID
+        values.put(TASK_ID, aTask.getTaskID());     //add taskID
+        values.put(TIME_STARTED, start);    //add start time
+        values.put(TIME_COMPLETED, finish); //add finish time
+        values.put(DATE_COMPLETED, date);   //add date
+
         //insert the row in the table
 
         long row_id = db.insert(STUDENT_TABLE, null, values);
