@@ -17,17 +17,19 @@
             android:layout_weight=".6" />
 
         <ImageView
+            android:id="@+id/studentImage"
             android:layout_width="100sp"
             android:layout_height="75sp"
             android:layout_gravity="center" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btnAddPicture"
             android:layout_width="50sp"
             android:layout_height="54dp"
             android:layout_gravity="right"
             android:background="@mipmap/camerabtn"
-            android:gravity="center_vertical" />
+            android:gravity="center_vertical"
+            android:onClick="getImage"/>
     </LinearLayout>
 
     <EditText

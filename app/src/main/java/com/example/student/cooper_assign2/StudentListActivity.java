@@ -1,7 +1,14 @@
 package com.example.student.cooper_assign2;
 //https://stackoverflow.com/questions/2478517/how-to-display-a-yes-no-dialog-box-on-android
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,13 +18,17 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.R.attr.data;
 
 public class StudentListActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     //Global variables
@@ -37,7 +48,11 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
     ListView lstStudents;
     //Spinner
     Spinner teacherListSpinner;
+    //ImageView
+    ImageView imgStudentImage;
     List<Teacher> teacherList;
+    Bitmap studentImage = null;
+    public static final int PICK_IMAGE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +70,7 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
         //ListView
         lstStudents = (ListView)findViewById(R.id.lstStudentsView);
         teacherListSpinner.setOnItemSelectedListener(this);
+        imgStudentImage = (ImageView)findViewById(R.id.studentImage);
 
     }
 
@@ -102,11 +118,17 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
             //Toast that displays error if all fields are not entered
             Toast.makeText(getApplicationContext(), "All fields must be filled in.", Toast.LENGTH_SHORT).show();
         }
+        else if(studentImage == null)
+        {
+            Toast.makeText(getApplicationContext(), "An image must be selected for the student", Toast.LENGTH_SHORT).show();
+        }
         else
         {
             //create a student object with the correct attributes
             Student aStudent = new Student(firstName, lastName, Integer.parseInt(age), teacherId, year);
-
+            //convert student image to a byte array and add to student object
+            byte[] imageToStore = ImageUtils.getBytes(studentImage);
+            aStudent.setStudentImage(imageToStore);
             //add the student to the database
             myDBHelper.addStudent(aStudent);
             //add the student to the list
@@ -116,6 +138,7 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
             onResume();
             //Toast to let user know that Student was added successfully
             Toast.makeText(getApplicationContext(), "Student successfully added.", Toast.LENGTH_SHORT).show();
+            studentImage = null;
             //clear all fields
             txtFirstName.setText("");
             txtLastName.setText("");
@@ -148,9 +171,40 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
         }
     }
 
-    //openCamera
-    //on click for
+    //addPicture
+    //opens a the gallery and allows a photo to be selected
+    //adds the photo to the database for the selected student
+    public void getImage(View view)
+    {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
 
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode,resultCode, data);
+        //get the results from the image chooser activity
+        if(requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
+
+            if (requestCode == PICK_IMAGE) {
+                if (data == null) {//ensure data is not null
+                    Toast.makeText(getApplicationContext(), "No photo was selected.", Toast.LENGTH_SHORT).show();
+                } else {
+                    //get returned data and convert it to a bitmap
+                    Uri imageUri = data.getData();
+                    Bitmap image = ImageUtils.decodeUriToBitmap(this.getApplicationContext(), imageUri);
+                    //toast to show image was successfully loaded
+                    Toast.makeText(getApplicationContext(), "Photo loaded successfully", Toast.LENGTH_SHORT).show();
+                    imgStudentImage.setImageBitmap(image);
+                    //store the image in current student image
+                    studentImage = image;
+                }
+            }
+        }
+    }
 
 
     @Override
@@ -194,6 +248,7 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
                         txtLastName.setText(studentToDelete.getLastName());
                         txtAge.setText(Integer.toString(studentToDelete.getAge()));
                         txtYear.setText(studentToDelete.getYear());
+                        imgStudentImage.setImageBitmap(ImageUtils.getImage(studentToDelete.getStudentImage()));
                     }
                 });
             } else {

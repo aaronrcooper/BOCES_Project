@@ -1,6 +1,11 @@
 package com.example.student.cooper_assign2;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.media.Image;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -24,10 +30,13 @@ public class TeacherListActivity extends AppCompatActivity {
     EditText txtLastName;
     EditText txtEmail;
     EditText txtPhone;
-
+    ImageView imgTeacherImage;
     protected DBHelper myDBHelper;
     private List<Teacher> teacherList;
     private MyAdapter adapter;
+    private Bitmap teacherImage;
+    public static final int PICK_IMAGE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +49,7 @@ public class TeacherListActivity extends AppCompatActivity {
         txtLastName = (EditText)findViewById(R.id.txtLastName);
         txtEmail = (EditText)findViewById(R.id.txtEmail);
         txtPhone = (EditText)findViewById(R.id.txtPhone);
+        imgTeacherImage = (ImageView)findViewById(R.id.teacherImage);
 
     }
     //Determines what happens when the app is resumed
@@ -87,6 +97,40 @@ public class TeacherListActivity extends AppCompatActivity {
     }
 
 
+    //addPicture
+    //opens a the gallery and allows a photo to be selected
+    //adds the photo to the database for the selected student
+    public void getImage(View view)
+    {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode,resultCode, data);
+        //get the results from the image chooser activity
+        if(requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
+
+            if (requestCode == PICK_IMAGE) {
+                if (data == null) {//ensure data is not null
+                    Toast.makeText(getApplicationContext(), "No photo was selected.", Toast.LENGTH_SHORT).show();
+                } else {
+                    //get returned data and convert it to a bitmap
+                    Uri imageUri = data.getData();
+                    Bitmap image = ImageUtils.decodeUriToBitmap(this.getApplicationContext(), imageUri);
+                    //toast to show image was successfully loaded
+                    Toast.makeText(getApplicationContext(), "Photo loaded successfully", Toast.LENGTH_SHORT).show();
+                    imgTeacherImage.setImageBitmap(image);
+                    //store the image in current student image
+                    teacherImage = image;
+                }
+            }
+        }
+    }
 
 
 
@@ -111,10 +155,15 @@ public class TeacherListActivity extends AppCompatActivity {
             //Toast yo
             Toast.makeText(getApplicationContext(), "All fields must be filled in.", Toast.LENGTH_SHORT).show();
         }
+        else if (teacherImage == null)
+        {
+            Toast.makeText(getApplicationContext(), "An image must be selected for the teacher", Toast.LENGTH_SHORT).show();
+        }
         else
         {
             //create a teacher object with correct attributes
             Teacher aTeacher = new Teacher(firstName, lastName, email, phone);
+            aTeacher.setTeacherImage(ImageUtils.getBytes(teacherImage));
             //add the teacher to the database
             myDBHelper.addTeacher(aTeacher);
             //update listview of teachers
@@ -123,6 +172,7 @@ public class TeacherListActivity extends AppCompatActivity {
             onResume();
             //Toast to let user know that Teacher was added successfully
             Toast.makeText(getApplicationContext(), "Teacher successfully added.", Toast.LENGTH_SHORT).show();
+            teacherImage = null;
             //clear all fields
             txtFirstName.setText("");
             txtLastName.setText("");
@@ -164,6 +214,7 @@ public class TeacherListActivity extends AppCompatActivity {
                         txtLastName.setText(changeTeacher.getLastName());
                         txtPhone.setText(changeTeacher.getPhoneNum());
                         txtEmail.setText(changeTeacher.getEmail());
+                        imgTeacherImage.setImageBitmap(ImageUtils.getImage(changeTeacher.getTeacherImage()));
                     }
                 });
             }
