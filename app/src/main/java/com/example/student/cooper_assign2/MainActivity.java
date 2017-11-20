@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     Spinner studentSpinner;
     Spinner teacherSpinner;
     Spinner taskSpinner;
+    Button btnClockIn;
     DBHelper myDBHelper;
     ArrayAdapter<Teacher> teacherAdapter;
     ArrayAdapter<Student> studentAdapter;
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         taskSpinner.setAdapter(taskAdapter);
         taskSpinner.setOnItemSelectedListener(this);
 
+        btnClockIn = (Button) findViewById(R.id.btnClockIn);
 
         List<String> teacherNames = new ArrayList<String>();
         for(Teacher aTeacher: teacherList)
@@ -79,6 +81,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ArrayAdapter<String> teacherAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item, teacherNames);
         studentAdapter.setDropDownViewResource(R.layout.spinner_item);
         teacherSpinner.setAdapter(teacherAdapter);
+        if (teacherList.isEmpty() || studentList.isEmpty() || taskList.isEmpty())
+        {
+            btnClockIn.setEnabled(false);
+        }
+        else
+        {
+            btnClockIn.setEnabled(true);
+        }
 
     }
 

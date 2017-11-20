@@ -18,6 +18,7 @@ import java.util.TimerTask;
 public class ClockedInActivity extends AppCompatActivity {
 
     //timer
+    private DBHelper myDBHelper;
     private Timer timer;
     MyTimerTask timerTask;
     private long startingTime;
@@ -36,13 +37,14 @@ public class ClockedInActivity extends AppCompatActivity {
     String startTime;
     String finishTime;
     String date;
-    String timeSpentOnTask;
+    static String timeSpentOnTask;
+    static long elapsedMs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clocked_in);
-
+        myDBHelper = new DBHelper(this);
         //get the student
         Bundle data = getIntent().getExtras();
         currentStudent = (Student) data.getParcelable("student");
@@ -88,6 +90,8 @@ public class ClockedInActivity extends AppCompatActivity {
         }
         final String calFinish = timeFormat.format(cal.getTime());
         finishTime = calFinish;
+        //Adds the completed task to the database
+        myDBHelper.addCompletedTask(currentStudent, currentTask, startTime, finishTime, date, timeSpentOnTask);
     }
 
     private class MyTimerTask extends TimerTask{
@@ -97,21 +101,21 @@ public class ClockedInActivity extends AppCompatActivity {
             //gets the number of milliseconds since system was booted
             currentTime = SystemClock.uptimeMillis();
             //calc the elapsed milliseconds, seconds, mins and hours
-            long elapsedMs = currentTime - startingTime;
+            elapsedMs = currentTime - startingTime;
             final int seconds = (int) ((elapsedMs /1000)%60);
             final int minutes = (int) (elapsedMs /60000);
-            final int hours = (int) (elapsedMs / 360000);
+            final int hours = (int) (elapsedMs / 3600000);
             //display the time to the user
 
             runOnUiThread(new Runnable() {
                 @Override
                 public void run(){
-                    lblTimer.setText(String.format("%02d", hours) + ":" +
+                    timeSpentOnTask = (String.format("%02d", hours) + ":" +
                             String.format("%02d", minutes) + ":" +
                             String.format("%02d", seconds));
+                    lblTimer.setText(timeSpentOnTask);
                 }
             });
-
         }
     }
 }
