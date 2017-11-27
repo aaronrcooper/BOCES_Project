@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.student.cooper_assign2.MainActivity">
 
-    <TextView
-        android:id="@+id/txtTitle"
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:textSize="30sp"
-        android:layout_marginBottom="15sp"
-        tools:text="@string/txtMainTitle" />
+        app:srcCompat="@mipmap/boceslogo" />
 
     <TextView
         android:id="@+id/lblTeach"
@@ -22,12 +21,27 @@
         android:text="@string/txtSelectTeacher"
         android:textSize="20sp" />
 
-    <Spinner
-        android:id="@+id/spinTeachers"
+
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50sp"
-        android:layout_marginBottom="15sp"
-        android:background="#0090ff" />
+        android:layout_height="60sp"
+        android:orientation="horizontal">
+            <Spinner
+                android:id="@+id/spinTeachers"
+                android:layout_width="0dp"
+                android:layout_height="60sp"
+                android:layout_marginBottom="15sp"
+                android:background="#0090ff"
+                android:layout_weight=".75"/>
+
+        <ImageView
+            android:id="@+id/imgMainTeacher"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@color/colorAccent"
+            android:layout_weight=".25"/>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/lblStudent"
@@ -35,13 +49,24 @@
         android:layout_height="wrap_content"
         android:text="@string/txtSelectSelf"
         android:textSize="20sp" />
-
-    <Spinner
-        android:id="@+id/spinStudent"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50sp"
-        android:layout_marginBottom="15sp"
-        android:background="#0090ff" />
+        android:layout_height="60sp"
+        android:orientation="horizontal">
+            <Spinner
+                android:id="@+id/spinStudent"
+                android:layout_width="0dp"
+                android:layout_height="60sp"
+                android:layout_marginBottom="15sp"
+                android:background="#0090ff"
+                android:layout_weight=".75"/>
+            <ImageView
+                android:id="@+id/imgMainStudent"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:srcCompat="@color/colorAccent"
+                android:layout_weight=".25"/>
+        </LinearLayout>
 
     <TextView
         android:id="@+id/lblTask"
@@ -50,19 +75,41 @@
         android:text="@string/txtSelectTask"
         android:textSize="20sp" />
 
+
+    <!--TO ADD TASK IMAGEVIEW-->
     <Spinner
         android:id="@+id/spinTask"
         android:layout_width="match_parent"
-        android:layout_height="50sp"
+        android:layout_height="60sp"
         android:layout_marginBottom="10sp"
         android:background="#0090ff" />
+    <!--UNCOMMENT THE CODE BELOW AND DELETE CODE ABOVE-->
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60sp"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:id="@+id/spinTask"
+            android:layout_width="0dp"
+            android:layout_height="60sp"
+            android:layout_marginBottom="10sp"
+            android:background="#0090ff"
+            android:layout_weight=".75"/>
+        <ImageView
+            android:id="@+id/imgMainTask"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:srcCompat="@color/colorAccent"
+            android:layout_weight=".25"/>
+    </LinearLayout>-->
 
     <Button
         android:id="@+id/btnClockIn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10sp"
         android:onClick="startClockedInView"
-        android:layout_marginBottom="40sp"
         android:text="@string/btnClockIn" />
 
     <!--Nested layout to allow elements to be side by side-->

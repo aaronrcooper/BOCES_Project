@@ -173,6 +173,7 @@ public class TeacherListActivity extends AppCompatActivity {
             //Toast to let user know that Teacher was added successfully
             Toast.makeText(getApplicationContext(), "Teacher successfully added.", Toast.LENGTH_SHORT).show();
             teacherImage = null;
+            imgTeacherImage.setImageResource(R.mipmap.noimgavail);
             //clear all fields
             txtFirstName.setText("");
             txtLastName.setText("");

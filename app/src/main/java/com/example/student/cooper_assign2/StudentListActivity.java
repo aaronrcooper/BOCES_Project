@@ -138,13 +138,13 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
             onResume();
             //Toast to let user know that Student was added successfully
             Toast.makeText(getApplicationContext(), "Student successfully added.", Toast.LENGTH_SHORT).show();
-            studentImage = null;
+            studentImage= null;
+            imgStudentImage.setImageResource(R.mipmap.noimgavail);
             //clear all fields
             txtFirstName.setText("");
             txtLastName.setText("");
             txtAge.setText("");
             txtYear.setText("");
-            //TODO Diagnose error that this seems to throw
         }
     }
 

@@ -3,14 +3,18 @@ package com.example.student.cooper_assign2;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -33,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     Teacher currentTeacher;
     Student currentStudent;
     Task currentTask;
+    ImageView imgTeacher, imgStudent, imgTask;
 
 
     @Override
@@ -40,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         myDBHelper = new DBHelper(this);
+
     }
 
     protected void onResume(){
@@ -67,7 +73,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         taskAdapter.setDropDownViewResource(R.layout.spinner_item);
         taskSpinner.setAdapter(taskAdapter);
         taskSpinner.setOnItemSelectedListener(this);
-
+        //get references to imageviews
+        imgTeacher = (ImageView) findViewById(R.id.imgMainTeacher);
+        imgStudent = (ImageView) findViewById(R.id.imgMainStudent);
+        //*****************UNCOMMENT THIS WHEN ADDING TASK IMAGES**********
+        //imgTask = (ImageView) findViewById(R.id.imgMainTask);
 
         List<String> teacherNames = new ArrayList<String>();
         for(Teacher aTeacher: teacherList)
@@ -110,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         {
             //Gets the selected teacher object
             currentTeacher = teacherAdapter.getItem(position);
+            imgTeacher.setImageBitmap(ImageUtils.getImage(currentTeacher.getTeacherImage()));
             studentList = myDBHelper.getStudentsByTeacher(currentTeacher);
             //Sets the adapter to null (for garbage collection) and creates a new adapter for the new list
             studentAdapter = null;
@@ -120,9 +131,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         else if (spinner.getId() == R.id.spinStudent)
         {
             currentStudent = studentAdapter.getItem(position);
+            if(currentStudent.getStudentImage() != null)
+                imgStudent.setImageBitmap(ImageUtils.getImage(currentStudent.getStudentImage()));
         }
         else if(spinner.getId() == R.id.spinTask)
         {
+
             currentTask = taskAdapter.getItem(position);
         }
     }

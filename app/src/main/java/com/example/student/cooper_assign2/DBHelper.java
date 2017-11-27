@@ -321,6 +321,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 student.setAge(cursor.getInt(3));
                 student.setYear(cursor.getString(4));
                 student.setTeacherID(cursor.getInt(5));
+                student.setStudentImage(cursor.getBlob(6));
 
                 //add the student object to the list
                 students.add(student);
