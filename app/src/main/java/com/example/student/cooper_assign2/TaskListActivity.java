@@ -74,6 +74,8 @@ public class TaskListActivity extends AppCompatActivity {
         {
             //create a task object with correct attributes
             Task aTask = new Task(taskName, taskDescr);
+            byte[] imageToStore = ImageUtils.getBytes(taskImage);
+            aTask.setTaskImage(imageToStore);
             //add the teacher to the database
             myDBHelper.addTask(aTask);
             //update listview of teachers

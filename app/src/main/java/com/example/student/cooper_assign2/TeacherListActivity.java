@@ -98,9 +98,8 @@ public class TeacherListActivity extends AppCompatActivity {
 
     }
 
-    public void editTeacher(View view)
-    {
-
+    public void openEditTeacherActivity(View view){
+        startActivity(new Intent(TeacherListActivity.this, Edit_Teacher.class));
     }
 
 

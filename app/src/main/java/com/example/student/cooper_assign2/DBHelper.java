@@ -52,6 +52,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String TASK_ID = "taskID";
     private static final String TASK_NAME = "taskName";
     private static final String DESCRIPTION = "taskDescription";
+    private static final String TASK_IMAGE = "taskImage";
 
     //Define fields for CompletedTask table
     //Needs studentID, taskID, TimeStarted, TimeCompleted
@@ -101,7 +102,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "(" +
                 TASK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 TASK_NAME + " TEXT, " +
-                DESCRIPTION + " TEXT" +
+                DESCRIPTION + " TEXT, " +
+                TASK_IMAGE + " BLOB" +
                 ")";
         //TODO make the task table store images
 
@@ -222,6 +224,7 @@ public class DBHelper extends SQLiteOpenHelper {
         //add teacher information to the database
         values.put(TASK_NAME,pTask.getTaskName());
         values.put(DESCRIPTION, pTask.getDescription());
+        values.put(TASK_IMAGE, pTask.getTaskImage());
 
         db.insert(TASK_TABLE, null, values);
 
@@ -375,6 +378,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 aTask.setTaskID(cursor.getInt(0));
                 aTask.setTaskName(cursor.getString(1));
                 aTask.setDescription(cursor.getString(2));
+                aTask.setTaskImage(cursor.getBlob(3));
 
                 tasks.add(aTask);
             }while(cursor.moveToNext());
