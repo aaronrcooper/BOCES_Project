@@ -31,5 +31,4 @@
         <activity android:name=".Generate_Report_Activity"></activity>
     </application>
 
-
 </manifest>

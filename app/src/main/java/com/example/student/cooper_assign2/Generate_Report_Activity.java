@@ -1,10 +1,14 @@
 package com.example.student.cooper_assign2;
 
+import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +39,8 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class Generate_Report_Activity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+
+    private final int REQUEST_CODE = 200;
     //Instance variables
     private Teacher currentTeacher;
     private TeacherAdapter teacherAdapter;
@@ -75,11 +81,7 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
         String dateTime = format.format(cal.getTime());
         //Sets the path for the PDF report to the current teachers name_report.pdf
         path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath()+ "/"
-                 + currentTeacher.getFirstName() + "_" + currentTeacher.getLastName()+"_report.pdf_" + dateTime ;
-        //path = getApplicationContext().getExternalFilesDir(null).getPath() + "/"
-        //        + currentTeacher.getFirstName() + "_" + currentTeacher.getLastName()+"_report.pdf_" + dateTime;
-        //path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getPath() + "/"
-        //        + currentTeacher.getFirstName() + "_" + currentTeacher.getLastName()+"_report.pdf_" + dateTime;
+                 + currentTeacher.getFirstName() + "_" + currentTeacher.getLastName()+"_report_ " + dateTime + ".pdf" ;
     }
 
     @Override
@@ -87,10 +89,31 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+
+    //Creates a PDF File for the report
     public void createPDF(View view) throws DocumentException, FileNotFoundException
     {
-        //DownloadManager manager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+        // Prompts the user for permission to write
+        if (ContextCompat.checkSelfPermission(getApplicationContext(),
+                Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        REQUEST_CODE);
+            }
+        }
         //Creates a file object to output to
         File file = new File(path);
         //Creates a new file if the file does not already exist
@@ -111,8 +134,9 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
                             "Date Completed: " + task.getDate_completed() + "\n" +
                             "Time Spent on Task: " + task.getTimeSpent() + "\n"));
                 }
+                //Close document
                 document.close();
-                //manager.addCompletedDownload(file.getName(), "PDF file for report", true, "PDF", file.getAbsolutePath(), file.length(), true);
+                //display toast on success
                 Toast.makeText(getApplicationContext(), "Document successfully created!", Toast.LENGTH_SHORT).show();
 
             }
