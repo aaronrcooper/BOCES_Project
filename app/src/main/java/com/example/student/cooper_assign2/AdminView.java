@@ -49,4 +49,9 @@ public class AdminView extends AppCompatActivity {
     public  void startTaskActivity(View view){
         startActivity(new Intent(AdminView.this, TaskListActivity.class));
     }
+
+    public void startGenerateReportActivity(View view)
+    {
+        startActivity(new Intent(AdminView.this, Generate_Report_Activity.class));
+    }
 }

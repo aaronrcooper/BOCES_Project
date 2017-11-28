@@ -1,6 +1,6 @@
 package com.example.student.cooper_assign2;
 /***************************************************
- * Chris Frye, Aaron Cooper, Chris Foose
+ * Chris Frye, Aaron Cooper
  * Created: 9/28/2017    Modified: 10/02/2017
  * Purpose: This class acts as a helper class to interact
  * with the database
@@ -12,20 +12,24 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    //constant to hold the database verson
-    private static final int DATABASE_VERSION = 8;
-    //Name of database and two tables it contains
-    //Table for teachers and table for students
+    //constant to hold the database version
+    private static final int DATABASE_VERSION = 13;
+    //Name of database and tables it contains
+
+    //Table strings
     private static final String DATABASE_NAME = "TeacherStudentDB";
     private static final String TEACHER_TABLE = "Teacher_Table";
     private static final String STUDENT_TABLE = "Student_Table";
     private static final String TASK_TABLE = "Task_Table";
+    private static final String COMPLETED_TASK_TABLE = "Completed_Task";
 
     //Define the column (fields) names for the Teacher table
     private static final String TEACHER_ID = "teacherID";
@@ -48,6 +52,14 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String TASK_ID = "taskID";
     private static final String TASK_NAME = "taskName";
     private static final String DESCRIPTION = "taskDescription";
+
+    //Define fields for CompletedTask table
+    //Needs studentID, taskID, TimeStarted, TimeCompleted
+    private static final String TIME_STARTED = "time_Started";
+    private static final String TIME_COMPLETED = "time_Completed";
+    private static final String DATE_COMPLETED = "date_Completed";
+    private static final String TIME_SPENT = "time_Spent_On_Task";
+
 
 
     //CONSTRUCTOR
@@ -93,10 +105,22 @@ public class DBHelper extends SQLiteOpenHelper {
                 ")";
         //TODO make the task table store images
 
+        String completedTaskTable = "CREATE TABLE " + COMPLETED_TASK_TABLE +
+                "(" +
+                STUDENT_ID + " INTEGER, "
+                + TASK_ID + " INTEGER, "
+                + TIME_STARTED + " TEXT, "
+                + TIME_COMPLETED + " TEXT, "
+                + DATE_COMPLETED + " TEXT, "
+                + TIME_SPENT + " TEXT, "
+                + S_TEACHER_ID + " INTEGER, " +
+                "PRIMARY KEY(" + STUDENT_ID + ", " + TASK_ID + ", " +
+                TIME_STARTED + ", " + TIME_COMPLETED  + "))";
         db.execSQL("PRAGMA foreign_keys=1;");
         db.execSQL(teacherTable);
         db.execSQL(studentTable);
         db.execSQL(taskTable);
+        db.execSQL(completedTaskTable);
     }
 
 
@@ -106,6 +130,7 @@ public class DBHelper extends SQLiteOpenHelper {
         database.execSQL("DROP TABLE IF EXISTS " + TEACHER_TABLE);
         database.execSQL("DROP TABLE IF EXISTS " + STUDENT_TABLE);
         database.execSQL("DROP TABLE IF EXISTS " + TASK_TABLE);
+        database.execSQL("DROP TABLE IF EXISTS " + COMPLETED_TASK_TABLE);
 
         //recreate the tables
         onCreate(database);
@@ -135,6 +160,32 @@ public class DBHelper extends SQLiteOpenHelper {
         //insert the row in the table
 
         long row_id = db.insert(STUDENT_TABLE, null, values);
+
+        //close the database connection
+        db.close();
+    }
+
+    //adding a new student
+    //columns: studentID, taskID, timeStarted, timeCompleted, dateCompleted
+    public void addCompletedTask(Student pStudent, Task aTask, String start, String finish, String date, String timeSpent)
+    {
+
+        //get a ref to the database
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        //add student information to the database
+        values.put(STUDENT_ID, pStudent.getStudentID());    //add studentID
+        values.put(TASK_ID, aTask.getTaskID());     //add taskID
+        values.put(TIME_STARTED, start);    //add start time
+        values.put(TIME_COMPLETED, finish); //add finish time
+        values.put(DATE_COMPLETED, date);   //add date
+        values.put(TIME_SPENT, timeSpent);  //adds time spent in MS
+        values.put(S_TEACHER_ID, pStudent.getTeacherID());  //add teacherID (for ordering)
+
+        //insert the row in the table
+
+        long row_id = db.insert(COMPLETED_TASK_TABLE, null, values);
 
         //close the database connection
         db.close();
@@ -219,6 +270,47 @@ public class DBHelper extends SQLiteOpenHelper {
         return teachers;
     }
 
+
+    //gets all completed tasks by teacher
+    public List<Completed_Task> getCompletedTasksByTeacher(Teacher teacher)
+    {
+        //create a list of Teacher objects
+        List<Completed_Task> tasks = new ArrayList<Completed_Task>();
+
+        //select all query from the Teacher table
+        String selectQuery = "SELECT * FROM " + COMPLETED_TASK_TABLE + " WHERE " + S_TEACHER_ID + " = " + teacher.getId()
+                + " ORDER BY " + STUDENT_ID;
+
+        //get a reference to the database
+        SQLiteDatabase db = this.getWritableDatabase();
+        //create a cursor object to take data from the database and display
+        //it in a list
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        //loop through the teachers and:
+        //*create a new Teacher obj and instantiate it
+        //*set the attributes for that obj
+        //*add the object to the list
+        //*move the cursor to the next item
+        if(cursor.moveToFirst()) {
+            do {
+                //create a new completed_task object
+                Completed_Task completed_task = new Completed_Task();
+                //set the attributes
+                completed_task.setStudentID(cursor.getInt(0));
+                completed_task.setTaskID(cursor.getInt(1));
+                completed_task.setTimeStarted(cursor.getString(2));
+                completed_task.setTimeCompleted(cursor.getString(3));
+                completed_task.setDate_completed(cursor.getString(4));
+                completed_task.setTimeSpent(cursor.getString(5));
+                //add the completed task
+                tasks.add(completed_task);
+            }while(cursor.moveToNext());
+        }
+        //return the list of tasks
+
+        return tasks;
+    }
 
     //show all students
     public List<Student> getAllStudents()

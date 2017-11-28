@@ -24,7 +24,10 @@
             android:windowSoftInputMode="stateVisible|adjustNothing" />
         <activity android:name=".AdminView" />
         <activity android:name=".TaskListActivity" />
-        <activity android:name=".ClockedInActivity"></activity>
+        <activity android:name=".ClockedInActivity" />
+        <activity android:name=".Generate_Report_Activity"></activity>
     </application>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>
