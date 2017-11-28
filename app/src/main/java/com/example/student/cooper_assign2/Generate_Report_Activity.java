@@ -1,5 +1,6 @@
 package com.example.student.cooper_assign2;
 
+import android.app.DownloadManager;
 import android.content.Context;
 import android.os.Build;
 import android.os.Environment;
@@ -20,8 +21,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
+
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
@@ -64,10 +69,17 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
         currentTeacher = teacherAdapter.getItem(position);
         tasks = null;
         tasks = myDBHelper.getCompletedTasksByTeacher(currentTeacher);
+        //Calendar object for date logging
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat format = new SimpleDateFormat("MM:dd:yyyy_hh:mm", Locale.US);
+        String dateTime = format.format(cal.getTime());
         //Sets the path for the PDF report to the current teachers name_report.pdf
-        //path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
-        path = getApplicationContext().getFilesDir().getPath() + "/"
-                + currentTeacher.getFirstName() + "_" + currentTeacher.getLastName()+"_report.pdf";
+        path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath()+ "/"
+                 + currentTeacher.getFirstName() + "_" + currentTeacher.getLastName()+"_report.pdf_" + dateTime ;
+        //path = getApplicationContext().getExternalFilesDir(null).getPath() + "/"
+        //        + currentTeacher.getFirstName() + "_" + currentTeacher.getLastName()+"_report.pdf_" + dateTime;
+        //path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).getPath() + "/"
+        //        + currentTeacher.getFirstName() + "_" + currentTeacher.getLastName()+"_report.pdf_" + dateTime;
     }
 
     @Override
@@ -78,55 +90,39 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void createPDF(View view) throws DocumentException, FileNotFoundException
     {
-        //String[] permissions = {"android.permissions.WRITE_EXTERNAL_STORAGE"};
-        //requestPermissions(permissions, 200);
+        //DownloadManager manager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
         //Creates a file object to output to
         File file = new File(path);
-        //File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        //Creates a new file if the file does not already exist
         if(!file.exists())
         {
             try
             {
+                //Creates a new file
                 file.createNewFile();
+                //Creates new document type
+                Document document = new Document();
+                PdfWriter.getInstance(document, new FileOutputStream(file.getAbsoluteFile()));
+                document.open();
+                for (Completed_Task task : tasks)
+                {
+                    document.add(new Paragraph("Student: " + task.getStudentID() + "\n" +
+                            "Task: " + task.getTaskID() + "\n " +
+                            "Date Completed: " + task.getDate_completed() + "\n" +
+                            "Time Spent on Task: " + task.getTimeSpent() + "\n"));
+                }
+                document.close();
+                //manager.addCompletedDownload(file.getName(), "PDF file for report", true, "PDF", file.getAbsolutePath(), file.length(), true);
+                Toast.makeText(getApplicationContext(), "Document successfully created!", Toast.LENGTH_SHORT).show();
+
             }
             catch (IOException ex)
             {
-                Toast.makeText(getApplicationContext(), "An error occurred.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "An error occurred while generating the report.", Toast.LENGTH_SHORT).show();
             }
         }
-        //Sets font type
-        Font fontType = new Font(Font.FontFamily.TIMES_ROMAN, 14);
-        Document document = new Document();
-        try
-        {
-            PdfWriter.getInstance(document, new FileOutputStream(file.getAbsoluteFile()));
-        }
-        catch (FileNotFoundException ex)
-        {
-            Toast.makeText(getApplicationContext(), "File path not found", Toast.LENGTH_SHORT).show();
-        }
-        catch (DocumentException ex)
-        {
-            Toast.makeText(getApplicationContext(), "Unable to create document", Toast.LENGTH_SHORT).show();
-        }
-        document.open();
-        //Loops through tasks list and outputs data from each completed task into document
-        for(Completed_Task task : tasks)
-        {
-            try
-            {
-                document.add(new Paragraph("Student: " + task.getStudentID() + "\n" +
-                    "Task: " + task.getTaskID() + "\n " +
-                    "Date Completed: " + task.getDate_completed() + "\n" +
-                    "Time Spent on Task: " + task.getTimeSpent() + "\n"));
-            }
-            catch (DocumentException ex)
-            {
-                Toast.makeText(getApplicationContext(), "An error occurred while generating your document", Toast.LENGTH_SHORT);
-            }
-        }
-        document.close();
-        Toast.makeText(getApplicationContext(), "Document successfully created!", Toast.LENGTH_SHORT);
+
+
     }
 
     //*******************TEACHER ADAPTER**************************
