@@ -34,12 +34,9 @@
     <string name="lblTimerDefault">00:00:00</string>
     <string name="lblTimerLabel">Time spent on current task:</string>
     <string name="btnClockOut">Clock Out</string>
-<<<<<<< HEAD
     <string name="btnAddImage">Add Image</string>
-=======
     <string name="btnGenerateReport">Generate Report</string>
     <string name="btnSelectStudent">Select by Student</string>
     <string name="btnSelectTeacher">Select by Teacher</string>
     <string name="txtSelectATeacher">Select a Teacher</string>
->>>>>>> TaskIntersectionTableBranch
 </resources>
