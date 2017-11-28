@@ -91,6 +91,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 TASK_NAME + " TEXT, " +
                 DESCRIPTION + " TEXT" +
                 ")";
+        //TODO make the task table store images
 
         db.execSQL("PRAGMA foreign_keys=1;");
         db.execSQL(teacherTable);

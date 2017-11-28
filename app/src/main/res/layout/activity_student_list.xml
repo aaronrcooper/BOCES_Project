@@ -106,12 +106,12 @@
             android:text="@string/txtRemoveStudent" />
 
         <Button
-            android:id="@+id/btnRemoveAll"
+            android:id="@+id/btnEdit"
             android:layout_width="60sp"
             android:layout_height="wrap_content"
             android:layout_weight=".33"
-            android:onClick="removeAllStudents"
-            android:text="@string/txtRemoveAll" />
+            android:onClick="editStudent"
+            android:text="@string/btnEdit" />
 
 
     </LinearLayout>

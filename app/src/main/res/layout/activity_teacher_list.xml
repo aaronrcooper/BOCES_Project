@@ -94,13 +94,13 @@
             android:onClick="removeCheckedTeachers"
             android:text="@string/txtRemoveStudent" />
 
-            <Button
-                android:id="@+id/btnRemoveAll"
-                android:layout_width="104dp"
-                android:layout_height="53dp"
-                android:layout_weight=".33"
-                android:onClick="removeAllTeachers"
-                android:text="@string/txtRemoveAll" />
+        <Button
+            android:id="@+id/btnRemoveAll"
+            android:layout_width="104dp"
+            android:layout_height="53dp"
+            android:layout_weight=".33"
+            android:onClick="editTeacher"
+            android:text="@string/btnEdit" />
 
     </LinearLayout>
 

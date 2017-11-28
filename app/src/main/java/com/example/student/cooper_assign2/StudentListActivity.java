@@ -88,12 +88,14 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
         teacherAdapter.setDropDownViewResource(R.layout.spinner_item);
         teacherListSpinner.setAdapter(teacherAdapter);
     }
+
+    //*****************FUNCTION TO REMOVE ALL STUDENTS FROM THE DB*************
     //Clears all students from the database
-    public void removeAllStudents(View view){
+    /*public void removeAllStudents(View view){
         myDBHelper.removeAllStudents(studentsList);
         studentAdapter.notifyDataSetChanged();
 
-    }
+    }**************************************************************************/
 
     //Button Click handler for add students button
     //creates a Student object and stores all
@@ -146,6 +148,11 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
             txtAge.setText("");
             txtYear.setText("");
         }
+    }
+
+    public void editStudent(View view)
+    {
+
     }
 
 

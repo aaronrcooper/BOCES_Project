@@ -9,7 +9,7 @@
     tools:context="com.example.student.cooper_assign2.MainActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imgLogo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:srcCompat="@mipmap/boceslogo" />
@@ -77,14 +77,14 @@
 
 
     <!--TO ADD TASK IMAGEVIEW-->
-    <Spinner
+    <!--<Spinner
         android:id="@+id/spinTask"
         android:layout_width="match_parent"
         android:layout_height="60sp"
         android:layout_marginBottom="10sp"
-        android:background="#0090ff" />
+        android:background="#0090ff" />-->
     <!--UNCOMMENT THE CODE BELOW AND DELETE CODE ABOVE-->
-    <!--<LinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60sp"
         android:orientation="horizontal">
@@ -102,7 +102,7 @@
             android:layout_height="match_parent"
             app:srcCompat="@color/colorAccent"
             android:layout_weight=".25"/>
-    </LinearLayout>-->
+    </LinearLayout>
 
     <Button
         android:id="@+id/btnClockIn"

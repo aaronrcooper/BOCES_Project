@@ -61,12 +61,14 @@ public class TeacherListActivity extends AppCompatActivity {
         ListView listTeachers = (ListView) findViewById(R.id.lstTeachersView);
         listTeachers.setAdapter(adapter);
     }
+
+    //************FUNCTION TO REMOVE ALL TEACHERS FROM THE DB*************
     //Clears all teachers from the database
-    public void removeAllTeachers(View view){
+    /*public void removeAllTeachers(View view){
         //prompt the user to confirm that he or she wants to remove all teachers
         myDBHelper.removeAllTeachers(teacherList);
         adapter.notifyDataSetChanged();
-    }
+    }*********************************************************************/
 
     //Clear a single teacher from the database
     /*public void removeTeacher(Teacher aTeacher){
@@ -93,6 +95,11 @@ public class TeacherListActivity extends AppCompatActivity {
         ListView listTeachers = (ListView) findViewById(R.id.lstTeachersView);
         listTeachers.setAdapter(adapter);
         //adapter.notifyDataSetChanged();
+
+    }
+
+    public void editTeacher(View view)
+    {
 
     }
 

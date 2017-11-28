@@ -1,6 +1,11 @@
 package com.example.student.cooper_assign2;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.media.Image;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -23,6 +29,9 @@ public class TaskListActivity extends AppCompatActivity {
     private List<Task> taskList;
     EditText txtTaskName;
     EditText txtTaskDescr;
+    public static final int PICK_IMAGE = 1;
+    ImageView imgTaskImage;
+    Bitmap taskImage = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +40,7 @@ public class TaskListActivity extends AppCompatActivity {
 
         txtTaskName = (EditText)findViewById(R.id.txtTaskName);
         txtTaskDescr = (EditText)findViewById(R.id.txtTaskDescr);
+        imgTaskImage = (ImageView)findViewById(R.id.taskImage);
     }
 
     @Override
@@ -55,6 +65,10 @@ public class TaskListActivity extends AppCompatActivity {
         {
             //Toast yo
             Toast.makeText(getApplicationContext(), "All fields must be filled in.", Toast.LENGTH_SHORT).show();
+        }
+        else if(taskImage == null)
+        {
+            Toast.makeText(getApplicationContext(), "An image must be selected for the task", Toast.LENGTH_SHORT).show();
         }
         else
         {
@@ -81,6 +95,41 @@ public class TaskListActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
+
+    //addPicture
+    //opens a the gallery and allows a photo to be selected
+    //adds the photo to the database for the selected student
+    public void getImage(View view)
+    {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode,resultCode, data);
+        //get the results from the image chooser activity
+        if(requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
+
+            if (requestCode == PICK_IMAGE) {
+                if (data == null) {//ensure data is not null
+                    Toast.makeText(getApplicationContext(), "No photo was selected.", Toast.LENGTH_SHORT).show();
+                } else {
+                    //get returned data and convert it to a bitmap
+                    Uri imageUri = data.getData();
+                    Bitmap image = ImageUtils.decodeUriToBitmap(this.getApplicationContext(), imageUri);
+                    //toast to show image was successfully loaded
+                    Toast.makeText(getApplicationContext(), "Photo loaded successfully", Toast.LENGTH_SHORT).show();
+                    imgTaskImage.setImageBitmap(image);
+                    //store the image in current student image
+                    taskImage = image;
+                }
+            }
+        }
+    }
 
     //*******************ADAPTER**************************
     private class MyAdapter extends ArrayAdapter<Task> {

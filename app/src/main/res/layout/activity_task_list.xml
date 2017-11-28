@@ -9,6 +9,33 @@
     android:weightSum="1">
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="75sp"
+        android:orientation="horizontal"
+        android:weightSum="1">
+        <View
+            android:layout_width="0sp"
+            android:layout_height="0sp"
+            android:layout_weight=".6" />
+
+        <ImageView
+            android:id="@+id/taskImage"
+            android:layout_width="100sp"
+            android:layout_height="75sp"
+            android:layout_gravity="center"
+            app:srcCompat="@mipmap/noimgavail" />
+
+        <Button
+            android:id="@+id/btnAddTaskPicture"
+            android:layout_width="50sp"
+            android:layout_height="54dp"
+            android:layout_gravity="right"
+            android:background="@mipmap/camerabtn"
+            android:gravity="center_vertical"
+            android:onClick="getImage"/>
+    </LinearLayout>
+
     <EditText
         android:id="@+id/txtTaskName"
         android:layout_width="200sp"
@@ -23,7 +50,7 @@
         android:id="@+id/txtTaskDescr"
         style="@style/Widget.AppCompat.EditText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="166dp"
         android:gravity="top|start"
         android:hint="@string/txtTaskDescr"
         android:lines="8"
@@ -57,7 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight=".33"
-            android:text="@string/btnEditTask" />
+            android:text="@string/btnEdit" />
 
 
     </LinearLayout>

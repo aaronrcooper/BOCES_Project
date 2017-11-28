@@ -11,6 +11,7 @@ public class Task implements Parcelable {
     private String taskName;
     private int taskID;
     private String description;
+    private byte[] taskImage;
 
 
     public Task()
@@ -77,5 +78,13 @@ public class Task implements Parcelable {
         parcel.writeString(taskName);
         parcel.writeInt(taskID);
         parcel.writeString(description);
+    }
+
+    public byte[] getTaskImage() {
+        return taskImage;
+    }
+
+    public void setTaskImage(byte[] taskImage) {
+        this.taskImage = taskImage;
     }
 }
