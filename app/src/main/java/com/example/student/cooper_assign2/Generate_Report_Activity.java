@@ -12,6 +12,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -129,20 +130,20 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
                 document.open();
                 for (Completed_Task task : tasks)
                 {
-                    document.add(new Paragraph("Student: " + task.getStudentID() + "\n" +
-                            "Task: " + task.getTaskID() + "\n " +
-                            "Date Completed: " + task.getDate_completed() + "\n" +
-                            "Time Spent on Task: " + task.getTimeSpent() + "\n"));
+                    document.add(new Paragraph("Student: " + myDBHelper.getStudent(task.getStudentID()).getFullName() + "\n" +
+                            "    Task: " + task.getTaskID() + "\n " +
+                            "    Date Completed: " + task.getDate_completed() + "\n" +
+                            "    Time Spent on Task: " + task.getTimeSpent() + "\n"));
                 }
                 //Close document
                 document.close();
                 //display toast on success
-                Toast.makeText(getApplicationContext(), "Document successfully created!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Document successfully created in " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), Toast.LENGTH_SHORT).show();
 
             }
             catch (IOException ex)
             {
-                Toast.makeText(getApplicationContext(), "An error occurred while generating the report.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "An error occurred while generating the report.", Toast.LENGTH_LONG).show();
             }
         }
 

@@ -353,6 +353,43 @@ public class DBHelper extends SQLiteOpenHelper {
         return students;
     }
 
+    public Student getStudent(int id)
+    {
+        //create a list of student objects
+        Student student = null;
+
+        //select all query from the Student table
+        String selectQuery = "SELECT * FROM " + STUDENT_TABLE + " WHERE " + STUDENT_ID + " = " + id ;
+
+        //get a reference to the database
+        SQLiteDatabase db = this.getWritableDatabase();
+        //create a cursor object to take data from the database and display
+        //it in a list
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        //loop through the students and:
+        //*create a new Student obj and instantiate it
+        //*set the attributes for that obj
+        //*add the object to the list
+        //*move the cursor to the next item
+        if(cursor.moveToFirst()) {
+            do {
+                //create a new Student obj
+                student = new Student();
+                //set the attributes
+                student.setStudentID(cursor.getInt(0));
+                student.setFirstName(cursor.getString(1));
+                student.setLastName(cursor.getString(2));
+                student.setAge(cursor.getInt(3));
+                student.setYear(cursor.getString(4));
+                student.setTeacherID(cursor.getInt(5));
+                student.setStudentImage((cursor.getBlob(6)));
+            }while(cursor.moveToNext());
+
+        }
+        //return the list of teachers
+        return student;
+    }
 
     //get all tasks
     public List<Task> getAllTasks()

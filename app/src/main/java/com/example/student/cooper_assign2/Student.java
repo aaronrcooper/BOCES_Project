@@ -85,6 +85,10 @@ public class Student implements Parcelable{
         this.lastName = lastName;
     }
 
+    public String getFullName() {
+        return getFirstName() + " " + getLastName();
+    }
+
     public int getAge() {
         return age;
     }
@@ -96,7 +100,6 @@ public class Student implements Parcelable{
     public int getTeacherID() {
         return teacherID;
     }
-
     public void setTeacherID(int teacherID) {
         this.teacherID = teacherID;
     }
