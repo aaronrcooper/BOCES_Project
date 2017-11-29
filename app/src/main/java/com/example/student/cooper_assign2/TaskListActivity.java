@@ -52,6 +52,13 @@ public class TaskListActivity extends AppCompatActivity {
         lstTaskView.setAdapter(adapter);
     }
 
+    //editTask
+    //button click for edit
+    //opens edit activity
+    public void editTask(View view)
+    {
+        startActivity(new Intent(TaskListActivity.this, Edit_Task.class));
+    }
 
     //method to add a task to the database
     public void addTask(View view)
