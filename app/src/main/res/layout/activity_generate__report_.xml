@@ -18,7 +18,7 @@
     <Spinner
         android:id="@+id/report_teacher_spinner"
         android:layout_width="match_parent"
-        android:layout_height="126dp" />
+        android:layout_height="50sp" />
 
     <Button
         android:id="@+id/btnGenerateReport"
