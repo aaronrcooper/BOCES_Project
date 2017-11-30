@@ -60,18 +60,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         teacherSpinner = (Spinner)findViewById(R.id.spinTeachers);
         taskSpinner = (Spinner)findViewById(R.id.spinTask);
         //Sets the adapter for the teacher spinner
-        teacherAdapter = new TeacherAdapter(getApplicationContext(), R.layout.spinner_item, teacherList);
-        teacherAdapter.setDropDownViewResource(R.layout.spinner_item);
+        //TODO change to spinner with image
+        teacherAdapter = new TeacherAdapter(getApplicationContext(), R.layout.spinner_with_image_item, teacherList);
+        teacherAdapter.setDropDownViewResource(R.layout.spinner_with_image_item);
         teacherSpinner.setAdapter(teacherAdapter);
         teacherSpinner.setOnItemSelectedListener(this);
         //Sets the adapter for the student spinner
-        studentAdapter = new StudentAdapter(getApplicationContext(), R.layout.spinner_item, studentList);
-        studentAdapter.setDropDownViewResource(R.layout.spinner_item);
+        //TODO change value to spinner with image
+        studentAdapter = new StudentAdapter(getApplicationContext(), R.layout.spinner_with_image_item, studentList);
+        studentAdapter.setDropDownViewResource(R.layout.spinner_with_image_item);
         studentSpinner.setAdapter(studentAdapter);
         studentSpinner.setOnItemSelectedListener(this);
         //sets the adapter for the task spinner
-        taskAdapter = new TaskAdapter(getApplicationContext(), R.layout.spinner_item, taskList);
-        taskAdapter.setDropDownViewResource(R.layout.spinner_item);
+        //TODO change value to spinner with image
+        taskAdapter = new TaskAdapter(getApplicationContext(), R.layout.spinner_with_image_item, taskList);
+        taskAdapter.setDropDownViewResource(R.layout.spinner_with_image_item);
         taskSpinner.setAdapter(taskAdapter);
         taskSpinner.setOnItemSelectedListener(this);
         //get references to imageviews
@@ -81,16 +84,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         //imgTask = (ImageView) findViewById(R.id.imgMainTask);
 
         btnClockIn = (Button) findViewById(R.id.btnClockIn);
-
-        List<String> teacherNames = new ArrayList<String>();
-        for(Teacher aTeacher: teacherList)
-        {
-            String temp;
-            temp = aTeacher.getFirstName() + " " + aTeacher.getLastName();
-            teacherNames.add(temp);
-        }
-        ArrayAdapter<String> teacherAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.spinner_item, teacherNames);
-        studentAdapter.setDropDownViewResource(R.layout.spinner_item);
+        studentAdapter.setDropDownViewResource(R.layout.spinner_with_image_item);
         teacherSpinner.setAdapter(teacherAdapter);
         if (teacherList.isEmpty() || studentList.isEmpty() || taskList.isEmpty())
         {
@@ -134,8 +128,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             studentList = myDBHelper.getStudentsByTeacher(currentTeacher);
             //Sets the adapter to null (for garbage collection) and creates a new adapter for the new list
             studentAdapter = null;
-            studentAdapter = new StudentAdapter(getApplicationContext(), R.layout.spinner_item, studentList);
-            studentAdapter.setDropDownViewResource(R.layout.spinner_item);
+            //TODO change values to spinner with image
+            studentAdapter = new StudentAdapter(getApplicationContext(), R.layout.spinner_with_image_item, studentList);
+            studentAdapter.setDropDownViewResource(R.layout.spinner_with_image_item);
             studentSpinner.setAdapter(studentAdapter);
         }
         else if (spinner.getId() == R.id.spinStudent)
@@ -146,7 +141,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
         else if(spinner.getId() == R.id.spinTask)
         {
-
             currentTask = taskAdapter.getItem(position);
         }
     }
@@ -169,38 +163,52 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         public View getView(int position, View convertView, ViewGroup parent) {
             TextView student = null;
+            ImageView studentImage = null;
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) context
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.spinner_item, parent, false);
-                student = (TextView) convertView.findViewById(R.id.spinnerItem);
+                convertView = inflater.inflate(R.layout.spinner_with_image_item, parent, false);
+                student = (TextView) convertView.findViewById(R.id.spinnerItemTextView);
+                studentImage = (ImageView) convertView.findViewById(R.id.spinnerImageView);
                 convertView.setTag(student);
 
             } else {
                 student = (TextView) convertView.getTag();
+                studentImage = (ImageView) convertView.getTag();
             }
             Student current = studentList.get(position);
+            //Sets TextView properties
             student.setText(current.getFirstName() + " " + current.getLastName());
             student.setTag(current);
+            //Sets imageView properties
+            studentImage.setImageBitmap(ImageUtils.getImage(current.getStudentImage()));
+            studentImage.setTag(current);
+            //return
             return convertView;
         }
         public View getDropDownView(int position, View convertView,
                                     ViewGroup parent) {
-            TextView view =null;
+            TextView student = null;
+            ImageView studentImage = null;
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) context
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.spinner_item, parent, false);
-                view = (TextView) convertView.findViewById(R.id.spinnerItem);
-                convertView.setTag(view);
+                convertView = inflater.inflate(R.layout.spinner_with_image_item, parent, false);
+                student = (TextView) convertView.findViewById(R.id.spinnerItemTextView);
+                studentImage = (ImageView) convertView.findViewById(R.id.spinnerImageView);
+                convertView.setTag(student);
 
             } else {
-                view = (TextView) convertView.getTag();
+                student = (TextView) convertView.getTag();
+                studentImage = (ImageView) convertView.getTag();
             }
-            view.setText(studentList.get(position).getFirstName() + " " + studentList.get(position).getLastName());
-            view.setHeight(60);
-
-            return view;
+            //Student current = studentList.get(position);
+            //Sets TextView properties
+            student.setText(studentList.get(position).getFirstName() + " " + studentList.get(position).getLastName());
+            //Sets imageView properties
+            studentImage.setImageBitmap(ImageUtils.getImage(studentList.get(position).getStudentImage()));
+            //return
+            return convertView;
         }
         public Student getPosition(int position)
         {
@@ -222,38 +230,47 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         public View getView(int position, View convertView, ViewGroup parent) {
             TextView teacher = null;
+            ImageView teacherImage = null;
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) context
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.spinner_item, parent, false);
-                teacher = (TextView) convertView.findViewById(R.id.spinnerItem);
+                convertView = inflater.inflate(R.layout.spinner_with_image_item, parent, false);
+                teacher = (TextView) convertView.findViewById(R.id.spinnerItemTextView);
+                teacherImage = (ImageView) convertView.findViewById(R.id.spinnerImageView);
                 convertView.setTag(teacher);
 
             } else {
                 teacher = (TextView) convertView.getTag();
+                teacherImage = (ImageView) convertView.getTag();
             }
             Teacher current = teacherList.get(position);
+            //Sets text
             teacher.setText(current.getFirstName() + " " + current.getLastName());
             teacher.setTag(current);
+            //Sets image
+            teacherImage.setImageBitmap(ImageUtils.getImage(current.getTeacherImage()));
+            teacherImage.setTag(current);
             return convertView;
         }
         public View getDropDownView(int position, View convertView,
                                     ViewGroup parent) {
-            TextView view =null;
+            TextView teacherView =null;
+            ImageView teacherImage = null;
             if (convertView == null) {
                 LayoutInflater inflater = (LayoutInflater) context
                         .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.spinner_item, parent, false);
-                view = (TextView) convertView.findViewById(R.id.spinnerItem);
-                convertView.setTag(view);
+                convertView = inflater.inflate(R.layout.spinner_with_image_item, parent, false);
+                teacherView = (TextView) convertView.findViewById(R.id.spinnerItemTextView);
+                convertView.setTag(teacherView);
 
             } else {
-                view = (TextView) convertView.getTag();
+                teacherView = (TextView) convertView.getTag();
+                teacherImage = (ImageView) convertView.getTag();
             }
-            view.setText(teacherList.get(position).getFirstName() + " " + teacherList.get(position).getLastName());
-            view.setHeight(60);
-
-            return view;
+            teacherView.setText(teacherList.get(position).getFirstName() + " " + teacherList.get(position).getLastName());
+            teacherView.setHeight(60);
+            teacherImage.setImageBitmap(ImageUtils.getImage(teacherList.get(position).getTeacherImage()));
+            return convertView;
         }
         public Teacher getPosition(int position)
         {
@@ -278,38 +295,51 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         public View getView(int position, View convertView, ViewGroup parent){
             TextView task = null;
+            ImageView taskImage = null;
             if(convertView == null){
                 LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.spinner_item, parent, false);
-                task = (TextView) convertView.findViewById(R.id.spinnerItem);
+                convertView = inflater.inflate(R.layout.spinner_with_image_item, parent, false);
+                task = (TextView) convertView.findViewById(R.id.spinnerItemTextView);
+                taskImage = (ImageView) convertView.findViewById(R.id.spinnerImageView);
                 convertView.setTag(task);
             }
             else
             {
                 task = (TextView) convertView.getTag();
+                taskImage = (ImageView) convertView.getTag();
             }
             Task current = taskList.get(position);
+            //Sets textview properties
             task.setText(current.getTaskName() + " " + current.getDescription());
             task.setTag(current);
+            //sets imageview properties
+            taskImage.setImageBitmap(ImageUtils.getImage(current.getTaskImage()));
+            taskImage.setTag(current);
             return convertView;
         }
 
         public View getDropDownView(int position, View convertView, ViewGroup parent)
         {
-            TextView view = null;
+            TextView task = null;
+            ImageView taskImage = null;
             if(convertView == null){
-                LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.spinner_item, parent, false);
-                view = (TextView) convertView.findViewById(R.id.spinnerItem);
-                convertView.setTag(view);
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                convertView = inflater.inflate(R.layout.spinner_with_image_item, parent, false);
+                task = (TextView) convertView.findViewById(R.id.spinnerItemTextView);
+                taskImage = (ImageView) convertView.findViewById(R.id.spinnerImageView);
+                convertView.setTag(task);
             }
             else
             {
-                view = (TextView) convertView.getTag();
+                task = (TextView) convertView.getTag();
+                taskImage = (ImageView) convertView.getTag();
             }
-            view.setText(taskList.get(position).getTaskName() + " " + taskList.get(position).getDescription());
-            view.setHeight(60);
-            return view;
+            //Task current = taskList.get(position);
+            //Sets textview properties
+            task.setText(taskList.get(position).getTaskName() + " " + taskList.get(position).getDescription());
+            //sets imageview properties
+            taskImage.setImageBitmap(ImageUtils.getImage(taskList.get(position).getTaskImage()));
+            return convertView;
         }
         public Task getPosition(int position)
         {
