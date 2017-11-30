@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         imgTeacher = (ImageView) findViewById(R.id.imgMainTeacher);
         imgStudent = (ImageView) findViewById(R.id.imgMainStudent);
         //*****************UNCOMMENT THIS WHEN ADDING TASK IMAGES**********
-        //imgTask = (ImageView) findViewById(R.id.imgMainTask);
+        imgTask = (ImageView) findViewById(R.id.imgMainTask);
 
         btnClockIn = (Button) findViewById(R.id.btnClockIn);
         studentAdapter.setDropDownViewResource(R.layout.spinner_with_image_item);
@@ -142,6 +142,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         else if(spinner.getId() == R.id.spinTask)
         {
             currentTask = taskAdapter.getItem(position);
+            imgTask.setImageBitmap(ImageUtils.getImage(currentTask.getTaskImage()));
         }
     }
 
