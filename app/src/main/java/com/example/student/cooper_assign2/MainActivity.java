@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         imgTeacher = (ImageView) findViewById(R.id.imgMainTeacher);
         imgStudent = (ImageView) findViewById(R.id.imgMainStudent);
         //*****************UNCOMMENT THIS WHEN ADDING TASK IMAGES**********
-        //imgTask = (ImageView) findViewById(R.id.imgMainTask);
+        imgTask = (ImageView) findViewById(R.id.imgMainTask);
 
         btnClockIn = (Button) findViewById(R.id.btnClockIn);
 
@@ -148,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         {
 
             currentTask = taskAdapter.getItem(position);
+            imgTask.setImageBitmap(ImageUtils.getImage(currentTask.getTaskImage()));
         }
     }
 

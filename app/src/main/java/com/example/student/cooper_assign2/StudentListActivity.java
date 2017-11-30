@@ -152,7 +152,7 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
 
     public void editStudent(View view)
     {
-
+        startActivity(new Intent(StudentListActivity.this, Edit_Student.class));
     }
 
 

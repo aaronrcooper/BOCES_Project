@@ -52,6 +52,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String TASK_ID = "taskID";
     private static final String TASK_NAME = "taskName";
     private static final String DESCRIPTION = "taskDescription";
+    private static final String TASK_IMAGE = "taskImage";
 
     //Define fields for CompletedTask table
     //Needs studentID, taskID, TimeStarted, TimeCompleted
@@ -101,7 +102,8 @@ public class DBHelper extends SQLiteOpenHelper {
                 "(" +
                 TASK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 TASK_NAME + " TEXT, " +
-                DESCRIPTION + " TEXT" +
+                DESCRIPTION + " TEXT, " +
+                TASK_IMAGE + " BLOB" +
                 ")";
         //TODO make the task table store images
 
@@ -222,6 +224,7 @@ public class DBHelper extends SQLiteOpenHelper {
         //add teacher information to the database
         values.put(TASK_NAME,pTask.getTaskName());
         values.put(DESCRIPTION, pTask.getDescription());
+        values.put(TASK_IMAGE, pTask.getTaskImage());
 
         db.insert(TASK_TABLE, null, values);
 
@@ -412,6 +415,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 aTask.setTaskID(cursor.getInt(0));
                 aTask.setTaskName(cursor.getString(1));
                 aTask.setDescription(cursor.getString(2));
+                aTask.setTaskImage(cursor.getBlob(3));
 
                 tasks.add(aTask);
             }while(cursor.moveToNext());
@@ -504,6 +508,8 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
+
+
     //delete a student
     //takes a student id as a parameter
     //returns true if the student was successfully removed
@@ -531,6 +537,65 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.execSQL("DELETE FROM " + TEACHER_TABLE + " WHERE " + TEACHER_ID + " = " + aTeacher.getId());
         db.close();
+        return true;
+    }
+
+    //update a teacher
+    //takes a teacher obj as a parameter
+    //updates the teacher based on its id
+    public boolean updateTeacher(Teacher aTeacher)
+    {
+        //get a ref to the database
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(FIRST_NAME, aTeacher.getFirstName());
+        values.put(LAST_NAME, aTeacher.getLastName());
+        values.put(EMAIL, aTeacher.getEmail());
+        values.put(PHONE_NUMBER, aTeacher.getPhoneNum());
+        values.put(TEACHER_IMAGE, aTeacher.getTeacherImage());
+        String whereClause = TEACHER_ID + "=" + aTeacher.getId();
+        db.update(TEACHER_TABLE, values, whereClause, null);
+
+        return true;
+    }
+
+    //update a student
+    //takes a student obj as a parameter
+    //updates the student based on its id
+    public boolean updateStudent(Student aStudent)
+    {
+        //get a ref to the database
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(S_FIRST_NAME, aStudent.getFirstName());
+        values.put(S_LAST_NAME, aStudent.getLastName());
+        values.put(AGE, aStudent.getAge());
+        values.put(S_TEACHER_ID, aStudent.getTeacherID());
+        values.put(STUDENT_IMAGE, aStudent.getStudentImage());
+        values.put(YEAR, aStudent.getYear());
+        String whereClause = STUDENT_ID + "=" + aStudent.getStudentID();
+        db.update(STUDENT_TABLE, values, whereClause, null);
+
+        return true;
+    }
+
+    //update a task
+    //takes a task obj as a parameter
+    //updates the task based on its id
+    public boolean updateTask(Task aTask)
+    {
+        //get a ref to the database
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(TASK_NAME, aTask.getTaskName());
+        values.put(DESCRIPTION, aTask.getDescription());
+        values.put(TASK_IMAGE, aTask.getTaskImage());
+        String whereClause = TASK_ID + "=" + aTask.getTaskID();
+        db.update(TASK_TABLE, values, whereClause, null);
+
         return true;
     }
 }

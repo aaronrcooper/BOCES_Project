@@ -98,9 +98,8 @@ public class TeacherListActivity extends AppCompatActivity {
 
     }
 
-    public void editTeacher(View view)
-    {
-
+    public void openEditTeacherActivity(View view){
+        startActivity(new Intent(TeacherListActivity.this, Edit_Teacher.class));
     }
 
 
@@ -121,7 +120,7 @@ public class TeacherListActivity extends AppCompatActivity {
         super.onActivityResult(requestCode,resultCode, data);
         //get the results from the image chooser activity
         if(requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
-
+        //TODO finish updating images, for some reason wont override old image
             if (requestCode == PICK_IMAGE) {
                 if (data == null) {//ensure data is not null
                     Toast.makeText(getApplicationContext(), "No photo was selected.", Toast.LENGTH_SHORT).show();
