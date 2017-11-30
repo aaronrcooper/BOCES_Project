@@ -156,26 +156,11 @@
         android:layout_height="50sp"
         android:background="#0090ff" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
         <Button
             android:id="@+id/btnSave"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight=".5"
+            android:layout_height="70sp"
             android:onClick="save"
             android:text="@string/btnSave" />
-
-        <Button
-            android:id="@+id/btnCancel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight=".5"
-            android:onClick=""
-            android:text="@string/btnCancel" />
-    </LinearLayout>
 
 </LinearLayout>
