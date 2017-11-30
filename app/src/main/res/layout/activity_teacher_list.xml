@@ -96,7 +96,7 @@
             android:text="@string/txtRemoveStudent" />
 
         <Button
-            android:id="@+id/btnRemoveAll"
+            android:id="@+id/btnEditTeacher"
             android:layout_width="104dp"
             android:layout_height="53dp"
             android:layout_weight=".33"

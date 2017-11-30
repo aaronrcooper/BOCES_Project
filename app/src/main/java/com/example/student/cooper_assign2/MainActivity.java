@@ -101,6 +101,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             btnClockIn.setEnabled(true);
         }
 
+        imgTask.setImageResource(R.mipmap.noimgavail);
+        imgTeacher.setImageResource(R.mipmap.noimgavail);
+        imgStudent.setImageResource(R.mipmap.noimgavail);
     }
 
 

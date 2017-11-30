@@ -11,6 +11,7 @@ public class Task implements Parcelable {
     private String taskName;
     private int taskID;
     private String description;
+    private boolean isDeletable;
     private byte[] taskImage;
 
 
@@ -86,5 +87,13 @@ public class Task implements Parcelable {
 
     public void setTaskImage(byte[] taskImage) {
         this.taskImage = taskImage;
+    }
+
+    public boolean isDeletable() {
+        return isDeletable;
+    }
+
+    public void setDeletable(boolean deletable) {
+        isDeletable = deletable;
     }
 }

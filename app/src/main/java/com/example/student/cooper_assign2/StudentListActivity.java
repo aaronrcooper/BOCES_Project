@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -44,6 +45,7 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
     EditText txtLastName;
     EditText txtAge;
     EditText txtYear;
+    Button btnEdit;
     //ListView
     ListView lstStudents;
     //Spinner
@@ -71,7 +73,7 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
         lstStudents = (ListView)findViewById(R.id.lstStudentsView);
         teacherListSpinner.setOnItemSelectedListener(this);
         imgStudentImage = (ImageView)findViewById(R.id.studentImage);
-
+        btnEdit = (Button)findViewById(R.id.btnEdit);
     }
 
     @Override
@@ -80,6 +82,8 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
         super.onResume();
         studentsList = myDBHelper.getAllStudents();
         teacherList = myDBHelper.getAllTeachers();
+        if(studentsList.isEmpty())
+            btnEdit.setEnabled(false);
         //Instantiated a studentAdapter
         studentAdapter = new StudentAdapter(this, R.layout.activity_list_item, studentsList);
         ListView listStudents = (ListView) findViewById(R.id.lstStudentsView);
@@ -147,6 +151,8 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
             txtLastName.setText("");
             txtAge.setText("");
             txtYear.setText("");
+            btnEdit.setEnabled(true);
+
         }
     }
 
@@ -176,6 +182,14 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
                 studentAdapter.notifyDataSetChanged();
             }
         }
+        if(studentsList.isEmpty())
+            btnEdit.setEnabled(false);
+        imgStudentImage.setImageResource(R.mipmap.noimgavail);
+        //clear all fields
+        txtFirstName.setText("");
+        txtLastName.setText("");
+        txtAge.setText("");
+        txtYear.setText("");
     }
 
     //addPicture

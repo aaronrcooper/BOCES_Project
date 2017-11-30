@@ -105,7 +105,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 DESCRIPTION + " TEXT, " +
                 TASK_IMAGE + " BLOB" +
                 ")";
-        //TODO make the task table store images
 
         String completedTaskTable = "CREATE TABLE " + COMPLETED_TASK_TABLE +
                 "(" +
@@ -536,6 +535,18 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         db.execSQL("DELETE FROM " + TEACHER_TABLE + " WHERE " + TEACHER_ID + " = " + aTeacher.getId());
+        db.close();
+        return true;
+    }
+
+    //delete a task
+    public boolean removeTask(Task aTask)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        db.execSQL("DELETE FROM " + TASK_TABLE + " WHERE " + TASK_ID + " = " + aTask.getTaskID());
+
         db.close();
         return true;
     }

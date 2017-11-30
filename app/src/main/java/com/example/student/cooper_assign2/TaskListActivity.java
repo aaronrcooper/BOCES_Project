@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,6 +30,7 @@ public class TaskListActivity extends AppCompatActivity {
     private List<Task> taskList;
     EditText txtTaskName;
     EditText txtTaskDescr;
+    Button btnEdit;
     public static final int PICK_IMAGE = 1;
     ImageView imgTaskImage;
     Bitmap taskImage = null;
@@ -41,12 +43,15 @@ public class TaskListActivity extends AppCompatActivity {
         txtTaskName = (EditText)findViewById(R.id.txtTaskName);
         txtTaskDescr = (EditText)findViewById(R.id.txtTaskDescr);
         imgTaskImage = (ImageView)findViewById(R.id.taskImage);
+        btnEdit = (Button)findViewById(R.id.btnEditTask);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         taskList = myDBHelper.getAllTasks();
+        if(taskList.isEmpty())
+            btnEdit.setEnabled(false);
         adapter = new MyAdapter(this, R.layout.activity_list_item, taskList);
         lstTaskView = (ListView) findViewById(R.id.lstTasks);
         lstTaskView.setAdapter(adapter);
@@ -93,15 +98,37 @@ public class TaskListActivity extends AppCompatActivity {
             //clear all fields
             txtTaskName.setText("");
             txtTaskDescr.setText("");
+            imgTaskImage.setImageResource(R.mipmap.noimgavail);
+            btnEdit.setEnabled(true);
         }
     }
 
     //method to remove tasks
-    //TODO change this from remove all tasks to remove 1 task
     public void removeTasks(View view)
     {
-        myDBHelper.removeAllTasks(taskList);
+        for(Task aTask: taskList)
+        {
+            if(aTask.isDeletable())
+            {
+                myDBHelper.removeTask(aTask);
+                //adapter.remove(aTeacher);
+                //
+                taskList = myDBHelper.getAllTasks();
+            }
+        }
+        //Instantiated an adapter
+        adapter = new TaskListActivity.MyAdapter(this, R.layout.activity_list_item, taskList);
+        ListView listTasks = (ListView) findViewById(R.id.lstTasks);
+        listTasks.setAdapter(adapter);
+        if(taskList.isEmpty())
+            btnEdit.setEnabled(false);
+        imgTaskImage.setImageResource(R.mipmap.noimgavail);
+        //clear all fields
+        txtTaskDescr.setText("");
+        txtTaskName.setText("");
         adapter.notifyDataSetChanged();
+        if(taskList.isEmpty())
+            btnEdit.setEnabled(false);
     }
 
 
@@ -165,6 +192,9 @@ public class TaskListActivity extends AppCompatActivity {
                     public void onClick(View view) {
                         CheckBox cb = (CheckBox) view;
                         Task changeTask = (Task) cb.getTag();
+                        changeTask.setDeletable(true);
+                        txtTaskName.setText(changeTask.getTaskName());
+                        txtTaskDescr.setText(changeTask.getDescription());
                     }
                 });
             } else {

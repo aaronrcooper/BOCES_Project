@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,6 +31,7 @@ public class TeacherListActivity extends AppCompatActivity {
     EditText txtLastName;
     EditText txtEmail;
     EditText txtPhone;
+    Button btnEdit;
     ImageView imgTeacherImage;
     protected DBHelper myDBHelper;
     private List<Teacher> teacherList;
@@ -50,12 +52,15 @@ public class TeacherListActivity extends AppCompatActivity {
         txtEmail = (EditText)findViewById(R.id.txtEmail);
         txtPhone = (EditText)findViewById(R.id.txtPhone);
         imgTeacherImage = (ImageView)findViewById(R.id.teacherImage);
+        btnEdit = (Button)findViewById(R.id.btnEditTeacher);
 
     }
     //Determines what happens when the app is resumed
     protected void onResume() {
         super.onResume();
         teacherList = myDBHelper.getAllTeachers();
+        if(teacherList.isEmpty())
+            btnEdit.setEnabled(false);
         //Instantiated an adapter
         adapter = new MyAdapter(this, R.layout.activity_list_item, teacherList);
         ListView listTeachers = (ListView) findViewById(R.id.lstTeachersView);
@@ -94,12 +99,20 @@ public class TeacherListActivity extends AppCompatActivity {
         adapter = new MyAdapter(this, R.layout.activity_list_item, teacherList);
         ListView listTeachers = (ListView) findViewById(R.id.lstTeachersView);
         listTeachers.setAdapter(adapter);
-        //adapter.notifyDataSetChanged();
+        if(teacherList.isEmpty())
+            btnEdit.setEnabled(false);
+        imgTeacherImage.setImageResource(R.mipmap.noimgavail);
+        //clear all fields
+        txtFirstName.setText("");
+        txtLastName.setText("");
+        txtEmail.setText("");
+        txtPhone.setText("");
+
 
     }
 
     public void openEditTeacherActivity(View view){
-        startActivity(new Intent(TeacherListActivity.this, Edit_Teacher.class));
+            startActivity(new Intent(TeacherListActivity.this, Edit_Teacher.class));
     }
 
 
@@ -120,7 +133,6 @@ public class TeacherListActivity extends AppCompatActivity {
         super.onActivityResult(requestCode,resultCode, data);
         //get the results from the image chooser activity
         if(requestCode == PICK_IMAGE && resultCode == Activity.RESULT_OK) {
-        //TODO finish updating images, for some reason wont override old image
             if (requestCode == PICK_IMAGE) {
                 if (data == null) {//ensure data is not null
                     Toast.makeText(getApplicationContext(), "No photo was selected.", Toast.LENGTH_SHORT).show();
@@ -185,6 +197,7 @@ public class TeacherListActivity extends AppCompatActivity {
             txtLastName.setText("");
             txtEmail.setText("");
             txtPhone.setText("");
+            btnEdit.setEnabled(true);
         }
     }
 

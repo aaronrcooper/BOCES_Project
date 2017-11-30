@@ -14,7 +14,6 @@ public class AdminView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_view);
-        //TODO create calendar object to grab start and end datetime
     }
 
     @Override

@@ -5,6 +5,7 @@ package com.example.student.cooper_assign2;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -77,6 +78,23 @@ public class ClockedInActivity extends AppCompatActivity {
         timer.schedule(timerTask,TIMER_DELAY, TIMER_DELAY);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        cal = null;
+        cal = Calendar.getInstance();
+        //Cancels the timer if it already exists
+        if (timer != null)
+        {
+            timer.cancel();
+            timer = null;
+        }
+        final String calFinish = timeFormat.format(cal.getTime());
+        finishTime = calFinish;
+        //Adds the completed task to the database
+        myDBHelper.addCompletedTask(currentStudent, currentTask, startTime, finishTime, date, timeSpentOnTask);
+    }
+
     //ClockOut method
     public void clockOut(View v)
     {
@@ -103,7 +121,7 @@ public class ClockedInActivity extends AppCompatActivity {
             //calc the elapsed milliseconds, seconds, mins and hours
             elapsedMs = currentTime - startingTime;
             final int seconds = (int) ((elapsedMs /1000)%60);
-            final int minutes = (int) (elapsedMs /60000);
+            final int minutes = (int) ((elapsedMs /60000)%60);
             final int hours = (int) (elapsedMs / 3600000);
             //display the time to the user
 
