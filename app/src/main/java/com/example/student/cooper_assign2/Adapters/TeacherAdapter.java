@@ -1,6 +1,7 @@
 package com.example.student.cooper_assign2.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,8 +52,11 @@ public class TeacherAdapter extends ArrayAdapter<Teacher> {
         Teacher current = teacherList.get(position);
         teacher.setText(current.getFirstName() + " " + current.getLastName());
         teacher.setTag(current);
-        teacherImage.setImageBitmap(ImageUtils.getImage(current.getTeacherImage()));
-        teacherImage.setTag(current);
+
+        //resize image so all images are consistent
+        Bitmap teacherResizedImage = ImageUtils.getImage(current.getTeacherImage());
+        teacherResizedImage = ImageUtils.resizeImage(teacherResizedImage);
+        teacherImage.setImageBitmap(teacherResizedImage);
         return convertView;
     }
     public View getDropDownView(int position, View convertView,

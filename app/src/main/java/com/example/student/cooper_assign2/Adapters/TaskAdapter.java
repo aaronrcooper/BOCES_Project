@@ -1,6 +1,7 @@
 package com.example.student.cooper_assign2.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +49,10 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         Task current = taskList.get(position);
         task.setText(current.getTaskName() + " " + current.getDescription());
         task.setTag(current);
-        taskImage.setImageBitmap(ImageUtils.getImage(current.getTaskImage()));
+        //resize image so all images are consistent
+        Bitmap taskResizedImage = ImageUtils.getImage(current.getTaskImage());
+        taskResizedImage = ImageUtils.resizeImage(taskResizedImage);
+        taskImage.setImageBitmap(taskResizedImage);
         taskImage.setTag(current);
         return convertView;
     }

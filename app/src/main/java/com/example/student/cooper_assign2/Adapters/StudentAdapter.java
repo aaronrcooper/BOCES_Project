@@ -1,6 +1,7 @@
 package com.example.student.cooper_assign2.Adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,7 +52,10 @@ public class StudentAdapter extends ArrayAdapter<Student> {
         student.setText(current.getFirstName() + " " + current.getLastName());
         student.setTag(current);
         //Sets imageView properties
-        studentImage.setImageBitmap(ImageUtils.getImage(current.getStudentImage()));
+        //resize image so all images are consistent
+        Bitmap studentResizedImage = ImageUtils.getImage(current.getStudentImage());
+        studentResizedImage = ImageUtils.resizeImage(studentResizedImage);
+        studentImage.setImageBitmap(studentResizedImage);
         studentImage.setTag(current);
         //return
         return convertView;
