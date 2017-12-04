@@ -27,20 +27,15 @@
         android:layout_width="match_parent"
         android:layout_height="60sp"
         android:orientation="horizontal">
-            <Spinner
-                android:id="@+id/spinTeachers"
-                android:layout_width="0dp"
-                android:layout_height="60sp"
-                android:layout_marginBottom="15sp"
-                android:background="#0090ff"
-                android:layout_weight=".75"/>
 
-        <ImageView
-            android:id="@+id/imgMainTeacher"
+        <Spinner
+            android:id="@+id/spinTeachers"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            app:srcCompat="@color/colorAccent"
-            android:layout_weight=".25"/>
+            android:layout_height="60sp"
+            android:layout_marginBottom="15sp"
+            android:layout_weight=".75"
+            android:background="#0079C2" />
+
     </LinearLayout>
 
     <TextView
@@ -53,20 +48,15 @@
         android:layout_width="match_parent"
         android:layout_height="60sp"
         android:orientation="horizontal">
-            <Spinner
-                android:id="@+id/spinStudent"
-                android:layout_width="0dp"
-                android:layout_height="60sp"
-                android:layout_marginBottom="15sp"
-                android:background="#0090ff"
-                android:layout_weight=".75"/>
-            <ImageView
-                android:id="@+id/imgMainStudent"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                app:srcCompat="@color/colorAccent"
-                android:layout_weight=".25"/>
-        </LinearLayout>
+
+        <Spinner
+            android:id="@+id/spinStudent"
+            android:layout_width="0dp"
+            android:layout_height="60sp"
+            android:layout_marginBottom="15sp"
+            android:layout_weight=".75"
+            android:background="#0079C2" />
+    </LinearLayout>
 
     <TextView
         android:id="@+id/lblTask"
@@ -94,14 +84,8 @@
             android:layout_width="0dp"
             android:layout_height="60sp"
             android:layout_marginBottom="10sp"
-            android:background="#0090ff"
-            android:layout_weight=".75"/>
-        <ImageView
-            android:id="@+id/imgMainTask"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            app:srcCompat="@color/colorAccent"
-            android:layout_weight=".25"/>
+            android:layout_weight=".75"
+            android:background="#0079C2" />
     </LinearLayout>
 
     <Button

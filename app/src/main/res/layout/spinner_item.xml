@@ -4,7 +4,7 @@
     style="?android:attr/spinnerItemStyle"
     android:layout_width="fill_parent"
     android:layout_height="50sp"
-    android:background="#0090ff"
+    android:background="#0079C2"
     android:ellipsize="middle"
     android:gravity="center"
     android:singleLine="true"
