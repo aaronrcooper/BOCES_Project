@@ -38,14 +38,14 @@ public class StudentAdapter extends ArrayAdapter<Student> {
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.spinner_with_image_item, parent, false);
-            student = (TextView) convertView.findViewById(R.id.spinnerItemTextView);
-            studentImage = (ImageView) convertView.findViewById(R.id.spinnerImageView);
-            convertView.setTag(student);
 
-        } else {
-            student = (TextView) convertView.getTag();
-            studentImage = (ImageView) convertView.getTag();
+
         }
+        //Sets view objects
+        student = (TextView) convertView.findViewById(R.id.spinnerItemTextView);
+        studentImage = (ImageView) convertView.findViewById(R.id.spinnerImageView);
+        convertView.setTag(student);
+
         Student current = studentList.get(position);
         //Sets TextView properties
         student.setText(current.getFirstName() + " " + current.getLastName());

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Student on 11/30/2017.
+ * Created by Aaron Cooper on 11/30/2017.
  */
 
 //*******************TEACHER ADAPTER**************************
@@ -42,38 +42,22 @@ public class TeacherAdapter extends ArrayAdapter<Teacher> {
             teacherImage = (ImageView) convertView.findViewById(R.id.spinnerImageView);
             convertView.setTag(teacher);
 
-        } else {
-            teacher = (TextView) convertView.getTag();
-            teacherImage = (ImageView) convertView.getTag();
         }
+        //Sets view objects
+        teacher = (TextView) convertView.findViewById(R.id.spinnerItemTextView);
+        teacherImage = (ImageView) convertView.findViewById(R.id.spinnerImageView);
+        convertView.setTag(teacher);
+        //Sets properties of views
         Teacher current = teacherList.get(position);
-        //Sets text
         teacher.setText(current.getFirstName() + " " + current.getLastName());
         teacher.setTag(current);
-        //Sets image
         teacherImage.setImageBitmap(ImageUtils.getImage(current.getTeacherImage()));
         teacherImage.setTag(current);
         return convertView;
     }
     public View getDropDownView(int position, View convertView,
                                 ViewGroup parent) {
-        TextView teacherView =null;
-        ImageView teacherImage = null;
-        if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) context
-                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.spinner_with_image_item, parent, false);
-            teacherView = (TextView) convertView.findViewById(R.id.spinnerItemTextView);
-            convertView.setTag(teacherView);
-
-        } else {
-            teacherView = (TextView) convertView.getTag();
-            teacherImage = (ImageView) convertView.getTag();
-        }
-        teacherView.setText(teacherList.get(position).getFirstName() + " " + teacherList.get(position).getLastName());
-        teacherView.setHeight(60);
-        teacherImage.setImageBitmap(ImageUtils.getImage(teacherList.get(position).getTeacherImage()));
-        return convertView;
+        return getView(position, convertView, parent);
     }
     public Teacher getPosition(int position)
     {

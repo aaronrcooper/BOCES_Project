@@ -38,8 +38,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     Teacher currentTeacher;
     Student currentStudent;
     Task currentTask;
-    ImageView imgTeacher, imgStudent, imgTask;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,28 +58,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         teacherSpinner = (Spinner) findViewById(R.id.spinTeachers);
         taskSpinner = (Spinner) findViewById(R.id.spinTask);
         //Sets the adapter for the teacher spinner
-        //TODO change to spinner with image
         teacherAdapter = new TeacherAdapter(getApplicationContext(), R.layout.spinner_with_image_item, teacherList);
-        teacherAdapter.setDropDownViewResource(R.layout.spinner_with_image_item);
+        //teacherAdapter.setDropDownViewResource(R.layout.spinner_with_image_item);
         teacherSpinner.setAdapter(teacherAdapter);
         teacherSpinner.setOnItemSelectedListener(this);
         //Sets the adapter for the student spinner
-        //TODO change value to spinner with image
         studentAdapter = new StudentAdapter(getApplicationContext(), R.layout.spinner_with_image_item, studentList);
-        studentAdapter.setDropDownViewResource(R.layout.spinner_with_image_item);
+        //studentAdapter.setDropDownViewResource(R.layout.spinner_with_image_item);
         studentSpinner.setAdapter(studentAdapter);
         studentSpinner.setOnItemSelectedListener(this);
         //sets the adapter for the task spinner
-        //TODO change value to spinner with image
         taskAdapter = new TaskAdapter(getApplicationContext(), R.layout.spinner_with_image_item, taskList);
-        taskAdapter.setDropDownViewResource(R.layout.spinner_with_image_item);
+        //taskAdapter.setDropDownViewResource(R.layout.spinner_with_image_item);
         taskSpinner.setAdapter(taskAdapter);
         taskSpinner.setOnItemSelectedListener(this);
         //get references to imageviews
-        imgTeacher = (ImageView) findViewById(R.id.imgMainTeacher);
-        imgStudent = (ImageView) findViewById(R.id.imgMainStudent);
-        //*****************UNCOMMENT THIS WHEN ADDING TASK IMAGES**********
-        imgTask = (ImageView) findViewById(R.id.imgMainTask);
 
         btnClockIn = (Button) findViewById(R.id.btnClockIn);
         studentAdapter.setDropDownViewResource(R.layout.spinner_with_image_item);
@@ -118,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         if (spinner.getId() == R.id.spinTeachers) {
             //Gets the selected teacher object
             currentTeacher = teacherAdapter.getItem(position);
-            imgTeacher.setImageBitmap(ImageUtils.getImage(currentTeacher.getTeacherImage()));
             studentList = myDBHelper.getStudentsByTeacher(currentTeacher);
             //Sets the adapter to null (for garbage collection) and creates a new adapter for the new list
             studentAdapter = null;
@@ -127,11 +117,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             studentSpinner.setAdapter(studentAdapter);
         } else if (spinner.getId() == R.id.spinStudent) {
             currentStudent = studentAdapter.getItem(position);
-            if (currentStudent.getStudentImage() != null)
-                imgStudent.setImageBitmap(ImageUtils.getImage(currentStudent.getStudentImage()));
         } else if (spinner.getId() == R.id.spinTask) {
             currentTask = taskAdapter.getItem(position);
-            imgTask.setImageBitmap(ImageUtils.getImage(currentTask.getTaskImage()));
         }
     }
 

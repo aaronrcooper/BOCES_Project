@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Student on 11/30/2017.
+ * Created by Aaron Cooper on 11/30/2017.
  */
 
 //**************TASK ADAPTER*********************************
@@ -38,20 +38,16 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         if(convertView == null){
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.spinner_with_image_item, parent, false);
-            task = (TextView) convertView.findViewById(R.id.spinnerItemTextView);
-            taskImage = (ImageView) convertView.findViewById(R.id.spinnerImageView);
-            convertView.setTag(task);
+
         }
-        else
-        {
-            task = (TextView) convertView.getTag();
-            taskImage = (ImageView) convertView.getTag();
-        }
+        //Sets view objects
+        task = (TextView) convertView.findViewById(R.id.spinnerItemTextView);
+        taskImage = (ImageView) convertView.findViewById(R.id.spinnerImageView);
+        convertView.setTag(task);
+        //Sets properties of views
         Task current = taskList.get(position);
-        //Sets textview properties
         task.setText(current.getTaskName() + " " + current.getDescription());
         task.setTag(current);
-        //sets imageview properties
         taskImage.setImageBitmap(ImageUtils.getImage(current.getTaskImage()));
         taskImage.setTag(current);
         return convertView;
@@ -59,26 +55,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
 
     public View getDropDownView(int position, View convertView, ViewGroup parent)
     {
-        TextView task = null;
-        ImageView taskImage = null;
-        if(convertView == null){
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.spinner_with_image_item, parent, false);
-            task = (TextView) convertView.findViewById(R.id.spinnerItemTextView);
-            taskImage = (ImageView) convertView.findViewById(R.id.spinnerImageView);
-            convertView.setTag(task);
-        }
-        else
-        {
-            task = (TextView) convertView.getTag();
-            taskImage = (ImageView) convertView.getTag();
-        }
-        //Task current = taskList.get(position);
-        //Sets textview properties
-        task.setText(taskList.get(position).getTaskName() + " " + taskList.get(position).getDescription());
-        //sets imageview properties
-        taskImage.setImageBitmap(ImageUtils.getImage(taskList.get(position).getTaskImage()));
-        return convertView;
+        return getView(position, convertView, parent);
     }
     public Task getPosition(int position)
     {
