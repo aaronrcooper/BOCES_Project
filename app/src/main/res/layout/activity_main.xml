@@ -35,12 +35,6 @@
                 android:background="#0090ff"
                 android:layout_weight=".75"/>
 
-        <ImageView
-            android:id="@+id/imgMainTeacher"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            app:srcCompat="@color/colorAccent"
-            android:layout_weight=".25"/>
     </LinearLayout>
 
     <TextView
@@ -60,13 +54,7 @@
                 android:layout_marginBottom="15sp"
                 android:background="#0090ff"
                 android:layout_weight=".75"/>
-            <ImageView
-                android:id="@+id/imgMainStudent"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                app:srcCompat="@color/colorAccent"
-                android:layout_weight=".25"/>
-        </LinearLayout>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/lblTask"
@@ -96,12 +84,6 @@
             android:layout_marginBottom="10sp"
             android:background="#0090ff"
             android:layout_weight=".75"/>
-        <ImageView
-            android:id="@+id/imgMainTask"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            app:srcCompat="@color/colorAccent"
-            android:layout_weight=".25"/>
     </LinearLayout>
 
     <Button
