@@ -27,13 +27,14 @@
         android:layout_width="match_parent"
         android:layout_height="60sp"
         android:orientation="horizontal">
-            <Spinner
-                android:id="@+id/spinTeachers"
-                android:layout_width="0dp"
-                android:layout_height="60sp"
-                android:layout_marginBottom="15sp"
-                android:background="#0090ff"
-                android:layout_weight=".75"/>
+
+        <Spinner
+            android:id="@+id/spinTeachers"
+            android:layout_width="0dp"
+            android:layout_height="60sp"
+            android:layout_marginBottom="15sp"
+            android:layout_weight=".75"
+            android:background="#0079C2" />
 
     </LinearLayout>
 
@@ -47,13 +48,14 @@
         android:layout_width="match_parent"
         android:layout_height="60sp"
         android:orientation="horizontal">
-            <Spinner
-                android:id="@+id/spinStudent"
-                android:layout_width="0dp"
-                android:layout_height="60sp"
-                android:layout_marginBottom="15sp"
-                android:background="#0090ff"
-                android:layout_weight=".75"/>
+
+        <Spinner
+            android:id="@+id/spinStudent"
+            android:layout_width="0dp"
+            android:layout_height="60sp"
+            android:layout_marginBottom="15sp"
+            android:layout_weight=".75"
+            android:background="#0079C2" />
     </LinearLayout>
 
     <TextView
@@ -82,8 +84,8 @@
             android:layout_width="0dp"
             android:layout_height="60sp"
             android:layout_marginBottom="10sp"
-            android:background="#0090ff"
-            android:layout_weight=".75"/>
+            android:layout_weight=".75"
+            android:background="#0079C2" />
     </LinearLayout>
 
     <Button
