@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BOCES_Project.iml" filepath="$PROJECT_DIR$/BOCES_Project.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Cooper_Assign2.iml" filepath="$PROJECT_DIR$/Cooper_Assign2.iml" />
+      <module fileurl="file://C:\Users\Student\Desktop\BOCES_Project\Cooper_Assign2.iml" filepath="C:\Users\Student\Desktop\BOCES_Project\Cooper_Assign2.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

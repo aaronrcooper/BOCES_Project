@@ -131,10 +131,9 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
 
 
     //Creates a PDF File for the report
-    public void createPDF(View view) throws DocumentException, FileNotFoundException
-    {
+    public void createPDF(View view) throws DocumentException, FileNotFoundException {
         tasks = null;
-        if(chkAllStudents.isChecked())
+        if (chkAllStudents.isChecked())
             tasks = myDBHelper.getCompletedTasksByTeacher(currentTeacher);
         else
             tasks = myDBHelper.getCompletedTasksByStudent(currentStudent);
@@ -162,10 +161,8 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
         //Creates a file object to output to
         File file = new File(path);
         //Creates a new file if the file does not already exist
-        if(!file.exists() && !tasks.isEmpty())
-        {
-            try
-            {
+        if (!file.exists() && !tasks.isEmpty()) {
+            try {
                 //Creates a new file
                 file.createNewFile();
                 //Creates new document type
@@ -180,20 +177,11 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
                 table.addCell(createCell("Date Completed", 1, 1, Element.ALIGN_CENTER));
                 table.addCell(createCell("Time", 1, 1, Element.ALIGN_CENTER));
                 Student current = null;
-                for (Completed_Task task : tasks)
-                {
-                    //if(task.getDate_completed() > )
-                    document.add(new Paragraph("Student: " + myDBHelper.getStudent(task.getStudentID()).getFullName() + "\n" +
-                            "    Task: " + task.getTaskID() + "\n " +
-                            "    Date Completed: " + task.getDate_completed() + "\n" +
-                            "    Time Spent on Task: " + task.getTimeSpent() + "\n"));
-                    if (current == null || current.getStudentID() != task.getStudentID())
-                    {
+                for (Completed_Task task : tasks) {
+                    if (current == null || current.getStudentID() != task.getStudentID()) {
                         current = myDBHelper.getStudent(task.getStudentID());
                         table.addCell(createCell(current.getFullName(), 1, 1, Element.ALIGN_CENTER));
-                    }
-                    else
-                    {
+                    } else {
                         table.addCell(createCell("", 1, 1, Element.ALIGN_CENTER));
                     }
                     table.addCell(createCell(myDBHelper.getTask(task.getTaskID()).getTaskName(), 1, 1, Element.ALIGN_CENTER));
@@ -206,26 +194,18 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
                 //display toast on success
                 Toast.makeText(getApplicationContext(), "Document successfully created in " + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), Toast.LENGTH_SHORT).show();
 
-            }
-            catch (IOException ex)
-            {
+            } catch (IOException ex) {
+                displayToastError();
+            } catch (IllegalStateException exc) {
                 displayToastError();
             }
-            catch (IllegalStateException exc)
-            {
-                displayToastError();
-            }
-        }
-        else
-        {
-            displayToastError();
-        }
-        else
-        {
-            if(tasks.isEmpty())
+        } else {
+            if (tasks.isEmpty())
                 Toast.makeText(getApplicationContext(), "There are no tasks to be reported.", Toast.LENGTH_LONG).show();
-            else
-                Toast.makeText(getApplicationContext(), "An error occurred while generating the report.", Toast.LENGTH_LONG).show();
+            else {
+                displayToastError();
+            }
+        }
     }
 
     public void displayToastError()
@@ -242,20 +222,4 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
         cell.setHorizontalAlignment(alignment);
         return cell;
     }
-
-    //*******************TEACHER ADAPTER**************************
-    private class TeacherAdapter extends ArrayAdapter<Teacher> {
-        Context context;
-        List<Teacher> teacherList = new ArrayList<Teacher>();
-
-        //Constructor
-        public TeacherAdapter(Context c, int rId, List<Teacher> objects) {
-            super(c, rId, objects);
-            teacherList = objects;
-            context = c;
-        }
-
-
-    }
-
 }

@@ -72,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         taskAdapter = new TaskAdapter(getApplicationContext(), R.layout.spinner_with_image_item, taskList);
         taskSpinner.setAdapter(taskAdapter);
         taskSpinner.setOnItemSelectedListener(this);
-<<<<<<< HEAD
         //get refs to login text fields
         txtTeacherEmail = (EditText)findViewById(R.id.txtTeacherEmailLog);
         txtTeacherID = (EditText)findViewById(R.id.txtTeacherID);
