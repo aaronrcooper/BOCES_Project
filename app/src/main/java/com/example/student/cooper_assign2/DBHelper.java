@@ -290,11 +290,7 @@ public class DBHelper extends SQLiteOpenHelper {
         //it in a list
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        //loop through the teachers and:
-        //*create a new Teacher obj and instantiate it
-        //*set the attributes for that obj
-        //*add the object to the list
-        //*move the cursor to the next item
+        //loop through the task attributes and input the values necessary to input to db
         if(cursor.moveToFirst()) {
             do {
                 //create a new completed_task object
@@ -361,7 +357,7 @@ public class DBHelper extends SQLiteOpenHelper {
         //create a list of student objects
         Student student = null;
 
-        //select all query from the Student table
+        //select query from the Student table
         String selectQuery = "SELECT * FROM " + STUDENT_TABLE + " WHERE " + STUDENT_ID + " = " + id ;
 
         //get a reference to the database
@@ -390,8 +386,42 @@ public class DBHelper extends SQLiteOpenHelper {
             }while(cursor.moveToNext());
 
         }
-        //return the list of teachers
+        //return the student
         return student;
+    }
+    public Task getTask(int id)
+    {
+        //create a list of student objects
+        Task task = null;
+
+        //select querty from task table
+        String selectQuery = "SELECT * FROM " + TASK_TABLE + " WHERE " + TASK_ID + " = " + id ;
+
+        //get a reference to the database
+        SQLiteDatabase db = this.getWritableDatabase();
+        //create a cursor object to take data from the database and display
+        //it in a list
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        //loop through the students and:
+        //*create a new Student obj and instantiate it
+        //*set the attributes for that obj
+        //*add the object to the list
+        //*move the cursor to the next item
+        if(cursor.moveToFirst()) {
+            do {
+                //create a new Student obj
+                task = new Task();
+                //set the attributes
+                task.setTaskID(cursor.getInt(0));
+                task.setTaskName(cursor.getString(1));
+                task.setDescription(cursor.getString(2));
+                task.setTaskImage(cursor.getBlob(3));
+            }while(cursor.moveToNext());
+
+        }
+        //return the task
+        return task;
     }
 
     //get all tasks

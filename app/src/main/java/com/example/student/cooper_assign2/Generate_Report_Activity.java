@@ -34,8 +34,12 @@ import java.util.Locale;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 public class Generate_Report_Activity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -128,13 +132,21 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
                 Document document = new Document();
                 PdfWriter.getInstance(document, new FileOutputStream(file.getAbsoluteFile()));
                 document.open();
+                //Creates a PDF table
+                PdfPTable table = new PdfPTable(4);
+                //Sets the column headers
+                table.addCell(createCell("Student", 1, 1, Element.ALIGN_CENTER));
+                table.addCell(createCell("Task", 1, 1, Element.ALIGN_CENTER));
+                table.addCell(createCell("Date Completed", 1, 1, Element.ALIGN_CENTER));
+                table.addCell(createCell("Time", 1, 1, Element.ALIGN_CENTER));
                 for (Completed_Task task : tasks)
                 {
-                    document.add(new Paragraph("Student: " + myDBHelper.getStudent(task.getStudentID()).getFullName() + "\n" +
-                            "    Task: " + task.getTaskID() + "\n " +
-                            "    Date Completed: " + task.getDate_completed() + "\n" +
-                            "    Time Spent on Task: " + task.getTimeSpent() + "\n"));
+                    table.addCell(createCell(myDBHelper.getStudent(task.getStudentID()).getFullName(), 1, 1, Element.ALIGN_CENTER));
+                    table.addCell(createCell(myDBHelper.getTask(task.getTaskID()).getTaskName(), 1, 1, Element.ALIGN_CENTER));
+                    table.addCell(createCell(task.getDate_completed(), 1, 1, Element.ALIGN_CENTER));
+                    table.addCell(createCell(task.getTimeSpent(), 1, 1, Element.ALIGN_CENTER));
                 }
+                document.add(table);
                 //Close document
                 document.close();
                 //display toast on success
@@ -160,6 +172,17 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
     {
         Toast.makeText(getApplicationContext(), "An error occurred while generating the report.", Toast.LENGTH_LONG).show();
     }
+
+
+    //Method to create table cells in a PDF
+    public PdfPCell createCell(String content, float borderWidth, int colspan, int alignment) {
+        PdfPCell cell = new PdfPCell(new Phrase(content));
+        cell.setBorderWidth(borderWidth);
+        cell.setColspan(colspan);
+        cell.setHorizontalAlignment(alignment);
+        return cell;
+    }
+    
     //*******************TEACHER ADAPTER**************************
     private class TeacherAdapter extends ArrayAdapter<Teacher> {
         Context context;
