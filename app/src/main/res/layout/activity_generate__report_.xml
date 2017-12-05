@@ -18,7 +18,8 @@
     <Spinner
         android:id="@+id/report_teacher_spinner"
         android:layout_width="match_parent"
-        android:layout_height="50sp" />
+        android:layout_height="50sp"
+        android:background="#0079C2" />
 
     <TextView
         android:id="@+id/lblSelectStudentRep"
@@ -31,7 +32,8 @@
     <Spinner
         android:id="@+id/spinStudentReport"
         android:layout_width="match_parent"
-        android:layout_height="50sp" />
+        android:layout_height="50sp"
+        android:background="#0079C2" />
 
     <CheckBox
         android:id="@+id/chkAllStudents"

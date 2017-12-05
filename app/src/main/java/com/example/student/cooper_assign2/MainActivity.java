@@ -78,8 +78,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         //clear login text
         txtTeacherEmail.setText("");
         txtTeacherID.setText("");
-        //get references to imageviews
-
         btnClockIn = (Button) findViewById(R.id.btnClockIn);
         studentAdapter.setDropDownViewResource(R.layout.spinner_with_image_item);
         teacherSpinner.setAdapter(teacherAdapter);

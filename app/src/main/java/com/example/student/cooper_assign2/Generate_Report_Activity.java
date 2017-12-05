@@ -171,12 +171,14 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
                 document.open();
                 //Creates a PDF table
                 PdfPTable table = new PdfPTable(4);
+                table.addCell(createCell("Report generated for teacher: " + currentTeacher.getFirstName() + " " + currentTeacher.getLastName(), 1, 4, Element.ALIGN_LEFT));
                 //Sets the column headers
                 table.addCell(createCell("Student", 1, 1, Element.ALIGN_CENTER));
                 table.addCell(createCell("Task", 1, 1, Element.ALIGN_CENTER));
                 table.addCell(createCell("Date Completed", 1, 1, Element.ALIGN_CENTER));
                 table.addCell(createCell("Time", 1, 1, Element.ALIGN_CENTER));
                 Student current = null;
+
                 for (Completed_Task task : tasks) {
                     if (current == null || current.getStudentID() != task.getStudentID()) {
                         current = myDBHelper.getStudent(task.getStudentID());
@@ -220,6 +222,7 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
         cell.setBorderWidth(borderWidth);
         cell.setColspan(colspan);
         cell.setHorizontalAlignment(alignment);
+        cell.setPaddingBottom(6.0F);
         return cell;
     }
 }
