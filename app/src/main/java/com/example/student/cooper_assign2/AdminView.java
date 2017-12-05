@@ -5,15 +5,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
 public class AdminView extends AppCompatActivity {
 
+    Teacher loggedTeacher;
+    TextView lblWelcome;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_view);
+        //get teacher that logged in from previous activity
+        Bundle data = getIntent().getExtras();
+        loggedTeacher = (Teacher) data.getParcelable("teacher");
+        //set teacher name on welcome message
+        lblWelcome = (TextView)findViewById(R.id.lblWelcomeTeacher);
+        lblWelcome.setText("Welcome " + loggedTeacher.getFirstName() + "!");
     }
 
     @Override

@@ -10,9 +10,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.student.cooper_assign2.Adapters.StudentAdapter;
 import com.example.student.cooper_assign2.Adapters.TaskAdapter;
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     Teacher currentTeacher;
     Student currentStudent;
     Task currentTask;
+    EditText txtTeacherEmail, txtTeacherID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         //taskAdapter.setDropDownViewResource(R.layout.spinner_with_image_item);
         taskSpinner.setAdapter(taskAdapter);
         taskSpinner.setOnItemSelectedListener(this);
+        //get refs to login text fields
+        txtTeacherEmail = (EditText)findViewById(R.id.txtTeacherEmailLog);
+        txtTeacherID = (EditText)findViewById(R.id.txtTeacherID);
+        //clear login text
+        txtTeacherEmail.setText("");
+        txtTeacherID.setText("");
         //get references to imageviews
 
         btnClockIn = (Button) findViewById(R.id.btnClockIn);
@@ -85,11 +94,59 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
+    //handleLogin
+    //click event handler for the admin login button
+    public void handleLogin(View view)
+    {
+        //get the entered teacher id and email
+        String teacherEmail = txtTeacherEmail.getText().toString();
+        String teacherIDString = txtTeacherID.getText().toString();
+        int teacherID =-1;
+        Teacher logTeacher = null;
+        if(teacherEmail.isEmpty() || teacherIDString.isEmpty())
+        {
+            Toast.makeText(getApplicationContext(), "All login fields must be filled in", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            teacherID = Integer.parseInt(teacherIDString);
+        }
+        boolean validLogin = true;
+        if(teacherID!= -1) {
+            //get the teacher based on the id
+            logTeacher = myDBHelper.getTeacher(teacherID);
+        }
+        if(logTeacher == null)
+        {
+            Toast.makeText(getApplicationContext(), "An invalid teacher id was entered", Toast.LENGTH_SHORT).show();
+            validLogin = false;
+        }
+        else if(!logTeacher.getEmail().equalsIgnoreCase(teacherEmail))
+        {
+            Toast.makeText(getApplicationContext(), "Email and Teacher ID do not match", Toast.LENGTH_SHORT).show();
+            validLogin = false;
+        }
+
+        if(teacherEmail.equalsIgnoreCase("Admin") && teacherID == 99999)
+        {
+            validLogin = true;
+            logTeacher = new Teacher("Admin", "ln", "1", "1");
+            logTeacher.setTeacherImage(null);
+            logTeacher.setDeletable(false);
+            logTeacher.setId(99999);
+        }
+        if(validLogin)
+        {
+            startAdminView(logTeacher);
+        }
+    }
+
     //************CLICK EVENT HANDLERS*********************
     //Admin button
     //checks teacher id and takes teacher to admin view
-    public void startAdminView(View view) {
-        startActivity(new Intent(MainActivity.this, AdminView.class));
+    public void startAdminView(Teacher logTeacher) {
+        Intent myIntent = new Intent(MainActivity.this, AdminView.class);
+        myIntent.putExtra("teacher", logTeacher);
+        startActivity(myIntent);
     }
 
     //Clock in Button

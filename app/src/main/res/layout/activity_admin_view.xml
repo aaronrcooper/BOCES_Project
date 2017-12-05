@@ -14,7 +14,16 @@ tools:context="com.example.student.cooper_assign2.AdminView">
     android:textSize="30sp"
     android:text="@string/txtEditTitle" />
 
-<Button
+    <TextView
+        android:id="@+id/lblWelcomeTeacher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:text="" />
+
+    <Button
     android:id="@+id/btnEditTeachers"
     android:layout_width="match_parent"
     android:layout_height="80sp"

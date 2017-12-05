@@ -1,6 +1,9 @@
 package com.example.student.cooper_assign2;
 
-public class Teacher {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Teacher implements Parcelable {
     //Instance variables
     private int teacherID;
     private String firstName;
@@ -23,6 +26,28 @@ public class Teacher {
         this.phoneNum = phoneNum;
         isDeletable= false;
     }
+
+    protected Teacher(Parcel in) {
+        teacherID = in.readInt();
+        firstName = in.readString();
+        lastName = in.readString();
+        email = in.readString();
+        phoneNum = in.readString();
+        teacherImage = in.createByteArray();
+        isDeletable = in.readByte() != 0;
+    }
+
+    public static final Creator<Teacher> CREATOR = new Creator<Teacher>() {
+        @Override
+        public Teacher createFromParcel(Parcel in) {
+            return new Teacher(in);
+        }
+
+        @Override
+        public Teacher[] newArray(int size) {
+            return new Teacher[size];
+        }
+    };
 
     public int getId() {
         return teacherID;
@@ -78,5 +103,21 @@ public class Teacher {
 
     public void setDeletable(boolean deletable) {
         isDeletable = deletable;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(teacherID);
+        parcel.writeString(firstName);
+        parcel.writeString(lastName);
+        parcel.writeString(email);
+        parcel.writeString(phoneNum);
+        parcel.writeByteArray(teacherImage);
+        parcel.writeByte((byte) (isDeletable ? 1 : 0));
     }
 }
