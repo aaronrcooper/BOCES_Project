@@ -35,6 +35,7 @@ public class TeacherAdapter extends ArrayAdapter<Teacher> {
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView teacher = null;
         ImageView teacherImage = null;
+        //Gets convertView if null
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -59,6 +60,7 @@ public class TeacherAdapter extends ArrayAdapter<Teacher> {
         teacherImage.setImageBitmap(teacherResizedImage);
         return convertView;
     }
+    //Gets the dropdown view
     public View getDropDownView(int position, View convertView,
                                 ViewGroup parent) {
         return getView(position, convertView, parent);

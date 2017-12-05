@@ -62,17 +62,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         taskSpinner = (Spinner) findViewById(R.id.spinTask);
         //Sets the adapter for the teacher spinner
         teacherAdapter = new TeacherAdapter(getApplicationContext(), R.layout.spinner_with_image_item, teacherList);
-        //teacherAdapter.setDropDownViewResource(R.layout.spinner_with_image_item);
         teacherSpinner.setAdapter(teacherAdapter);
         teacherSpinner.setOnItemSelectedListener(this);
         //Sets the adapter for the student spinner
         studentAdapter = new StudentAdapter(getApplicationContext(), R.layout.spinner_with_image_item, studentList);
-        //studentAdapter.setDropDownViewResource(R.layout.spinner_with_image_item);
         studentSpinner.setAdapter(studentAdapter);
         studentSpinner.setOnItemSelectedListener(this);
         //sets the adapter for the task spinner
         taskAdapter = new TaskAdapter(getApplicationContext(), R.layout.spinner_with_image_item, taskList);
-        //taskAdapter.setDropDownViewResource(R.layout.spinner_with_image_item);
         taskSpinner.setAdapter(taskAdapter);
         taskSpinner.setOnItemSelectedListener(this);
         //get refs to login text fields

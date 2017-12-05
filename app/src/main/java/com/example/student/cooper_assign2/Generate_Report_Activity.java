@@ -118,7 +118,7 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
         //Creates a file object to output to
         File file = new File(path);
         //Creates a new file if the file does not already exist
-        if(!file.exists())
+        if(!file.exists() && !tasks.isEmpty())
         {
             try
             {
@@ -143,13 +143,23 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
             }
             catch (IOException ex)
             {
-                Toast.makeText(getApplicationContext(), "An error occurred while generating the report.", Toast.LENGTH_LONG).show();
+                displayToastError();
+            }
+            catch (IllegalStateException exc)
+            {
+                displayToastError();
             }
         }
-
-
+        else
+        {
+            displayToastError();
+        }
     }
 
+    public void displayToastError()
+    {
+        Toast.makeText(getApplicationContext(), "An error occurred while generating the report.", Toast.LENGTH_LONG).show();
+    }
     //*******************TEACHER ADAPTER**************************
     private class TeacherAdapter extends ArrayAdapter<Teacher> {
         Context context;
