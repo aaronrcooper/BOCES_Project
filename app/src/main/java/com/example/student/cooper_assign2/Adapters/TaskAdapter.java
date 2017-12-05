@@ -35,6 +35,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
     public View getView(int position, View convertView, ViewGroup parent){
         TextView task = null;
         ImageView taskImage = null;
+        //Gets convertView if null
         if(convertView == null){
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.spinner_with_image_item, parent, false);
@@ -52,7 +53,7 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         taskImage.setTag(current);
         return convertView;
     }
-
+    //Gets the dropdown view
     public View getDropDownView(int position, View convertView, ViewGroup parent)
     {
         return getView(position, convertView, parent);
