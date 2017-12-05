@@ -122,6 +122,9 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL(studentTable);
         db.execSQL(taskTable);
         db.execSQL(completedTaskTable);
+        String addAdmin = "INSERT INTO " + TEACHER_TABLE + "(" + FIRST_NAME + "," + LAST_NAME + "," + EMAIL + "," + PHONE_NUMBER
+                + "," + TEACHER_IMAGE + ")" + "VALUES('ADMIN', '', 'ADMIN', '', NULL)";
+        db.execSQL(addAdmin);
     }
 
 
@@ -136,8 +139,6 @@ public class DBHelper extends SQLiteOpenHelper {
         //recreate the tables
         onCreate(database);
     }
-
-
 
     //************DATEBASE OPERATIONS****************
     //Datebase ops: add, delete, and show all students and teachers
@@ -239,7 +240,8 @@ public class DBHelper extends SQLiteOpenHelper {
         List<Teacher> teachers = new ArrayList<Teacher>();
 
         //select all query from the Teacher table
-        String selectQuery = "SELECT * FROM " + TEACHER_TABLE;
+        //gets all teachers other than the admin
+        String selectQuery = "SELECT * FROM " + TEACHER_TABLE + " WHERE " + TEACHER_ID + " <> 1";
 
         //get a reference to the database
         SQLiteDatabase db = this.getWritableDatabase();
@@ -581,8 +583,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
         //get a ref to database
         SQLiteDatabase db = this.getWritableDatabase();
-        //delete the teacher table
-        db.delete(TEACHER_TABLE, null, new String[]{});
+        //delete the teacher table (except for admin)
+        db.delete(TEACHER_TABLE, "WHERE " + TEACHER_ID + " <> 1", new String[]{});
         //close the database connection
         db.close();
     }
