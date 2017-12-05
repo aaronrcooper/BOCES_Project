@@ -314,6 +314,48 @@ public class DBHelper extends SQLiteOpenHelper {
         return tasks;
     }
 
+    //getTasksByStudent
+    //gets all tasks completed by a single student
+    public List<Completed_Task> getCompletedTasksByStudent(Student student)
+    {
+        //create a list of Teacher objects
+        List<Completed_Task> tasks = new ArrayList<Completed_Task>();
+
+        //select all query from the Teacher table
+        String selectQuery = "SELECT * FROM " + COMPLETED_TASK_TABLE +
+                " WHERE " + STUDENT_ID + " = " + student.getStudentID();
+
+        //get a reference to the database
+        SQLiteDatabase db = this.getWritableDatabase();
+        //create a cursor object to take data from the database and display
+        //it in a list
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        //loop through the teachers and:
+        //*create a new Teacher obj and instantiate it
+        //*set the attributes for that obj
+        //*add the object to the list
+        //*move the cursor to the next item
+        if(cursor.moveToFirst()) {
+            do {
+                //create a new completed_task object
+                Completed_Task completed_task = new Completed_Task();
+                //set the attributes
+                completed_task.setStudentID(cursor.getInt(0));
+                completed_task.setTaskID(cursor.getInt(1));
+                completed_task.setTimeStarted(cursor.getString(2));
+                completed_task.setTimeCompleted(cursor.getString(3));
+                completed_task.setDate_completed(cursor.getString(4));
+                completed_task.setTimeSpent(cursor.getString(5));
+                //add the completed task
+                tasks.add(completed_task);
+            }while(cursor.moveToNext());
+        }
+        //return the list of tasks
+
+        return tasks;
+    }
+
     //show all students
     public List<Student> getAllStudents()
     {

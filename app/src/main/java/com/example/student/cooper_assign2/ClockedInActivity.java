@@ -110,6 +110,7 @@ public class ClockedInActivity extends AppCompatActivity {
         finishTime = calFinish;
         //Adds the completed task to the database
         myDBHelper.addCompletedTask(currentStudent, currentTask, startTime, finishTime, date, timeSpentOnTask);
+        ClockedInActivity.this.finish();
     }
 
     private class MyTimerTask extends TimerTask{

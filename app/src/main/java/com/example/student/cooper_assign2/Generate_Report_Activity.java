@@ -18,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,12 +28,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import com.example.student.cooper_assign2.Adapters.StudentAdapter;
+import com.example.student.cooper_assign2.Adapters.TeacherAdapter;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
@@ -49,7 +55,13 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
     private DBHelper myDBHelper;
     private Spinner teacherSpinner;
     private List<Completed_Task> tasks;
+    private List<Student> studentList;
     private String path;
+    private CheckBox chkAllStudents;
+    private Spinner spinStudents;
+    private Student currentStudent;
+    private StudentAdapter studentAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +69,8 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
         setContentView(R.layout.activity_generate__report_);
         //DB helper instance
         myDBHelper = new DBHelper(this);
+        chkAllStudents = (CheckBox)findViewById(R.id.chkAllStudents);
+        spinStudents = (Spinner)findViewById(R.id.spinStudentReport);
     }
     protected void onResume()
     {
@@ -64,21 +78,42 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
         //Gets teacher spinner on reports page and sets adapter and listener
         teacherSpinner = (Spinner) findViewById(R.id.report_teacher_spinner);
         teacherList = myDBHelper.getAllTeachers();
+        studentList= myDBHelper.getStudentsByTeacher(teacherList.get(0));
+
         teacherAdapter = new TeacherAdapter(this.getApplicationContext(), R.layout.spinner_item, teacherList);
         teacherSpinner.setAdapter(teacherAdapter);
         teacherAdapter.notifyDataSetChanged();
         teacherSpinner.setOnItemSelectedListener(this);
+
+        studentAdapter = new StudentAdapter(this.getApplicationContext(), R.layout.spinner_item, studentList);
+        spinStudents.setAdapter(studentAdapter);
+        studentAdapter.notifyDataSetChanged();
+        spinStudents.setOnItemSelectedListener(this);
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
+        Spinner spinner = (Spinner)parent;
         //Gets the selected teacher object
-        currentTeacher = teacherAdapter.getItem(position);
-        tasks = null;
-        tasks = myDBHelper.getCompletedTasksByTeacher(currentTeacher);
+        if(spinner.getId() == R.id.report_teacher_spinner) {
+            currentTeacher = teacherAdapter.getItem(position);
+            studentList = myDBHelper.getStudentsByTeacher(currentTeacher);
+            studentAdapter = null;
+            studentAdapter = new StudentAdapter(this.getApplicationContext(), R.layout.spinner_item, studentList);
+            spinStudents.setAdapter(studentAdapter);
+            studentAdapter.notifyDataSetChanged();
+        }
+        else if(spinner.getId() == R.id.spinStudentReport)
+            currentStudent = studentAdapter.getItem(position);
+
+
+
+        //currentTeacher = teacherAdapter.getItem(position);
+        //tasks = null;
+        //tasks = myDBHelper.getCompletedTasksByTeacher(currentTeacher);
         //Calendar object for date logging
         Calendar cal = Calendar.getInstance();
-        SimpleDateFormat format = new SimpleDateFormat("MM:dd:yyyy_hh:mm", Locale.US);
+        SimpleDateFormat format = new SimpleDateFormat("MM:dd:yyyy_hh:mm:ss", Locale.US);
         String dateTime = format.format(cal.getTime());
         //Sets the path for the PDF report to the current teachers name_report.pdf
         path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath()+ "/"
@@ -94,6 +129,11 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
     //Creates a PDF File for the report
     public void createPDF(View view) throws DocumentException, FileNotFoundException
     {
+        tasks = null;
+        if(chkAllStudents.isChecked())
+            tasks = myDBHelper.getCompletedTasksByTeacher(currentTeacher);
+        else
+            tasks = myDBHelper.getCompletedTasksByStudent(currentStudent);
         // Prompts the user for permission to write
         if (ContextCompat.checkSelfPermission(getApplicationContext(),
                 Manifest.permission.READ_CONTACTS)
@@ -118,7 +158,7 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
         //Creates a file object to output to
         File file = new File(path);
         //Creates a new file if the file does not already exist
-        if(!file.exists())
+        if(!file.exists() && !tasks.isEmpty())
         {
             try
             {
@@ -130,6 +170,7 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
                 document.open();
                 for (Completed_Task task : tasks)
                 {
+                    //if(task.getDate_completed() > )
                     document.add(new Paragraph("Student: " + myDBHelper.getStudent(task.getStudentID()).getFullName() + "\n" +
                             "    Task: " + task.getTaskID() + "\n " +
                             "    Date Completed: " + task.getDate_completed() + "\n" +
@@ -146,63 +187,15 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
                 Toast.makeText(getApplicationContext(), "An error occurred while generating the report.", Toast.LENGTH_LONG).show();
             }
         }
-
-
-    }
-
-    //*******************TEACHER ADAPTER**************************
-    private class TeacherAdapter extends ArrayAdapter<Teacher> {
-        Context context;
-        List<Teacher> teacherList = new ArrayList<Teacher>();
-
-        //Constructor
-        public TeacherAdapter(Context c, int rId, List<Teacher> objects) {
-            super(c, rId, objects);
-            teacherList = objects;
-            context = c;
-        }
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-            TextView teacher = null;
-            //if view is null, create the view
-            if (convertView == null) {
-                LayoutInflater inflater = (LayoutInflater) context
-                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.spinner_item, parent, false);
-                teacher = (TextView) convertView.findViewById(R.id.spinnerItem);
-                convertView.setTag(teacher);
-
-            }
-            //Sets the view if not null
-            else {
-                teacher = (TextView) convertView.getTag();
-            }
-            Teacher current = teacherList.get(position);
-            teacher.setText(current.getFirstName() + " " + current.getLastName());
-            teacher.setTag(current);
-            return convertView;
-        }
-        public View getDropDownView(int position, View convertView,
-                                    ViewGroup parent) {
-            TextView view =null;
-            if (convertView == null) {
-                LayoutInflater inflater = (LayoutInflater) context
-                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.spinner_item, parent, false);
-                view = (TextView) convertView.findViewById(R.id.spinnerItem);
-                convertView.setTag(view);
-
-            } else {
-                view = (TextView) convertView.getTag();
-            }
-            view.setText(teacherList.get(position).getFirstName() + " " + teacherList.get(position).getLastName());
-            view.setHeight(60);
-
-            return view;
-        }
-        public Teacher getPosition(int position)
+        else
         {
-            return teacherList.get(position);
+            if(tasks.isEmpty())
+                Toast.makeText(getApplicationContext(), "There are no tasks to be reported.", Toast.LENGTH_LONG).show();
+            else
+                Toast.makeText(getApplicationContext(), "An error occurred while generating the report.", Toast.LENGTH_LONG).show();
         }
+
+
     }
+
 }

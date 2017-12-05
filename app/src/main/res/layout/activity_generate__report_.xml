@@ -20,6 +20,26 @@
         android:layout_width="match_parent"
         android:layout_height="50sp" />
 
+    <TextView
+        android:id="@+id/lblSelectStudentRep"
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:text="@string/txtSelectAStudent"
+        android:textAlignment="center"
+        android:textSize="20sp" />
+
+    <Spinner
+        android:id="@+id/spinStudentReport"
+        android:layout_width="match_parent"
+        android:layout_height="50sp" />
+
+    <CheckBox
+        android:id="@+id/chkAllStudents"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="@string/txtAllStudentReport" />
+
     <Button
         android:id="@+id/btnGenerateReport"
         android:layout_width="match_parent"

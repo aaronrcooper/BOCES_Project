@@ -45,4 +45,7 @@
     <string name="btnCancel">Cancel</string>
     <string name="txtPhoneNum">Phone</string>
     <string name="txtStudentID">Student ID</string>
+    <string name="txtStartDateLabel">Select the start date: </string>
+    <string name="txtEndDateLabel">Select the end date: </string>
+    <string name="txtAllStudentReport">Generate report for all students of this teacher</string>
 </resources>
