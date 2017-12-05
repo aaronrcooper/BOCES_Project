@@ -139,9 +139,18 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
                 table.addCell(createCell("Task", 1, 1, Element.ALIGN_CENTER));
                 table.addCell(createCell("Date Completed", 1, 1, Element.ALIGN_CENTER));
                 table.addCell(createCell("Time", 1, 1, Element.ALIGN_CENTER));
+                Student current = null;
                 for (Completed_Task task : tasks)
                 {
-                    table.addCell(createCell(myDBHelper.getStudent(task.getStudentID()).getFullName(), 1, 1, Element.ALIGN_CENTER));
+                    if (current == null || current.getStudentID() != task.getStudentID())
+                    {
+                        current = myDBHelper.getStudent(task.getStudentID());
+                        table.addCell(createCell(current.getFullName(), 1, 1, Element.ALIGN_CENTER));
+                    }
+                    else
+                    {
+                        table.addCell(createCell("", 1, 1, Element.ALIGN_CENTER));
+                    }
                     table.addCell(createCell(myDBHelper.getTask(task.getTaskID()).getTaskName(), 1, 1, Element.ALIGN_CENTER));
                     table.addCell(createCell(task.getDate_completed(), 1, 1, Element.ALIGN_CENTER));
                     table.addCell(createCell(task.getTimeSpent(), 1, 1, Element.ALIGN_CENTER));
@@ -182,7 +191,7 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
         cell.setHorizontalAlignment(alignment);
         return cell;
     }
-    
+
     //*******************TEACHER ADAPTER**************************
     private class TeacherAdapter extends ArrayAdapter<Teacher> {
         Context context;
