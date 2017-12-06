@@ -39,8 +39,9 @@
         android:id="@+id/chkAllStudents"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:text="@string/txtAllStudentReport" />
+        android:buttonTint="#0079C2"
+        android:text="@string/txtAllStudentReport"
+        android:textSize="20sp" />
 
     <Button
         android:id="@+id/btnGenerateReport"
