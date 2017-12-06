@@ -1,3 +1,6 @@
+//Created By: Chris Frye
+//Activity where teachers can edit students in the database
+//provides capability to change values associated with specific students in the DB
 package com.example.student.cooper_assign2;
 
 import android.app.Activity;
@@ -18,11 +21,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.student.cooper_assign2.Adapters.StudentAdapter;
+import com.example.student.cooper_assign2.Adapters.TeacherAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Edit_Student extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
+    //Instance Variables
     List<Teacher> teacherList;
     List<Student> studentList;
     DBHelper myDBHelper;
@@ -41,15 +48,19 @@ public class Edit_Student extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit__student);
+        //get a reference to the database
         myDBHelper = new DBHelper(this);
+        //get references to elements on the activity
         txtFName = (EditText)findViewById(R.id.txtSFirstName);
         txtLName = (EditText)findViewById(R.id.txtSLastName);
         txtAge = (EditText)findViewById(R.id.txtSAge);
         txtYear = (EditText)findViewById(R.id.txtSYear);
         imgStudent =(ImageView)findViewById(R.id.studentImageEdit);
         lblStudentID = (TextView)findViewById(R.id.lblStudentID);
+        //populate the list of teachers and students from the database
         teacherList = myDBHelper.getAllTeachers();
         studentList = myDBHelper.getAllStudents();
+        //get references to the spinners
         teacherSpinner = (Spinner)findViewById(R.id.spinEditStudentsTeacher);
         studentSpinner = (Spinner)findViewById(R.id.spinEditStudent);
         //Sets the adapter for the teacher spinner
@@ -91,7 +102,7 @@ public class Edit_Student extends AppCompatActivity implements AdapterView.OnIte
         }
         else
         {
-            //create a teacher object with correct attributes
+            //create a student object with correct attributes
             currentStudent.setFirstName(firstName);
             currentStudent.setLastName(lastName);
             currentStudent.setAge(Integer.parseInt(age));
@@ -116,7 +127,7 @@ public class Edit_Student extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         Spinner spinner = (Spinner) adapterView;
-
+        //Determine which spinner was changed
         if(spinner.getId() == R.id.spinEditStudentsTeacher)
         {
             currentTeacher = teacherAdapter.getItem(i);
@@ -129,8 +140,10 @@ public class Edit_Student extends AppCompatActivity implements AdapterView.OnIte
             txtLName.setText(currentStudent.getLastName());
             txtAge.setText(Integer.toString(currentStudent.getAge()));
             txtYear.setText(currentStudent.getYear());
+            //display student image
             imgStudent.setImageBitmap(ImageUtils.getImage(currentStudent.getStudentImage()));
             studentImage = ImageUtils.getImage(currentStudent.getStudentImage());
+            //display student id
             lblStudentID.setText("Student ID: " + Integer.toString(currentStudent.getStudentID()));
         }
     }
@@ -151,6 +164,8 @@ public class Edit_Student extends AppCompatActivity implements AdapterView.OnIte
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
 
     }
+    //onActivityResults
+    //executes when the user closes the image picker
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -167,117 +182,11 @@ public class Edit_Student extends AppCompatActivity implements AdapterView.OnIte
                     Bitmap image = ImageUtils.decodeUriToBitmap(this.getApplicationContext(), imageUri);
                     //toast to show image was successfully loaded
                     Toast.makeText(getApplicationContext(), "Photo loaded successfully", Toast.LENGTH_SHORT).show();
+                    //store and display the image
                     studentImage = image;
                     imgStudent.setImageBitmap(image);
                 }
             }
-        }
-    }
-
-
-    //*******************TEACHER ADAPTER**************************
-    private class TeacherAdapter extends ArrayAdapter<Teacher> {
-        Context context;
-        List<Teacher> teacherList = new ArrayList<Teacher>();
-
-        //Constructor
-        public TeacherAdapter(Context c, int rId, List<Teacher> objects) {
-            super(c, rId, objects);
-            teacherList = objects;
-            context = c;
-        }
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-            TextView teacher = null;
-            if (convertView == null) {
-                LayoutInflater inflater = (LayoutInflater) context
-                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.spinner_item, parent, false);
-                teacher = (TextView) convertView.findViewById(R.id.spinnerItem);
-                convertView.setTag(teacher);
-
-            } else {
-                teacher = (TextView) convertView.getTag();
-            }
-            Teacher current = teacherList.get(position);
-            teacher.setText(current.getFirstName() + " " + current.getLastName());
-            teacher.setTag(current);
-            return convertView;
-        }
-        public View getDropDownView(int position, View convertView,
-                                    ViewGroup parent) {
-            TextView view =null;
-            if (convertView == null) {
-                LayoutInflater inflater = (LayoutInflater) context
-                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.spinner_item, parent, false);
-                view = (TextView) convertView.findViewById(R.id.spinnerItem);
-                convertView.setTag(view);
-
-            } else {
-                view = (TextView) convertView.getTag();
-            }
-            view.setText(teacherList.get(position).getFirstName() + " " + teacherList.get(position).getLastName());
-            view.setHeight(60);
-
-            return view;
-        }
-        public Teacher getPosition(int position)
-        {
-            return teacherList.get(position);
-        }
-    }
-
-    //*******************STUDENT ADAPTER**************************
-    private class StudentAdapter extends ArrayAdapter<Student> {
-        Context context;
-        List<Student> studentList = new ArrayList<Student>();
-
-        //Constructor
-        public StudentAdapter(Context c, int rId, List<Student> objects) {
-            super(c, rId, objects);
-            studentList = objects;
-            context = c;
-        }
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-            TextView student = null;
-            if (convertView == null) {
-                LayoutInflater inflater = (LayoutInflater) context
-                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.spinner_item, parent, false);
-                student = (TextView) convertView.findViewById(R.id.spinnerItem);
-                convertView.setTag(student);
-
-            } else {
-                student = (TextView) convertView.getTag();
-            }
-            Student current = studentList.get(position);
-            student.setText(current.getFirstName() + " " + current.getLastName());
-            student.setTag(current);
-            return convertView;
-        }
-        public View getDropDownView(int position, View convertView,
-                                    ViewGroup parent) {
-            TextView view =null;
-            if (convertView == null) {
-                LayoutInflater inflater = (LayoutInflater) context
-                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.spinner_item, parent, false);
-                view = (TextView) convertView.findViewById(R.id.spinnerItem);
-                convertView.setTag(view);
-
-            } else {
-                view = (TextView) convertView.getTag();
-            }
-            view.setText(studentList.get(position).getFirstName() + " " + studentList.get(position).getLastName());
-            view.setHeight(60);
-
-            return view;
-        }
-        public Student getPosition(int position)
-        {
-            return studentList.get(position);
         }
     }
 }

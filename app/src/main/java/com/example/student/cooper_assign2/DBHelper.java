@@ -24,7 +24,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 13;
     //Name of database and tables it contains
 
-    //Table strings
+    //Table names
     private static final String DATABASE_NAME = "TeacherStudentDB";
     private static final String TEACHER_TABLE = "Teacher_Table";
     private static final String STUDENT_TABLE = "Student_Table";
@@ -71,6 +71,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     //ONCREATE method
     //creates both the student and the teacher tables
+    //adds an administrator account
     @Override
     public void onCreate(SQLiteDatabase db) {
 
@@ -97,7 +98,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY (" + S_TEACHER_ID + ") REFERENCES " +
                 TEACHER_TABLE +  "(" + TEACHER_ID + ")" +
                 ")";
-
+        //create the task table
         String taskTable = "CREATE TABLE " + TASK_TABLE +
                 "(" +
                 TASK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -105,7 +106,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 DESCRIPTION + " TEXT, " +
                 TASK_IMAGE + " BLOB" +
                 ")";
-
+        //create the completed task table
         String completedTaskTable = "CREATE TABLE " + COMPLETED_TASK_TABLE +
                 "(" +
                 STUDENT_ID + " INTEGER, "
@@ -117,17 +118,22 @@ public class DBHelper extends SQLiteOpenHelper {
                 + S_TEACHER_ID + " INTEGER, " +
                 "PRIMARY KEY(" + STUDENT_ID + ", " + TASK_ID + ", " +
                 TIME_STARTED + ", " + TIME_COMPLETED  + "))";
+
+        //execute all above statements to create tables, turn on foreign key enforcement
         db.execSQL("PRAGMA foreign_keys=1;");
         db.execSQL(teacherTable);
         db.execSQL(studentTable);
         db.execSQL(taskTable);
         db.execSQL(completedTaskTable);
+
+        //add an admin to the database teacher table
         String addAdmin = "INSERT INTO " + TEACHER_TABLE + "(" + FIRST_NAME + "," + LAST_NAME + "," + EMAIL + "," + PHONE_NUMBER
                 + "," + TEACHER_IMAGE + ")" + "VALUES('ADMIN', '', 'ADMIN', '', NULL)";
         db.execSQL(addAdmin);
     }
 
-
+    //ONUPGRADE
+    //called when the DB Version is changed
     @Override
     public void onUpgrade(SQLiteDatabase database, int i, int i1) {
         //Drop the older tables if they exists
@@ -140,14 +146,18 @@ public class DBHelper extends SQLiteOpenHelper {
         onCreate(database);
     }
 
-    //************DATEBASE OPERATIONS****************
+
+
+    //****************************DATEBASE OPERATIONS******************************************
     //Datebase ops: add, delete, and show all students and teachers
-
-
     //adding a new student
+
+    //**********ADDING OPERATIONS*****************
+    //AddStudent
+    //Adds a student to the database
+    //takes a student object as parameter
     public void addStudent(Student pStudent)
     {
-
         //get a ref to the database
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -167,8 +177,9 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    //adding a new student
-    //columns: studentID, taskID, timeStarted, timeCompleted, dateCompleted
+    //AddCompletedTask
+    //Adds a completedTask to the database
+    //columns(parameters): studentID, taskID, timeStarted, timeCompleted, dateCompleted
     public void addCompletedTask(Student pStudent, Task aTask, String start, String finish, String date, String timeSpent)
     {
 
@@ -176,7 +187,7 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        //add student information to the database
+        //add completed task information to the database
         values.put(STUDENT_ID, pStudent.getStudentID());    //add studentID
         values.put(TASK_ID, aTask.getTaskID());     //add taskID
         values.put(TIME_STARTED, start);    //add start time
@@ -186,7 +197,6 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(S_TEACHER_ID, pStudent.getTeacherID());  //add teacherID (for ordering)
 
         //insert the row in the table
-
         long row_id = db.insert(COMPLETED_TASK_TABLE, null, values);
 
         //close the database connection
@@ -194,7 +204,9 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    //adding a new teacher
+    //addTeacher
+    //adds a new teacher to the database
+    //takes a teacher object as parameter
     public void addTeacher(Teacher pTeacher)
     {
         //get a ref to the database
@@ -214,14 +226,16 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    //adding a new task
+    //addTask
+    //adds a task to the database
+    //takes a task object as a parameter
     public void addTask(Task pTask)
     {
         //get a ref to database
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        //add teacher information to the database
+        //add task information to the database
         values.put(TASK_NAME,pTask.getTaskName());
         values.put(DESCRIPTION, pTask.getDescription());
         values.put(TASK_IMAGE, pTask.getTaskImage());
@@ -233,7 +247,11 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    //get all teachers
+    //**********RETRIEVE OPERATIONS*****************
+
+    //getAllTeachers
+    //retrieves a list of all teachers in the DB except the default admin
+    //returns: list of Teacher object
     public List<Teacher> getAllTeachers()
     {
         //create a list of Teacher objects
@@ -275,13 +293,16 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    //gets all completed tasks by teacher
+    //getCompletedTasksByTeacher
+    //Retrieves a list of completed tasks by teacher
+    //takes a Teache object as parameter
+    //returns a list of Completed_Task objects
     public List<Completed_Task> getCompletedTasksByTeacher(Teacher teacher)
     {
-        //create a list of Teacher objects
+        //create a list of Completed_Task objects
         List<Completed_Task> tasks = new ArrayList<Completed_Task>();
 
-        //select all query from the Teacher table
+        //select all query from the Completed_Task table
         String selectQuery = "SELECT * FROM " + COMPLETED_TASK_TABLE + " WHERE " + S_TEACHER_ID + " = " + teacher.getId()
                 + " ORDER BY " + STUDENT_ID;
 
@@ -314,12 +335,14 @@ public class DBHelper extends SQLiteOpenHelper {
 
     //getTasksByStudent
     //gets all tasks completed by a single student
+    //takes a Student object as a parameter
+    //returns: list of Completed_Task objects
     public List<Completed_Task> getCompletedTasksByStudent(Student student)
     {
-        //create a list of Teacher objects
+        //create a list of Completed_Task objects
         List<Completed_Task> tasks = new ArrayList<Completed_Task>();
 
-        //select all query from the Teacher table
+        //select all query from the Completed Task table
         String selectQuery = "SELECT * FROM " + COMPLETED_TASK_TABLE +
                 " WHERE " + STUDENT_ID + " = " + student.getStudentID();
 
@@ -329,8 +352,8 @@ public class DBHelper extends SQLiteOpenHelper {
         //it in a list
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        //loop through the teachers and:
-        //*create a new Teacher obj and instantiate it
+        //loop through the CompletedTask and:
+        //*create a new CompletedTask obj and instantiate it
         //*set the attributes for that obj
         //*add the object to the list
         //*move the cursor to the next item
@@ -354,7 +377,9 @@ public class DBHelper extends SQLiteOpenHelper {
         return tasks;
     }
 
-    //show all students
+    //getAllStudents
+    //returns a list of all students in the database
+    //Returns: list of Student objects
     public List<Student> getAllStudents()
     {
         //create a list of student objects
@@ -395,9 +420,13 @@ public class DBHelper extends SQLiteOpenHelper {
         return students;
     }
 
+    //getStudent
+    //retrieves a student by his/her student id
+    //parameter: integer that represents student ID
+    //returns: single student object
     public Student getStudent(int id)
     {
-        //create a list of student objects
+        //create a student object
         Student student = null;
 
         //select query from the Student table
@@ -409,11 +438,7 @@ public class DBHelper extends SQLiteOpenHelper {
         //it in a list
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        //loop through the students and:
-        //*create a new Student obj and instantiate it
-        //*set the attributes for that obj
-        //*add the object to the list
-        //*move the cursor to the next item
+        //Set the attributes of the student
         if(cursor.moveToFirst()) {
             do {
                 //create a new Student obj
@@ -432,12 +457,17 @@ public class DBHelper extends SQLiteOpenHelper {
         //return the student
         return student;
     }
+
+    //getTask
+    //gets a task by its ID
+    //parameter: Task Id (integer)
+    //returns a single task
     public Task getTask(int id)
     {
-        //create a list of student objects
+        //create a task object
         Task task = null;
 
-        //select querty from task table
+        //select query from task table
         String selectQuery = "SELECT * FROM " + TASK_TABLE + " WHERE " + TASK_ID + " = " + id ;
 
         //get a reference to the database
@@ -446,11 +476,7 @@ public class DBHelper extends SQLiteOpenHelper {
         //it in a list
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        //loop through the students and:
-        //*create a new Student obj and instantiate it
-        //*set the attributes for that obj
-        //*add the object to the list
-        //*move the cursor to the next item
+        //set the attributes of the task object
         if(cursor.moveToFirst()) {
             do {
                 //create a new Student obj
@@ -467,6 +493,10 @@ public class DBHelper extends SQLiteOpenHelper {
         return task;
     }
 
+    //getTeacher
+    //gets a teacher by id
+    //parameter: teacherId (integer)
+    //returns: teacher object
     public Teacher getTeacher(int id)
     {
         //create a teacher object
@@ -503,7 +533,9 @@ public class DBHelper extends SQLiteOpenHelper {
         return teacher;
     }
 
-    //get all tasks
+    //getAllTasks
+    //gets a list of all tasks in the DB
+    //returns a list of Task objects
     public List<Task> getAllTasks()
     {
 
@@ -533,13 +565,16 @@ public class DBHelper extends SQLiteOpenHelper {
         return tasks;
     }
 
-    //show all students whose teacher ID field matches the ID of the selected teacher
+    //getStudentByTeacher
+    //gets a list of all students who have a specific teacher id
+    //takes Teacher object as parameter
+    //returns List of Student objects
     public List<Student> getStudentsByTeacher(Teacher teacher)
     {
         //create a list of student objects
         List<Student> students = new ArrayList<Student>();
 
-        //select all query from the Student table
+        //select query from the Student table by teacher id
         String selectQuery = "SELECT * FROM " + STUDENT_TABLE + " WHERE " + S_TEACHER_ID + " = " + teacher.getId();
 
         //get a reference to the database
@@ -575,7 +610,12 @@ public class DBHelper extends SQLiteOpenHelper {
         return students;
     }
 
-    //remove all teachers
+    //**********DELETE OPERATIONS*****************
+
+
+    //removeAllTeachers
+    //removes all teachers from the database
+    //takes a list of teacher objects as parameter
     public void removeAllTeachers(List<Teacher> teachers)
     {
         //remove all teachers from the list
@@ -589,7 +629,9 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    //remove all students
+    //removeAllStudents
+    //removes all students from the DB
+    //takes a list of Student Objects as parameter
     public void removeAllStudents(List<Student> students)
     {
         //clear the student list
@@ -602,7 +644,9 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    //remove all tasks
+    //removeAllTasks
+    //removes all tasks from the database
+    //takes a list of tasks as parameter
     public void removeAllTasks(List<Task> tasks)
     {
         //clear the task list
@@ -613,7 +657,6 @@ public class DBHelper extends SQLiteOpenHelper {
         db.delete(TASK_TABLE, null, new String[]{});
         //close the db connection
         db.close();
-
     }
 
 
@@ -627,8 +670,7 @@ public class DBHelper extends SQLiteOpenHelper {
     {
         //get a ref to the database
         SQLiteDatabase db = this.getWritableDatabase();
-        //ContentValues values = new ContentValues();
-
+        //Delete sql statement
         db.execSQL("DELETE FROM " + STUDENT_TABLE + " WHERE " + STUDENT_ID + " = " + aStudent.getStudentID());
 
         db.close();
@@ -637,19 +679,22 @@ public class DBHelper extends SQLiteOpenHelper {
 
     //delete a teacher
     //takes a teacher id as a parameter
-    //returns true if the student was successfully removed
+    //returns true if the student was successfully removed, else returns false
     public boolean removeTeacher(Teacher aTeacher)
     {
         //get a ref to the database
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-
+        //Delete sql statement
         db.execSQL("DELETE FROM " + TEACHER_TABLE + " WHERE " + TEACHER_ID + " = " + aTeacher.getId());
         db.close();
         return true;
     }
 
-    //delete a task
+    //removeTask
+    //removes a single task
+    //takes task obj as parameter
+    //returns true if successful
     public boolean removeTask(Task aTask)
     {
         SQLiteDatabase db = this.getWritableDatabase();

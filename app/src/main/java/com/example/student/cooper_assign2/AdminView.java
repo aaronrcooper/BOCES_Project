@@ -1,3 +1,8 @@
+//AdminView
+//Serves as a hub for teachers. Teachers can navigate to pages where they can edit, update, or
+//delete tasks, students, and teachers. Teachers can also navigate to an activity to generate a
+//report
+//Created by Chris Frye on 11/20/2017
 package com.example.student.cooper_assign2;
 
 import android.content.Intent;
@@ -7,14 +12,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 public class AdminView extends AppCompatActivity {
-
-    Teacher loggedTeacher;
+    //instance variables
+    Teacher loggedTeacher; //Reference to the teacher whose ID was entered on the sign in page
     TextView lblWelcome;
+    //ONCREATE
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,14 +31,16 @@ public class AdminView extends AppCompatActivity {
         lblWelcome.setText("Welcome " + loggedTeacher.getFirstName() + "!");
     }
 
+    //ONRESUME
     @Override
     protected void onResume() {
         super.onResume();
-
-        // if there are no teachers, disable the add student button
+        //get references to button and DB
         Button btnStudents = (Button)findViewById(R.id.btnEditStudents);
         DBHelper myDBHelper = new DBHelper(this);
+        //populate the list of teachers currently in the DB
         List<Teacher> teacherList = myDBHelper.getAllTeachers();
+        // if there are no teachers currently in the DB, disable the add student button
         if(teacherList.isEmpty())
         {
             btnStudents.setEnabled(false);
@@ -59,7 +65,7 @@ public class AdminView extends AppCompatActivity {
     public  void startTaskActivity(View view){
         startActivity(new Intent(AdminView.this, TaskListActivity.class));
     }
-
+    //function to open the generate report activity
     public void startGenerateReportActivity(View view)
     {
         startActivity(new Intent(AdminView.this, Generate_Report_Activity.class));

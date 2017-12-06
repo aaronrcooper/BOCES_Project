@@ -18,6 +18,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.student.cooper_assign2.Adapters.TeacherAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +27,7 @@ import static com.example.student.cooper_assign2.R.id.teacherImage;
 import static com.example.student.cooper_assign2.R.id.teacherImageEdit;
 
 public class Edit_Teacher extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-
+    //Instance Variables
     List<Teacher> teacherList;
     DBHelper myDBHelper;
     Spinner teacherSpinner;
@@ -41,17 +43,20 @@ public class Edit_Teacher extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit__teacher);
+        //get reference to database
         myDBHelper = new DBHelper(this);
+        //get references to elements on activity
         txtFName = (EditText)findViewById(R.id.txtTFirstName);
         txtLName = (EditText)findViewById(R.id.txtTLastName);
         txtEmail = (EditText)findViewById(R.id.txtTEmail);
         txtPhone = (EditText)findViewById(R.id.txtTPhone);
         imgTeacher =(ImageView)findViewById(R.id.teacherImageEdit);
         lblTeachID = (TextView)findViewById(R.id.lblTeacherID);
+        //populate teacher list from database
         teacherList = myDBHelper.getAllTeachers();
         teacherSpinner = (Spinner)findViewById(R.id.spinEditTeacher);
         //Sets the adapter for the teacher spinner
-        teacherAdapter = new Edit_Teacher.TeacherAdapter(getApplicationContext(), R.layout.spinner_item, teacherList);
+        teacherAdapter = new TeacherAdapter(getApplicationContext(), R.layout.spinner_item, teacherList);
         teacherAdapter.setDropDownViewResource(R.layout.spinner_item);
         teacherSpinner.setAdapter(teacherAdapter);
         teacherSpinner.setOnItemSelectedListener(this);
@@ -75,8 +80,10 @@ public class Edit_Teacher extends AppCompatActivity implements AdapterView.OnIte
         txtLName.setText(currentTeacher.getLastName());
         txtEmail.setText(currentTeacher.getEmail());
         txtPhone.setText(currentTeacher.getPhoneNum());
+        //set teacher image
         imgTeacher.setImageBitmap(ImageUtils.getImage(currentTeacher.getTeacherImage()));
         teacherImage = ImageUtils.getImage(currentTeacher.getTeacherImage());
+        //display teacher id
         lblTeachID.setText("Teacher ID: " + Integer.toString(currentTeacher.getId()));
     }
 
@@ -163,60 +170,6 @@ public class Edit_Teacher extends AppCompatActivity implements AdapterView.OnIte
                     imgTeacher.setImageBitmap(image);
                 }
             }
-        }
-    }
-
-
-    //*******************TEACHER ADAPTER**************************
-    private class TeacherAdapter extends ArrayAdapter<Teacher> {
-        Context context;
-        List<Teacher> teacherList = new ArrayList<Teacher>();
-
-        //Constructor
-        public TeacherAdapter(Context c, int rId, List<Teacher> objects) {
-            super(c, rId, objects);
-            teacherList = objects;
-            context = c;
-        }
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-            TextView teacher = null;
-            if (convertView == null) {
-                LayoutInflater inflater = (LayoutInflater) context
-                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.spinner_item, parent, false);
-                teacher = (TextView) convertView.findViewById(R.id.spinnerItem);
-                convertView.setTag(teacher);
-
-            } else {
-                teacher = (TextView) convertView.getTag();
-            }
-            Teacher current = teacherList.get(position);
-            teacher.setText(current.getFirstName() + " " + current.getLastName());
-            teacher.setTag(current);
-            return convertView;
-        }
-        public View getDropDownView(int position, View convertView,
-                                    ViewGroup parent) {
-            TextView view =null;
-            if (convertView == null) {
-                LayoutInflater inflater = (LayoutInflater) context
-                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.spinner_item, parent, false);
-                view = (TextView) convertView.findViewById(R.id.spinnerItem);
-                convertView.setTag(view);
-
-            } else {
-                view = (TextView) convertView.getTag();
-            }
-            view.setText(teacherList.get(position).getFirstName() + " " + teacherList.get(position).getLastName());
-            view.setHeight(60);
-
-            return view;
-        }
-        public Teacher getPosition(int position)
-        {
-            return teacherList.get(position);
         }
     }
 }

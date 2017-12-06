@@ -61,6 +61,28 @@ public class Student implements Parcelable{
         }
     };
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
+        //write the array that will be passed to the constructor
+        //above.. ORDER IS VERY IMPORTANT HERE
+        parcel.writeStringArray(new String[] {
+                Integer.toString(this.studentID),// 0
+                this.firstName, //1
+                this.lastName,//2
+                Integer.toString(this.age), //3
+                Integer.toString(this.teacherID), //4
+                year//5
+        });
+    }
+
+    //*****************ACCESSORS AND MUTATORS*******************
+
     public int getStudentID() {
         return studentID;
     }
@@ -128,23 +150,5 @@ public class Student implements Parcelable{
         isDeletable = deletable;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-
-        //write the array that will be passed to the constructor
-        //above.. ORDER IS VERY IMPORTANT HERE
-        parcel.writeStringArray(new String[] {
-                Integer.toString(this.studentID),// 0
-                this.firstName, //1
-                this.lastName,//2
-                Integer.toString(this.age), //3
-                Integer.toString(this.teacherID), //4
-                year//5
-        });
-    }
 }

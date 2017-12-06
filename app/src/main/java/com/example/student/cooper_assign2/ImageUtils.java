@@ -12,6 +12,7 @@ import java.io.InputStream;
 
 /**
  * Created by Chris Frye on 10/31/2017.
+ * Image utils class contains useful methods to handle images
  */
 
 public class ImageUtils {

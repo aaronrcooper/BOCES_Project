@@ -1,3 +1,5 @@
+//Created by Chris Frye and Aaron Cooper
+//Allows admins to edit, remove, and add tasks
 package com.example.student.cooper_assign2;
 
 import android.app.Activity;
@@ -24,6 +26,7 @@ import java.util.List;
 
 public class TaskListActivity extends AppCompatActivity {
 
+    //Instance variables
     ListView lstTaskView;
     private MyAdapter adapter;
     DBHelper myDBHelper;
@@ -38,8 +41,9 @@ public class TaskListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_list);
+        //get a reference to the DB
         myDBHelper = new DBHelper(this);
-
+        //get references to views and buttons
         txtTaskName = (EditText)findViewById(R.id.txtTaskName);
         txtTaskDescr = (EditText)findViewById(R.id.txtTaskDescr);
         imgTaskImage = (ImageView)findViewById(R.id.taskImage);
@@ -49,9 +53,12 @@ public class TaskListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        //populate the task list from DB
         taskList = myDBHelper.getAllTasks();
+        //check if task list is empty, if true disable edit button
         if(taskList.isEmpty())
             btnEdit.setEnabled(false);
+        //set the task adapter
         adapter = new MyAdapter(this, R.layout.activity_list_item, taskList);
         lstTaskView = (ListView) findViewById(R.id.lstTasks);
         lstTaskView.setAdapter(adapter);
@@ -99,6 +106,7 @@ public class TaskListActivity extends AppCompatActivity {
             txtTaskName.setText("");
             txtTaskDescr.setText("");
             imgTaskImage.setImageResource(R.mipmap.noimgavail);
+            //enable the edit button
             btnEdit.setEnabled(true);
         }
     }
@@ -143,6 +151,9 @@ public class TaskListActivity extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
 
     }
+    //After the user returns from selecting an image, this function
+    //is executed
+    //the image is the set to the current task
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {

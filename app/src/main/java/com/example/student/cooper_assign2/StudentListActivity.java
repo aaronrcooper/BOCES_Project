@@ -1,5 +1,7 @@
+//Created By Aaron Cooper and Chris Frye
+//Activity that allows the admin to add and remove students. Also allows access to the edit students
+//page
 package com.example.student.cooper_assign2;
-//https://stackoverflow.com/questions/2478517/how-to-display-a-yes-no-dialog-box-on-android
 
 import android.app.Activity;
 import android.content.Context;
@@ -24,6 +26,8 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.student.cooper_assign2.Adapters.TeacherAdapter;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -279,59 +283,6 @@ public class StudentListActivity extends AppCompatActivity implements AdapterVie
             deleteStudent.setText(current.getFirstName() + " " + current.getLastName());
             deleteStudent.setTag(current);
             return convertView;
-        }
-    }
-
-    //*******************TEACHER ADAPTER**************************
-    private class TeacherAdapter extends ArrayAdapter<Teacher> {
-        Context context;
-        List<Teacher> teacherList = new ArrayList<Teacher>();
-
-        //Constructor
-        public TeacherAdapter(Context c, int rId, List<Teacher> objects) {
-            super(c, rId, objects);
-            teacherList = objects;
-            context = c;
-        }
-
-        public View getView(int position, View convertView, ViewGroup parent) {
-            TextView teacher = null;
-            if (convertView == null) {
-                LayoutInflater inflater = (LayoutInflater) context
-                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.spinner_item, parent, false);
-                teacher = (TextView) convertView.findViewById(R.id.spinnerItem);
-                convertView.setTag(teacher);
-
-            } else {
-                teacher = (TextView) convertView.getTag();
-            }
-            Teacher current = teacherList.get(position);
-            teacher.setText(current.getFirstName() + " " + current.getLastName());
-            teacher.setTag(current);
-            return convertView;
-        }
-        public View getDropDownView(int position, View convertView,
-                                    ViewGroup parent) {
-            TextView view =null;
-            if (convertView == null) {
-                LayoutInflater inflater = (LayoutInflater) context
-                        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.spinner_item, parent, false);
-                view = (TextView) convertView.findViewById(R.id.spinnerItem);
-                convertView.setTag(view);
-
-            } else {
-                view = (TextView) convertView.getTag();
-            }
-            view.setText(teacherList.get(position).getFirstName() + " " + teacherList.get(position).getLastName());
-            view.setHeight(60);
-
-            return view;
-        }
-        public Teacher getPosition(int position)
-        {
-            return teacherList.get(position);
         }
     }
 }

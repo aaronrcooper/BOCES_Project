@@ -1,10 +1,14 @@
 package com.example.student.cooper_assign2;
 
 /**
- * Created by Student on 11/20/2017.
+ * Created by Aaron Cooper on 11/20/2017.
+ * Represents a completed task by a student
+ * Note: Completed task is not parcelable, meaning it cannot be passed between activites, to make
+ * this possible, implement interface Parcelable
  */
 
 public class Completed_Task {
+    //Instance Variables
     private int studentID;
     private int taskID;
     private String date_completed;
@@ -27,6 +31,7 @@ public class Completed_Task {
         setTimeSpent(timeSpent);
     }
 
+    //ACCESSORS AND MUTATORS
     public int getStudentID() {
         return studentID;
     }

@@ -1,3 +1,5 @@
+//Created by Aaron Cooper
+//Represents a teacher in the DB
 package com.example.student.cooper_assign2;
 
 import android.os.Parcel;
@@ -17,7 +19,7 @@ public class Teacher implements Parcelable {
     {
 
     }
-
+    //overloaded constructor
     public Teacher(String fn, String ln, String email, String phoneNum)
     {
         firstName = fn;
@@ -26,7 +28,7 @@ public class Teacher implements Parcelable {
         this.phoneNum = phoneNum;
         isDeletable= false;
     }
-
+    //allows objects to be passed between activities
     protected Teacher(Parcel in) {
         teacherID = in.readInt();
         firstName = in.readString();

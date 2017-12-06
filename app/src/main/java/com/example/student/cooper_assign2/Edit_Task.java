@@ -1,3 +1,5 @@
+//Created by Chris Frye
+//Allows teachers to edit tasks in the database
 package com.example.student.cooper_assign2;
 
 import android.app.Activity;
@@ -18,11 +20,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.student.cooper_assign2.Adapters.TaskAdapter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Edit_Task extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
+    //Instance Variables
     List<Task> taskList;
     TaskAdapter taskAdapter;
     Spinner taskSpinner;
@@ -37,9 +42,11 @@ public class Edit_Task extends AppCompatActivity implements AdapterView.OnItemSe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit__task);
+        //get reference to the database
         myDBHelper = new DBHelper(this);
+        //get references to elements on the page
         taskSpinner = (Spinner)findViewById(R.id.spinEditTask);
-        taskList = myDBHelper.getAllTasks();
+        taskList = myDBHelper.getAllTasks();//populate task list from DB
         txtTaskName = (EditText)findViewById(R.id.txtTaskName);
         txtDescription = (EditText)findViewById(R.id.txtTaskDescr);
         imgTask = (ImageView)findViewById(R.id.taskImageEdit);
@@ -142,60 +149,6 @@ public class Edit_Task extends AppCompatActivity implements AdapterView.OnItemSe
                     imgTask.setImageBitmap(image);
                 }
             }
-        }
-    }
-
-    //**************TASK ADAPTER*********************************
-    private class TaskAdapter extends ArrayAdapter<Task> {
-        Context context;
-        List<Task> taskList = new ArrayList<Task>();
-
-        //Constructor
-        public TaskAdapter(Context c, int rId, List<Task> objects)
-        {
-            super(c, rId, objects);
-            taskList = objects;
-            context = c;
-        }
-
-        public View getView(int position, View convertView, ViewGroup parent){
-            TextView task = null;
-            if(convertView == null){
-                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.spinner_item, parent, false);
-                task = (TextView) convertView.findViewById(R.id.spinnerItem);
-                convertView.setTag(task);
-            }
-            else
-            {
-                task = (TextView) convertView.getTag();
-            }
-            Task current = taskList.get(position);
-            task.setText(current.getTaskName() + " " + current.getDescription());
-            task.setTag(current);
-            return convertView;
-        }
-
-        public View getDropDownView(int position, View convertView, ViewGroup parent)
-        {
-            TextView view = null;
-            if(convertView == null){
-                LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = inflater.inflate(R.layout.spinner_item, parent, false);
-                view = (TextView) convertView.findViewById(R.id.spinnerItem);
-                convertView.setTag(view);
-            }
-            else
-            {
-                view = (TextView) convertView.getTag();
-            }
-            view.setText(taskList.get(position).getTaskName() + " " + taskList.get(position).getDescription());
-            view.setHeight(60);
-            return view;
-        }
-        public Task getPosition(int position)
-        {
-            return taskList.get(position);
         }
     }
 }

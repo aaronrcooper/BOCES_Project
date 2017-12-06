@@ -50,9 +50,8 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class Generate_Report_Activity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
-
-    private final int REQUEST_CODE = 200;
     //Instance variables
+    private final int REQUEST_CODE = 200;
     private Teacher currentTeacher;
     private TeacherAdapter teacherAdapter;
     private List<Teacher> teacherList;
@@ -73,6 +72,7 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
         setContentView(R.layout.activity_generate__report_);
         //DB helper instance
         myDBHelper = new DBHelper(this);
+        //get references to views on activity
         chkAllStudents = (CheckBox)findViewById(R.id.chkAllStudents);
         spinStudents = (Spinner)findViewById(R.id.spinStudentReport);
     }
@@ -83,12 +83,12 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
         teacherSpinner = (Spinner) findViewById(R.id.report_teacher_spinner);
         teacherList = myDBHelper.getAllTeachers();
         studentList= myDBHelper.getStudentsByTeacher(teacherList.get(0));
-
+        //set the teacher adapter
         teacherAdapter = new TeacherAdapter(this.getApplicationContext(), R.layout.spinner_item, teacherList);
         teacherSpinner.setAdapter(teacherAdapter);
         teacherAdapter.notifyDataSetChanged();
         teacherSpinner.setOnItemSelectedListener(this);
-
+        //set the student adapter
         studentAdapter = new StudentAdapter(this.getApplicationContext(), R.layout.spinner_item, studentList);
         spinStudents.setAdapter(studentAdapter);
         studentAdapter.notifyDataSetChanged();
@@ -98,23 +98,21 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
         Spinner spinner = (Spinner)parent;
-        //Gets the selected teacher object
-        if(spinner.getId() == R.id.report_teacher_spinner) {
+        //Determine which spinner was changed
+        if(spinner.getId() == R.id.report_teacher_spinner)
+        {
+            //set the currently selected teacher
             currentTeacher = teacherAdapter.getItem(position);
+            //filter the student spinner based on the current teacher
             studentList = myDBHelper.getStudentsByTeacher(currentTeacher);
+            //reset the student adapter
             studentAdapter = null;
             studentAdapter = new StudentAdapter(this.getApplicationContext(), R.layout.spinner_item, studentList);
             spinStudents.setAdapter(studentAdapter);
             studentAdapter.notifyDataSetChanged();
         }
         else if(spinner.getId() == R.id.spinStudentReport)
-            currentStudent = studentAdapter.getItem(position);
-
-
-
-        //currentTeacher = teacherAdapter.getItem(position);
-        //tasks = null;
-        //tasks = myDBHelper.getCompletedTasksByTeacher(currentTeacher);
+            currentStudent = studentAdapter.getItem(position);//set current student
         //Calendar object for date logging
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat format = new SimpleDateFormat("MM:dd:yyyy_hh:mm:ss", Locale.US);
@@ -139,7 +137,7 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
             tasks = myDBHelper.getCompletedTasksByStudent(currentStudent);
         // Prompts the user for permission to write
         if (ContextCompat.checkSelfPermission(getApplicationContext(),
-                Manifest.permission.READ_CONTACTS)
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
 
             // Should we show an explanation?
@@ -178,7 +176,7 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
                 table.addCell(createCell("Date Completed", 1, 1, Element.ALIGN_CENTER));
                 table.addCell(createCell("Time", 1, 1, Element.ALIGN_CENTER));
                 Student current = null;
-
+                //Loop through the completed tasks and add their attributes to the report
                 for (Completed_Task task : tasks) {
                     if (current == null || current.getStudentID() != task.getStudentID()) {
                         current = myDBHelper.getStudent(task.getStudentID());
@@ -190,6 +188,7 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
                     table.addCell(createCell(task.getDate_completed(), 1, 1, Element.ALIGN_CENTER));
                     table.addCell(createCell(task.getTimeSpent(), 1, 1, Element.ALIGN_CENTER));
                 }
+                //add the table to the document
                 document.add(table);
                 //Close document
                 document.close();
@@ -210,6 +209,8 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
         }
     }
 
+    //displayToastError
+    //display
     public void displayToastError()
     {
         Toast.makeText(getApplicationContext(), "An error occurred while generating the report.", Toast.LENGTH_LONG).show();

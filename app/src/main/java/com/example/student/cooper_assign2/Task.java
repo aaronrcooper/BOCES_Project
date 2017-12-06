@@ -25,11 +25,17 @@ public class Task implements Parcelable {
         taskName = name;
         description = descr;
     }
-
     public Task(Parcel in) {
         taskName = in.readString();
         taskID = in.readInt();
         description = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(taskName);
+        parcel.writeInt(taskID);
+        parcel.writeString(description);
     }
 
     public static final Creator<Task> CREATOR = new Creator<Task>() {
@@ -74,12 +80,6 @@ public class Task implements Parcelable {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(taskName);
-        parcel.writeInt(taskID);
-        parcel.writeString(description);
-    }
 
     public byte[] getTaskImage() {
         return taskImage;

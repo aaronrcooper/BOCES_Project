@@ -58,7 +58,9 @@ public class TeacherListActivity extends AppCompatActivity {
     //Determines what happens when the app is resumed
     protected void onResume() {
         super.onResume();
+        //populate teacher list from the database
         teacherList = myDBHelper.getAllTeachers();
+        //disable edit button if there are no teachers
         if(teacherList.isEmpty())
             btnEdit.setEnabled(false);
         //Instantiated an adapter
@@ -75,13 +77,6 @@ public class TeacherListActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }*********************************************************************/
 
-    //Clear a single teacher from the database
-    /*public void removeTeacher(Teacher aTeacher){
-        myDBHelper.removeTeacher(aTeacher);
-        adapter.remove(aTeacher);
-        adapter.notifyDataSetChanged();
-    }*/
-
     //removeCheckedTeachers
     public void removeCheckedTeachers(View view)
     {
@@ -89,9 +84,9 @@ public class TeacherListActivity extends AppCompatActivity {
         {
             if(aTeacher.isDeletable())
             {
+                //remove the teacher
                 myDBHelper.removeTeacher(aTeacher);
-                //adapter.remove(aTeacher);
-                //
+                //repopulate the teacher list
                 teacherList = myDBHelper.getAllTeachers();
             }
         }
@@ -99,6 +94,7 @@ public class TeacherListActivity extends AppCompatActivity {
         adapter = new MyAdapter(this, R.layout.activity_list_item, teacherList);
         ListView listTeachers = (ListView) findViewById(R.id.lstTeachersView);
         listTeachers.setAdapter(adapter);
+        //check if the teacher list is empty, if true, disable edit button
         if(teacherList.isEmpty())
             btnEdit.setEnabled(false);
         imgTeacherImage.setImageResource(R.mipmap.noimgavail);
@@ -247,11 +243,6 @@ public class TeacherListActivity extends AppCompatActivity {
             deleteChBx.setTag(current);
             return convertView;
         }
-//        public boolean onCreateOptionsMenu(Menu menu) {
-//            // Inflate the menu.
-//            getMenuInflater().inflate(R.menu.menu_main, menu);
-//            return true;
-//        }
     }
 
 
