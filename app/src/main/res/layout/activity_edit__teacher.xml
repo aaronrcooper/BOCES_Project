@@ -18,10 +18,10 @@
 
     <Spinner
         android:id="@+id/spinEditTeacher"
-        android:background="#0090ff"
-        android:layout_gravity="center_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="60sp" />
+        android:layout_height="60sp"
+        android:layout_gravity="center_horizontal"
+        android:background="#0079C2" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -121,9 +121,9 @@
             android:id="@+id/txtTEmail"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:layout_weight=".7"
-            android:inputType="phone" />
+            android:ems="10"
+            android:inputType="textEmailAddress" />
         </LinearLayout>
 
     <LinearLayout
@@ -144,9 +144,9 @@
             android:id="@+id/txtTPhone"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:layout_weight=".7"
-            android:inputType="textEmailAddress" />
+            android:ems="10"
+            android:inputType="phone" />
         </LinearLayout>
 
         <Button

@@ -17,10 +17,10 @@
 
     <Spinner
         android:id="@+id/spinEditTask"
-        android:background="#0090ff"
-        android:layout_gravity="center_horizontal"
         android:layout_width="match_parent"
-        android:layout_height="60sp" />
+        android:layout_height="60sp"
+        android:layout_gravity="center_horizontal"
+        android:background="#0079C2" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="75sp"

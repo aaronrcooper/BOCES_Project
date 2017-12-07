@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="50sp"
         android:layout_gravity="center_horizontal"
-        android:background="#0090ff" />
+        android:background="#0079C2" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -124,7 +124,7 @@
             android:layout_height="wrap_content"
             android:layout_weight=".7"
             android:ems="10"
-            android:inputType="phone" />
+            android:inputType="number" />
     </LinearLayout>
 
     <LinearLayout
@@ -145,16 +145,16 @@
             android:id="@+id/txtSYear"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:ems="10"
             android:layout_weight=".7"
-            android:inputType="textEmailAddress" />
+            android:ems="10"
+            android:inputType="text|number" />
     </LinearLayout>
 
     <Spinner
         android:id="@+id/spinEditStudentsTeacher"
         android:layout_width="match_parent"
         android:layout_height="50sp"
-        android:background="#0090ff" />
+        android:background="#0079C2" />
 
         <Button
             android:id="@+id/btnSave"
