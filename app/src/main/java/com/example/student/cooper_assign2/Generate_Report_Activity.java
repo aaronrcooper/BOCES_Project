@@ -139,7 +139,7 @@ public class Generate_Report_Activity extends AppCompatActivity implements Adapt
             tasks = myDBHelper.getCompletedTasksByStudent(currentStudent);
         // Prompts the user for permission to write
         if (ContextCompat.checkSelfPermission(getApplicationContext(),
-                Manifest.permission.READ_CONTACTS)
+                Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
 
             // Should we show an explanation?
